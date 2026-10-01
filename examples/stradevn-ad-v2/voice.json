@@ -1,0 +1,57 @@
+{
+  "_huong_dan": "Kịch bản giọng v2 — hook 'Đừng tuyển thêm Sales nữa' (duyệt 30/09). Chạy: python ../../../kit/tools/tts_script.py voice.json audio",
+  "model": "gemini-3.1-flash-tts-preview",
+  "voice": "Kore",
+  "language": "vi-VN",
+  "gap_seconds": 0.3,
+  "profile": "Bạn là nữ MC quảng cáo người Việt, giọng miền Bắc chuẩn, ấm, tự tin, gần gũi như đang nói chuyện với người làm Sales. Tuyệt đối không đọc đều đều như máy; có nhấn nhá, có lên xuống. Nhịp hơi nhanh, gọn.",
+  "profile_fallback": "Bạn là nữ MC quảng cáo người Việt, giọng miền Bắc, ấm, tự tin. Có nhấn nhá, nhịp hơi nhanh, gọn.",
+  "lines": [
+    {
+      "id": "V1",
+      "text": "Đừng tuyển thêm Sales nữa. [short pause] Ít nhất là cho đến khi xem hết video này.",
+      "direction": "Câu đầu dứt khoát, hơi 'chơi lớn'. Câu sau hạ giọng, tinh nghịch như đang nháy mắt."
+    },
+    {
+      "id": "V2",
+      "text": "Việc ngày càng nhiều, mà công ty không tuyển thêm ai? [short pause] Vì thời gian của Sales đang mất vào lật tờ khai, copy từng cái tên, rồi... đoán mò.",
+      "direction": "Câu hỏi đầu như nói hộ nỗi lòng nhân viên, hơi than thở. Vế sau đồng cảm, liệt kê có nhịp, mỉa mai nhẹ ở 'đoán mò'."
+    },
+    {
+      "id": "V3",
+      "text": "Việc đó... [short pause] để StradeVn làm.",
+      "direction": "Chậm, tự tin như tiết lộ bí mật. Nhấn rõ tên thương hiệu StradeVn."
+    },
+    {
+      "id": "V4",
+      "text": "Chỉ cần nhập mã HS và mặt hàng.",
+      "direction": "Nhẹ nhàng, dễ dàng. Nhấn 'chỉ cần'."
+    },
+    {
+      "id": "V5",
+      "text": "Hệ thống tự truy xuất tờ khai hải quan toàn cầu, [short pause] cho bạn thấy ngay khách đang ở nước nào.",
+      "direction": "Tự tin, rành mạch, hơi tự hào ở 'toàn cầu'. 'Thấy ngay' đọc gọn.",
+      "caption": "Hệ thống tự truy xuất [short pause] tờ khai hải quan toàn cầu, [short pause] cho bạn thấy ngay khách đang ở nước nào."
+    },
+    {
+      "id": "V6",
+      "text": "Từng công ty được xếp hạng Top 1, Top 2, [short pause] kèm lý do cụ thể.",
+      "direction": "Đếm nhịp 'Top 1, Top 2'. Nhấn 'lý do'."
+    },
+    {
+      "id": "V7",
+      "text": "Chọn công ty muốn theo đuổi, [short pause] email và số điện thoại đã có sẵn.",
+      "direction": "Nhịp nhanh, năng lượng tăng dần, kết câu dứt khoát."
+    },
+    {
+      "id": "V8",
+      "text": "Dù bạn làm Sales xuất nhập khẩu hay logistics, [short pause] không cần thêm người. [short pause] Đội hiện tại... chỉ việc chốt đơn.",
+      "direction": "Ấm, chắc chắn, nối lại lời hứa ở đầu video; mỉm cười ở 'chỉ việc chốt đơn'."
+    },
+    {
+      "id": "V9",
+      "text": "StradeVn, [short pause] trợ lý AI cho Sales xuất nhập khẩu. [short pause] Nhắn Zalo để được demo trên đúng mặt hàng của bạn.",
+      "direction": "Kết ấm, tin cậy; lời mời thân thiện, chậm lại ở 'đúng mặt hàng của bạn'."
+    }
+  ]
+}

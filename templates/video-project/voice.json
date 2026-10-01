@@ -1,0 +1,21 @@
+{
+  "_huong_dan": [
+    "Mỗi dòng = 1 câu thoại = 1 cảnh (khớp 'line' trong scenes.json). Đọc: python <kit>/tools/tts_script.py voice.json audio",
+    "profile: ai đọc, giọng vùng miền, không khí, TỐC ĐỘ. direction: đạo diễn riêng câu. Thẻ trong lời: [short pause] [medium pause] [long pause] [whispering] [shouting] [sigh] [laughing]",
+    "Số đọc bằng chữ nếu cần (vd 'chín trăm'); muốn phụ đề hiện số thì thêm 'caption'. Bị chặn nhầm (400 usage guidelines) → đổi vài chữ.",
+    "Đọc lại đúng 1 câu: --only V3"
+  ],
+  "model": "gemini-3.1-flash-tts-preview",
+  "voice": "Kore",
+  "language": "vi-VN",
+  "gap_seconds": 0.3,
+  "profile": "Bạn là nữ MC quảng cáo người Việt, giọng miền Bắc chuẩn, ấm, tự tin, gần gũi. Tuyệt đối không đọc đều đều như máy; có nhấn nhá, có lên xuống. Nhịp hơi nhanh, gọn.",
+  "profile_fallback": "Bạn là nữ MC quảng cáo người Việt, giọng miền Bắc, ấm, tự tin. Có nhấn nhá, nhịp hơi nhanh, gọn.",
+  "lines": [
+    {"id": "V1", "text": "[HOOK — câu gây chú ý 3 giây đầu]", "direction": "Dứt khoát, gây tò mò."},
+    {"id": "V2", "text": "[NỖI ĐAU — người xem đang khổ vì điều gì]", "direction": "Đồng cảm, liệt kê có nhịp."},
+    {"id": "V3", "text": "[LỜI GIẢI — Việc đó… để TÊN SẢN PHẨM làm.]", "direction": "Chậm, tự tin như tiết lộ. Nhấn tên thương hiệu."},
+    {"id": "V4", "text": "[TÍNH NĂNG / BẰNG CHỨNG — cho thấy sản phẩm thật]", "direction": "Rành mạch, tự tin."},
+    {"id": "V5", "text": "[KÊU GỌI — Tên sản phẩm, lời hứa ngắn. Nhắn … để …]", "direction": "Ấm, tin cậy, mỉm cười."}
+  ]
+}

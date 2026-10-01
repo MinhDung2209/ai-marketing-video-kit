@@ -1,0 +1,25 @@
+# ============================================================================
+# marketing-video-kit — phụ thuộc.   Kiểm cả máy 1 lệnh:  python tools/check_env.py
+# ============================================================================
+
+# ---- 1. Thư viện Python:  pip install -r requirements.txt --------------------
+# Python 3.11+ (đã chạy thật trên Python 3.14, Windows 11 — 30/09/2026)
+google-auth>=2.30      # token Google Cloud từ service account (TTS, Lyria)
+requests>=2.31         # gọi API Google TTS / Vertex Lyria
+pillow>=10             # ghép ảnh xem trước, cắt ảnh
+playwright>=1.45       # điều khiển Chrome để render từng khung hình
+
+# ---- 2. BẮT BUỘC nhưng KHÔNG cài được bằng pip --------------------------------
+# FFmpeg + ffprobe (bản full, có libx264 + aac) — trộn âm, đo khoảng lặng, ghép MP4
+#     Windows: winget install Gyan.FFmpeg | macOS: brew install ffmpeg | Ubuntu: sudo apt install ffmpeg
+# Google Chrome (hoặc Chromium) — render.py tự dò; đường dẫn lạ thì đặt biến VIDEOKIT_CHROME
+#     máy không có Chrome: python -m playwright install chromium
+
+# ---- 3. Tuỳ chọn ---------------------------------------------------------------
+# Git              — tools/fetch_sources.py tải lại âm thanh Pixabay/Mixkit (không lưu trong git)
+# Node.js 22+      — chỉ khi dùng CLI HyperFrames (npx hyperframes check)
+# Claude Code + plenxai MCP (https://mcp.plenxai.com/mcp) — tạo ảnh/clip AI
+
+# ---- 4. Repo mã nguồn mở đã dùng -----------------------------------------------
+# KHÔNG phải thư viện phải cài: kit học định dạng + lấy âm thanh sạch giấy phép từ đó.
+# Danh sách, vai trò, giấy phép, commit: THIRD-PARTY.md

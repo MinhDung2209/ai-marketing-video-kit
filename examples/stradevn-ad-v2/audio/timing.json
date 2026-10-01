@@ -1,0 +1,71 @@
+{
+ "model": "gemini-3.1-flash-tts-preview",
+ "voice": "Kore",
+ "total": 54.16,
+ "lines": [
+  {
+   "id": "V1",
+   "file": "V1.mp3",
+   "start": 0.3,
+   "dur": 5.04,
+   "text": "Đừng tuyển thêm Sales nữa. [short pause] Ít nhất là cho đến khi xem hết video này."
+  },
+  {
+   "id": "V2",
+   "file": "V2.mp3",
+   "start": 5.64,
+   "dur": 10.79,
+   "text": "Việc ngày càng nhiều, mà công ty không tuyển thêm ai? [short pause] Vì thời gian của Sales đang mất vào lật tờ khai, copy từng cái tên, rồi... đoán mò."
+  },
+  {
+   "id": "V3",
+   "file": "V3.mp3",
+   "start": 16.73,
+   "dur": 3.37,
+   "text": "Việc đó... [short pause] để StradeVn làm."
+  },
+  {
+   "id": "V4",
+   "file": "V4.mp3",
+   "start": 20.4,
+   "dur": 3.32,
+   "text": "Chỉ cần nhập mã HS và mặt hàng."
+  },
+  {
+   "id": "V5",
+   "file": "V5.mp3",
+   "start": 24.02,
+   "dur": 5.2,
+   "text": "Hệ thống tự truy xuất tờ khai hải quan toàn cầu, [short pause] cho bạn thấy ngay khách đang ở nước nào.",
+   "caption": "Hệ thống tự truy xuất [short pause] tờ khai hải quan toàn cầu, [short pause] cho bạn thấy ngay khách đang ở nước nào."
+  },
+  {
+   "id": "V6",
+   "file": "V6.mp3",
+   "start": 29.52,
+   "dur": 4.47,
+   "text": "Từng công ty được xếp hạng Top 1, Top 2, [short pause] kèm lý do cụ thể."
+  },
+  {
+   "id": "V7",
+   "file": "V7.mp3",
+   "start": 34.29,
+   "dur": 4.15,
+   "text": "Chọn công ty muốn theo đuổi, [short pause] email và số điện thoại đã có sẵn."
+  },
+  {
+   "id": "V8",
+   "file": "V8.mp3",
+   "start": 38.74,
+   "dur": 7.13,
+   "text": "Dù bạn làm Sales xuất nhập khẩu hay logistics, [short pause] không cần thêm người. [short pause] Đội hiện tại... chỉ việc chốt đơn."
+  },
+  {
+   "id": "V9",
+   "file": "V9.mp3",
+   "start": 46.17,
+   "dur": 6.69,
+   "text": "StradeVn, [short pause] trợ lý AI cho Sales xuất nhập khẩu. [short pause] Nhắn Zalo để được demo trên đúng mặt hàng của bạn."
+  }
+ ]
+}

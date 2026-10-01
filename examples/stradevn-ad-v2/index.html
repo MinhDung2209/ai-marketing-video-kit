@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<title>StradeVn — video quảng cáo v2 (hook: Đừng tuyển thêm Sales nữa)</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-700-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-800-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-800-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('assets/fonts/BeVietnamPro-800-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-500-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-600-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/IBMPlexSans-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root{--indigo:#4F46E5;--orange:#F97316;--amber:#FBBF24;--ink:#101828}
+body{margin:0;background:#0B1020;color:#fff;font-family:'IBM Plex Sans',sans-serif}
+#root{position:relative;width:100%;height:100%;overflow:hidden;background:#0B1020}
+.clip{position:absolute;inset:0;overflow:hidden}
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.h{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;letter-spacing:-1px;line-height:1.08;margin:0}
+.shade-top{position:absolute;left:0;right:0;top:0;height:900px;background:linear-gradient(180deg,rgba(6,9,20,.92) 0%,rgba(6,9,20,.5) 55%,rgba(6,9,20,0) 100%)}
+.shade-bot{position:absolute;left:0;right:0;bottom:0;height:800px;background:linear-gradient(0deg,rgba(6,9,20,.92) 0%,rgba(6,9,20,.4) 60%,rgba(6,9,20,0) 100%)}
+.headline{position:absolute;left:70px;right:70px;top:200px;font-size:100px}
+.hl{color:var(--amber)} .hl2{color:#A5B4FC}
+.cap{position:absolute;inset:auto;left:60px;right:60px;top:1480px;display:flex;justify-content:center;align-items:flex-start}
+.cap span{display:block;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:48px;line-height:1.3;
+  padding:16px 32px;border-radius:24px;background:rgba(8,11,24,.8);color:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+/* tờ tin tuyển dụng (C1) */
+.paper{position:absolute;left:190px;top:640px;width:700px;height:520px}
+.half{position:absolute;inset:0;background:#FBFAF6;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#111}
+.half .t1{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:92px;letter-spacing:-2px;color:#B91C1C;line-height:1}
+.half .t2{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:64px;line-height:1.05;text-align:center;margin-top:18px}
+.half .t3{font-size:30px;color:#555;margin-top:26px}
+#pL{clip-path:polygon(0 0,52% 0,47% 18%,53% 35%,46% 52%,54% 70%,48% 86%,52% 100%,0 100%)}
+#pR{clip-path:polygon(52% 0,100% 0,100% 100%,52% 100%,48% 86%,54% 70%,46% 52%,53% 35%,47% 18%)}
+/* thẻ nỗi đau (C2) */
+.chips{position:absolute;left:80px;right:80px;top:470px;display:flex;flex-direction:column;gap:26px}
+.chip{position:relative;align-self:flex-start;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:60px;padding:14px 34px;border-radius:20px;background:rgba(15,18,32,.85);border:2px solid rgba(255,255,255,.2)}
+.strike{position:absolute;left:18px;right:18px;top:50%;height:10px;border-radius:6px;background:#EF4444;transform-origin:left center}
+/* UI giống app (C4) */
+.ui{position:absolute;left:80px;right:80px;background:#161B26;border:2px solid #2B3240;border-radius:32px;padding:48px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.ui label{display:block;font-size:32px;font-weight:600;color:#9AA4B5;margin:0 0 14px}
+.field{height:104px;border-radius:20px;background:#0E1320;border:2px solid #3A4354;display:flex;align-items:center;padding:0 32px;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:52px;color:#fff;margin-bottom:40px}
+.field .ch{opacity:0}
+.btn{display:flex;align-items:center;justify-content:center;height:112px;border-radius:24px;background:var(--indigo);font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:40px;color:#fff}
+.brand{display:flex;align-items:center;justify-content:center;gap:34px}
+.brand img{width:170px;height:170px;border-radius:40px;object-fit:cover;box-shadow:0 20px 60px rgba(249,115,22,.4)}
+.brand .name{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:120px;letter-spacing:-2px}
+.shot{position:absolute;border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 90px rgba(249,115,22,.25)}
+.shot img{display:block;width:100%;height:auto}
+.tag{position:absolute;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:26px;letter-spacing:2px;padding:10px 20px;border-radius:999px;background:rgba(79,70,229,.9);color:#fff}
+.card{position:absolute;left:90px;right:90px;top:760px;background:rgba(255,255,255,.96);color:var(--ink);border-radius:36px;padding:48px 50px;box-shadow:0 40px 110px rgba(0,0,0,.45)}
+.card .top{display:flex;align-items:center;gap:20px;margin-bottom:34px}
+.badge{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:32px;color:#15803D;background:#DCFCE7;padding:10px 22px;border-radius:999px}
+.bar{height:34px;border-radius:12px;background:#D0D5DD;filter:blur(3px)}
+.row{display:flex;align-items:center;gap:26px;padding:22px 0;border-top:2px solid #EEF0F4}
+.row .v{flex:1;height:30px;border-radius:10px;background:#D0D5DD;filter:blur(3px)}
+.row .t{font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:38px;min-width:230px}
+.ok{flex:none;width:56px;height:56px;border-radius:50%;background:#16A34A;display:flex;align-items:center;justify-content:center}
+.proof{position:absolute;left:60px;right:60px;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;color:#fff;opacity:.28;filter:blur(1.5px);text-align:center}
+.cta{position:absolute;left:90px;right:90px;display:flex;align-items:center;justify-content:center;height:140px;border-radius:32px;background:var(--indigo);font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:52px;color:#fff;box-shadow:0 20px 60px rgba(79,70,229,.55)}
+.c9v{position:absolute;inset:0}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="54.16">
+
+  <audio id="mix" src="assets/final_audio.mp3" data-start="0" data-duration="54.16" data-track-index="9"></audio>
+
+  <!-- C1 HOOK: xé tin tuyển dụng -->
+  <section id="c1" class="clip" data-start="0" data-duration="5.49" data-track-index="0">
+    <div id="c1w" class="full">
+      <div id="c1img" class="full"><video class="full" src="assets/clips/P-C1-xe-giay.mp4" muted playsinline preload="auto" data-rate="1.1"></video></div>
+      <div class="shade-top" style="height:620px"></div>
+      <h1 id="c1h" class="h headline" style="font-size:104px;top:170px">Đừng tuyển thêm Sales nữa.</h1>
+    </div>
+  </section>
+
+  <!-- C2 LÝ DO -->
+  <section id="c2" class="clip" data-start="5.49" data-duration="11.09" data-track-index="0">
+    <div id="c2w" class="full">
+      <div id="c2img" class="full"><video id="c2vid" class="full" src="assets/clips/P-C2-kol-met.mp4" muted playsinline preload="auto" data-rate="0.75"></video></div>
+      <div class="shade-top" style="height:1100px"></div>
+      <h1 id="c2h" class="h headline" style="font-size:84px"><span style="display:block">Việc ngày càng nhiều,</span><span class="hl" style="display:block">mà không tuyển thêm ai?</span></h1>
+      <div class="chips">
+        <div class="chip" id="k1">Lật tờ khai<div class="strike" id="x1"></div></div>
+        <div class="chip" id="k2">Copy từng cái tên<div class="strike" id="x2"></div></div>
+        <div class="chip" id="k3">Đoán mò<div class="strike" id="x3"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C3 REHOOK: logo -->
+  <section id="c3" class="clip" data-start="16.58" data-duration="3.67" data-track-index="0">
+    <div id="c3w" class="full" style="background:radial-gradient(circle at 50% 45%,#1E1B4B 0%,#0B1020 70%)">
+      <div style="position:absolute;left:0;right:0;top:640px;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:54px;color:#C7CCD8" id="c3pre">Việc đó… để</div>
+      <div id="c3brand" class="brand" style="position:absolute;left:0;right:0;top:760px"><img src="assets/img/logo.jpg" alt="" /><div class="name">StradeVn</div></div>
+      <div id="c3sub" style="position:absolute;left:0;right:0;top:990px;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:46px;color:#A5B4FC">Trợ lý AI cho Sales xuất nhập khẩu</div>
+    </div>
+  </section>
+
+  <!-- C4 NHẬP MÃ HS -->
+  <section id="c4" class="clip" data-start="20.25" data-duration="3.62" data-track-index="0">
+    <div id="c4w" class="full">
+      <img id="c4bg" class="full" src="assets/img/02-cang.png" alt="" style="filter:blur(14px) brightness(.42)" />
+      <h1 class="h headline" style="font-size:92px"><span style="display:block">Chỉ cần nhập</span><span class="hl" style="display:block">mã HS + mặt hàng</span></h1>
+      <div id="c4ui" class="ui" style="top:640px">
+        <label>Mã HS</label>
+        <div class="field" id="hs"><span class="ch">2</span><span class="ch">0</span><span class="ch">0</span><span class="ch">8</span><span class="ch">2</span><span class="ch">0</span></div>
+        <label>Từ khoá chính</label>
+        <div class="field" id="kw"><span class="ch">p</span><span class="ch">i</span><span class="ch">n</span><span class="ch">e</span><span class="ch">a</span><span class="ch">p</span><span class="ch">p</span><span class="ch">l</span><span class="ch">e</span></div>
+        <div id="c4btn" class="btn">Bắt đầu truy xuất &amp; phân loại</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C5 BẢN ĐỒ THẬT -->
+  <section id="c5" class="clip" data-start="23.87" data-duration="5.5" data-track-index="0">
+    <div id="c5w" class="full">
+      <img id="c5bg" class="full" src="assets/img/02-cang.png" alt="" />
+      <div class="shade-top"></div><div class="shade-bot"></div>
+      <h1 class="h headline" style="font-size:94px"><span style="display:block">Thấy ngay khách</span><span class="hl" style="display:block">ở những nước nào</span></h1>
+      <div id="c5shot" class="shot" style="left:40px;right:40px;top:720px"><img src="assets/img/map-988.png" alt="" /></div>
+      <div class="tag" style="left:60px;top:1250px" id="c5tag">VÍ DỤ THẬT · Dứa đóng lon</div>
+    </div>
+  </section>
+
+  <!-- C6 XẾP HẠNG + LÝ DO -->
+  <section id="c6" class="clip" data-start="29.37" data-duration="4.77" data-track-index="0">
+    <div id="c6w" class="full" style="background:linear-gradient(180deg,#0B1020 0%,#1E1B4B 100%)">
+      <h1 class="h headline" style="font-size:94px"><span style="display:block">Top 1 · Top 2</span><span class="hl2" style="display:block">kèm lý do cụ thể</span></h1>
+      <div class="shot" style="left:0;right:0;top:640px;height:760px;border-radius:0;border-left:0;border-right:0">
+        <div id="c6pan" style="position:absolute;left:0;top:0;height:760px;width:1950px">
+          <img src="assets/img/ranking.png" alt="" style="display:block;height:760px;width:1950px" />
+          <div id="c6hl" style="position:absolute;left:78.5%;top:36%;width:20.5%;height:62%;border:6px solid #FBBF24;border-radius:18px;box-shadow:0 0 50px rgba(251,191,36,.6)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C7 LIÊN HỆ -->
+  <section id="c7" class="clip" data-start="34.14" data-duration="4.45" data-track-index="0">
+    <div id="c7w" class="full">
+      <img id="c7img" class="full" src="assets/img/03-kol-cuoi.png" alt="" />
+      <div class="shade-top"></div>
+      <h1 class="h headline" style="font-size:86px"><span style="display:block">Email &amp; SĐT</span><span class="hl" style="display:block">đã có sẵn</span></h1>
+      <div id="c7card" class="card">
+        <div class="top"><span class="badge">Top 1</span><div class="bar" style="flex:1"></div></div>
+        <div class="row"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="t">Email</span><div class="v"></div><div class="ok" id="o1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg></div></div>
+        <div class="row"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="t">Điện thoại</span><div class="v"></div><div class="ok" id="o2"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg></div></div>
+        <div class="row"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span class="t">Website</span><div class="v"></div><div class="ok" id="o3"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg></div></div>
+        <div class="row"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg><span class="t">Mạng XH</span><div class="v"></div><div class="ok" id="o4"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C8 CHỐT Ý: không cần thêm người -->
+  <section id="c8" class="clip" data-start="38.59" data-duration="7.43" data-track-index="0">
+    <div id="c8w" class="full" style="background:#0E1422">
+      <img id="c8map" src="assets/img/map-988.png" alt="" style="position:absolute;left:-300px;top:260px;height:1100px;width:auto;opacity:.3;filter:blur(2px)" />
+      <div class="proof" style="top:1040px;font-size:64px" id="c8p1">988 công ty · 36 quốc gia</div>
+      <div class="proof" style="top:1130px;font-size:64px;color:#FBBF24" id="c8p2">324 khách Top 1–2</div>
+      <div class="tag" style="left:60px;top:1240px;opacity:.7">VÍ DỤ THẬT · Dứa đóng lon · HS 200820</div>
+      <div id="c8kol" style="position:absolute;right:0;top:0;width:500px;height:980px;overflow:hidden;border-bottom-left-radius:60px;clip-path:inset(0 round 0 0 0 60px)"><video src="assets/clips/P-C8-goi-dien-v2.mp4" muted playsinline preload="auto" data-rate="0.7" data-end="3.1" style="width:100%;height:100%;object-fit:cover;object-position:45% 25%"></video></div>
+      <div style="position:absolute;right:0;top:0;width:500px;height:980px;background:linear-gradient(90deg,#0E1422 0%,rgba(14,20,34,0) 35%);border-bottom-left-radius:60px"></div>
+      <div style="position:absolute;left:60px;top:250px;width:520px">
+        <div class="h" style="font-size:52px;color:#C7CCD8" id="c8a">Sales XNK hay logistics</div>
+        <div class="h" style="font-size:80px;margin-top:22px" id="c8b">Không cần thêm người.</div>
+        <div class="h hl" style="font-size:80px;margin-top:22px" id="c8c">Chỉ việc chốt đơn.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C9 KÊU GỌI -->
+  <section id="c9" class="clip" data-start="46.02" data-duration="8.14" data-track-index="0">
+    <div id="c9w" class="full" style="background:#F7F8FB">
+      <div id="c9img" style="position:absolute;left:0;top:0;width:100%;height:1000px;overflow:hidden"><div class="c9v" data-start="46.02" data-duration="5.25"><video src="assets/clips/P-C8-goi-dien-v1.mp4" muted playsinline preload="auto" data-rate="0.8" data-end="4.2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%"></video></div><div class="c9v" data-start="51.27" data-duration="2.89"><video src="assets/clips/P-C8-goi-dien-v2.mp4" muted playsinline preload="auto" data-rate="0.75" data-offset="3.9" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%"></video></div></div>
+      <div style="position:absolute;left:0;right:0;top:640px;height:360px;background:linear-gradient(180deg,rgba(247,248,251,0) 0%,#F7F8FB 100%)"></div>
+      <div id="c9brand" style="position:absolute;left:0;right:0;top:950px;display:flex;align-items:center;justify-content:center;gap:26px">
+        <img src="assets/img/logo.jpg" alt="" style="width:130px;height:130px;border-radius:30px" />
+        <span class="h" style="font-size:104px;color:#101828">StradeVn</span>
+      </div>
+      <div id="c9sub" style="position:absolute;left:60px;right:60px;top:1110px;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:50px;color:#344054">Trợ lý AI cho Sales xuất nhập khẩu</div>
+      <div id="c9cta" class="cta" style="top:1210px">Nhắn Zalo đặt lịch demo</div>
+      <div id="c9url" style="position:absolute;left:0;right:0;top:1380px;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:44px;color:#4F46E5">stradevn.com · Zalo 0338 503 979</div>
+    </div>
+  </section>
+
+  <div class="cap clip" id="cap0" data-start="0.3" data-duration="1.96" data-track-index="5"><span>Đừng tuyển thêm Sales nữa.</span></div>
+  <div class="cap clip" id="cap1" data-start="2.26" data-duration="3.08" data-track-index="5"><span>Ít nhất là cho đến khi xem hết video này.</span></div>
+  <div class="cap clip" id="cap2" data-start="5.64" data-duration="1.72" data-track-index="5"><span>Việc ngày càng nhiều,</span></div>
+  <div class="cap clip" id="cap3" data-start="7.36" data-duration="2.53" data-track-index="5"><span>mà công ty không tuyển thêm ai?</span></div>
+  <div class="cap clip" id="cap4" data-start="9.89" data-duration="3.92" data-track-index="5"><span>Vì thời gian của Sales đang mất vào lật tờ khai,</span></div>
+  <div class="cap clip" id="cap5" data-start="13.81" data-duration="2.62" data-track-index="5"><span>copy từng cái tên, rồi… đoán mò.</span></div>
+  <div class="cap clip" id="cap6" data-start="16.73" data-duration="1.12" data-track-index="5"><span>Việc đó…</span></div>
+  <div class="cap clip" id="cap7" data-start="17.85" data-duration="2.25" data-track-index="5"><span>để StradeVn làm.</span></div>
+  <div class="cap clip" id="cap8" data-start="20.4" data-duration="3.32" data-track-index="5"><span>Chỉ cần nhập mã HS và mặt hàng.</span></div>
+  <div class="cap clip" id="cap9" data-start="24.02" data-duration="1.26" data-track-index="5"><span>Hệ thống tự truy xuất</span></div>
+  <div class="cap clip" id="cap10" data-start="25.28" data-duration="1.55" data-track-index="5"><span>tờ khai hải quan toàn cầu,</span></div>
+  <div class="cap clip" id="cap11" data-start="26.83" data-duration="2.39" data-track-index="5"><span>cho bạn thấy ngay khách đang ở nước nào.</span></div>
+  <div class="cap clip" id="cap12" data-start="29.52" data-duration="3.14" data-track-index="5"><span>Từng công ty được xếp hạng Top 1, Top 2,</span></div>
+  <div class="cap clip" id="cap13" data-start="32.66" data-duration="1.33" data-track-index="5"><span>kèm lý do cụ thể.</span></div>
+  <div class="cap clip" id="cap14" data-start="34.29" data-duration="1.9" data-track-index="5"><span>Chọn công ty muốn theo đuổi,</span></div>
+  <div class="cap clip" id="cap15" data-start="36.19" data-duration="2.25" data-track-index="5"><span>email và số điện thoại đã có sẵn.</span></div>
+  <div class="cap clip" id="cap16" data-start="38.74" data-duration="3.31" data-track-index="5"><span>Dù bạn làm Sales xuất nhập khẩu hay logistics,</span></div>
+  <div class="cap clip" id="cap17" data-start="42.05" data-duration="1.52" data-track-index="5"><span>không cần thêm người.</span></div>
+  <div class="cap clip" id="cap18" data-start="43.57" data-duration="2.3" data-track-index="5"><span>Đội hiện tại… chỉ việc chốt đơn.</span></div>
+  <div class="cap clip" id="cap19" data-start="46.17" data-duration="0.65" data-track-index="5"><span>StradeVn,</span></div>
+  <div class="cap clip" id="cap20" data-start="46.82" data-duration="2.52" data-track-index="5"><span>trợ lý AI cho Sales xuất nhập khẩu.</span></div>
+  <div class="cap clip" id="cap21" data-start="49.34" data-duration="1.94" data-track-index="5"><span>Nhắn Zalo để được demo trên</span></div>
+  <div class="cap clip" id="cap22" data-start="51.28" data-duration="1.58" data-track-index="5"><span>đúng mặt hàng của bạn.</span></div>
+
+  <div id="flash" class="flash"></div>
+</div>
+
+<script>
+const T = {"D": 54.16, "c2": 5.49, "c3": 16.58, "c4": 20.25, "c5": 23.87, "c6": 29.37, "c7": 34.14, "c8": 38.59, "c9": 46.02, "tear": 2.18, "chip": [11.75, 12.69, 14.99], "strike": [12.49, 14.02, 16.1], "logo": 19.03, "typeStep": 0.1, "typeHs": 20.95, "typeKw": 21.9, "click": 23.05, "mapIn": 24.47, "reason": 33.18, "cardIn": 34.54, "ticks": [35.44, 35.94, 36.44, 36.94], "noMore": 42.06, "close": 44.89, "cta": 50.16};           // mốc sinh từ giọng đọc thật (build.py)
+const tl = gsap.timeline({ paused: true });
+const E = "power3.out";
+
+// chuyển cảnh
+["c2","c3","c4","c5","c6","c7","c8","c9"].forEach(c => {
+  tl.fromTo("#"+c+"w", {opacity:0, scale:1.06}, {opacity:1, scale:1, duration:0.45, ease:E}, T[c]);
+});
+[T.c3, T.c5, T.c8, T.c9].forEach(t => tl.fromTo("#flash",{opacity:0.55},{opacity:0,duration:0.35,ease:"power2.out",immediateRender:false},t));
+
+// C1 — clip xé giấy thật (P-C1)
+tl.fromTo("#c1img",{scale:1.0},{scale:1.06,duration:T.c2,ease:"none"},0);
+tl.fromTo("#c1h",{y:-40,opacity:0},{y:0,opacity:1,duration:0.35,ease:E},0.05);
+
+// C2 — Ken Burns + 3 thẻ bị gạch
+tl.fromTo("#c2img",{scale:1.02},{scale:1.14,duration:T.c3-T.c2,ease:"none"},T.c2);
+tl.fromTo("#c2h",{y:40,opacity:0},{y:0,opacity:1,duration:0.5,ease:E},T.c2+0.2);
+[["#k1","#x1"],["#k2","#x2"],["#k3","#x3"]].forEach(([k,x],i)=>{
+  tl.fromTo(k,{x:-120,opacity:0},{x:0,opacity:1,duration:0.4,ease:"back.out(2)"},T.chip[i]);
+  tl.fromTo(x,{scaleX:0},{scaleX:1,duration:0.3,ease:"power2.out"},T.strike[i]);
+});
+
+// C3 — logo
+tl.fromTo("#c3pre",{opacity:0,y:20},{opacity:1,y:0,duration:0.4,ease:E},T.c3+0.1);
+tl.fromTo("#c3brand",{scale:0.6,opacity:0},{scale:1,opacity:1,duration:0.45,ease:"back.out(2.5)"},T.logo);
+tl.fromTo("#c3sub",{opacity:0,y:20},{opacity:1,y:0,duration:0.5,ease:E},T.logo+0.5);
+
+// C4 — gõ mã HS
+tl.fromTo("#c4bg",{scale:1.1},{scale:1.2,duration:T.c5-T.c4,ease:"none"},T.c4);
+tl.fromTo("#c4ui",{y:120,opacity:0},{y:0,opacity:1,duration:0.5,ease:E},T.c4+0.1);
+tl.to("#hs .ch",{opacity:1,duration:0.01,stagger:T.typeStep},T.typeHs);
+tl.to("#kw .ch",{opacity:1,duration:0.01,stagger:T.typeStep},T.typeKw);
+tl.fromTo("#c4btn",{scale:1},{scale:0.94,duration:0.12,yoyo:true,repeat:1,ease:"power1.inOut"},T.click);
+tl.fromTo("#c4btn",{boxShadow:"0 0 0 0 rgba(99,102,241,.8)"},{boxShadow:"0 0 0 40px rgba(99,102,241,0)",duration:0.8,ease:"power2.out",immediateRender:false},T.click);
+
+// C5 — bản đồ thật
+tl.fromTo("#c5bg",{scale:1.25},{scale:1.05,duration:T.c6-T.c5,ease:"power1.out"},T.c5);
+tl.fromTo("#c5shot",{y:500,opacity:0,rotationX:35,transformPerspective:1400},{y:0,opacity:1,rotationX:0,duration:1.0,ease:E},T.mapIn);
+tl.fromTo("#c5tag",{opacity:0},{opacity:1,duration:0.4},T.mapIn+1.0);
+
+// C6 — lia sang cột Lý do
+tl.fromTo("#c6pan",{x:0},{x:-870,duration:2.6,ease:"power2.inOut"},T.c6+0.4);
+tl.fromTo("#c6hl",{opacity:0,scale:1.15},{opacity:1,scale:1,duration:0.5,ease:"back.out(2)"},T.reason);
+
+// C7 — liên hệ
+tl.fromTo("#c7img",{scale:1.12},{scale:1.02,duration:T.c8-T.c7,ease:"none"},T.c7);
+tl.fromTo("#c7card",{x:900,opacity:0},{x:0,opacity:1,duration:0.6,ease:E},T.cardIn);
+["#o1","#o2","#o3","#o4"].forEach((o,i)=>tl.fromTo(o,{scale:0,opacity:0},{scale:1,opacity:1,duration:0.3,ease:"back.out(3)"},T.ticks[i]));
+
+// C8 — chốt ý + số liệu thật mờ phía sau
+tl.fromTo("#c8map",{x:0},{x:-220,duration:T.c9-T.c8,ease:"none"},T.c8);
+tl.fromTo("#c8kol",{scale:1.08},{scale:1,duration:T.c9-T.c8,ease:"none"},T.c8);
+tl.fromTo("#c8a",{x:-60,opacity:0},{x:0,opacity:1,duration:0.45,ease:E},T.c8+0.2);
+tl.fromTo("#c8b",{x:-60,opacity:0},{x:0,opacity:1,duration:0.45,ease:E},T.noMore);
+tl.fromTo("#c8c",{scale:0.8,opacity:0},{scale:1,opacity:1,duration:0.45,ease:"back.out(2.5)"},T.close);
+tl.fromTo(["#c8p1","#c8p2"],{y:30,opacity:0},{y:0,opacity:0.28,duration:0.8,stagger:0.3,ease:E},T.c8+0.6);
+
+// C9 — kêu gọi
+tl.fromTo("#c9img",{scale:1.08},{scale:1,duration:T.D-T.c9,ease:"none"},T.c9);
+tl.fromTo("#c9brand",{y:40,opacity:0},{y:0,opacity:1,duration:0.6,ease:E},T.c9+0.3);
+tl.fromTo("#c9sub",{y:30,opacity:0},{y:0,opacity:1,duration:0.6,ease:E},T.c9+0.8);
+tl.fromTo("#c9cta",{y:40,opacity:0,scale:0.9},{y:0,opacity:1,scale:1,duration:0.6,ease:"back.out(2)"},T.cta);
+tl.to("#c9cta",{scale:1.05,duration:0.5,yoyo:true,repeat:5,ease:"sine.inOut"},T.cta+0.8);
+tl.fromTo("#c9url",{opacity:0},{opacity:1,duration:0.6,ease:E},T.cta+0.5);
+
+// phụ đề
+document.querySelectorAll(".cap").forEach(c => {
+  tl.fromTo(c.querySelector("span"),{y:24,opacity:0},{y:0,opacity:1,duration:0.22,ease:E},parseFloat(c.dataset.start));
+});
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>
