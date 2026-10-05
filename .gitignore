@@ -18,3 +18,6 @@ _sheet*
 _check*
 out.mp4
 _thu/
+
+# Đường dẫn kit riêng máy (new_project.py ghi vào dự án)
+.videokit

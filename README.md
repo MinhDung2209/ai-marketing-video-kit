@@ -40,12 +40,10 @@ lại xin duyệt ở các bước tốn tiền hoặc cần tai người (ảnh
 python tools/new_project.py ~/videos/san-pham-a      # tạo dự án từ khung mẫu
 cd ~/videos/san-pham-a
 # viết BRIEF.md · điền voice.json + scenes.json · thả ảnh/clip/logo vào assets/
-python <kit>/tools/tts_script.py voice.json audio     # giọng đọc
-python build.py                                       # dựng cảnh, phụ đề, mốc hiệu ứng âm thanh
-python <kit>/tools/mix_audio.py cues.json assets/final_audio.mp3
-python <kit>/tools/render.py . --snap 1,5,10          # chụp vài khung để xem trước
-python <kit>/tools/render.py . --fps 30 --audio assets/final_audio.mp3 --out video.mp4
+python <kit>/tools/make_video.py ~/videos/san-pham-a  # CHẠY TOÀN BỘ: giọng → dựng → trộn → xem thử → render → kiểm tra
+python <kit>/tools/make_video.py ~/videos/san-pham-a --from mix   # sửa xong → chạy lại từ 1 bước
 ```
+Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-quy-trinh-tung-buoc.md).
 
 ## Tài liệu
 
@@ -61,7 +59,7 @@ python <kit>/tools/render.py . --fps 30 --audio assets/final_audio.mp3 --out vid
 
 | Thư mục | Nội dung |
 | --- | --- |
-| `tools/` | 17 công cụ Python: kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
+| `tools/` | 18 công cụ Python: **chạy toàn bộ 1 lệnh (`make_video.py`)**, kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
 | `templates/video-project/` | Khung dự án mới, dựng tự động từ `scenes.json` (4 kiểu cảnh: media · screenshot · logo · cta) |
 | `examples/stradevn-ad-v2/` | Video thật đã làm, đủ nguồn để dựng và render lại |
 | `audio-library/` | 936 hiệu ứng CC0 + nhạc Lyria có sẵn; thêm 167 hiệu ứng/nhạc Pixabay & Mixkit qua `fetch_sources.py`. Nguồn + giấy phép từng file: `catalog.json` |

@@ -18,5 +18,7 @@
 | SFX chói tai | File gốc quá to, chồng nhau | Chuẩn hoá đỉnh (tự động) + `sfx_audition.py` cho người duyệt nghe |
 | Giọng "lỏ", đều đều | Dùng Chirp3-HD | Gemini-TTS + profile/direction |
 | Sửa tốc độ ngược ý người duyệt | Hiểu nhầm "chậm/nhanh" | Hỏi lại / nghe lại trước khi đọc lại cả bài |
+| `build.py`: "Không tìm thấy kit/tools" | Dự án nằm xa thư mục kit | Chạy qua `make_video.py`, hoặc file `.videokit` (new_project tự ghi) chứa đường dẫn `<kit>/tools` |
+| Phụ đề/hoạt ảnh theo **từng chữ** bằng WhisperX tiếng Việt lệch nặng | Đã thử 05/10 (WhisperX small + bộ căn chữ tiếng Việt, qua Hypit): nghe chữ khá, nhưng mốc chữ hỏng — điểm tin cậy ~0,01, bài 54s bị dồn vào 36s | Giữ `speech_segments.py` (đo khoảng lặng, khớp theo cụm). Chưa dùng mốc từng chữ cho tiếng Việt |
 | `npx hyperframes` bị chặn | Quyền auto mode Claude Code | `/permissions` thêm `Bash(npx hyperframes:*)` hoặc dùng `render.py` |
 | Không lấy lại được ảnh đã tạo | `list_my_jobs` của MCP lỗi | Người duyệt copy link từ web; đổi đuôi `format=png,quality=100` |

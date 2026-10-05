@@ -14,4 +14,5 @@ if dst.exists() and any(dst.iterdir()): raise SystemExit(f"Thư mục đã có n
 shutil.copytree(KIT / "templates" / "video-project", dst, dirs_exist_ok=True)
 fonts = KIT / "templates" / "fonts"
 if fonts.exists(): shutil.copytree(fonts, dst / "assets" / "fonts", dirs_exist_ok=True)
+(dst / ".videokit").write_text(str(KIT / "tools"), encoding="utf-8")   # để build.py tìm được kit dù dự án nằm đâu
 print("đã tạo:", dst, "\nBước tiếp: mở BRIEF.md (viết kịch bản) → voice.json (lời đọc) → xem kit/docs/02-quy-trinh-tung-buoc.md")

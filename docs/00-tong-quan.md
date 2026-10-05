@@ -56,6 +56,7 @@ kit/
 ## 4. Công cụ
 | Công cụ | Làm gì | Tài liệu |
 | --- | --- | --- |
+| `make_video.py` | **Chạy toàn bộ 1 lệnh**: giọng → dựng → trộn → xem thử → render → kiểm tra (`--from`, `--only`) | 02 |
 | `new_project.py` | Tạo dự án từ khung mẫu | 02 |
 | `tts_script.py` | Đọc `voice.json` → mp3 từng câu + narration.mp3 + timing.json (`--only V3` đọc lại 1 câu) | 04 |
 | `lyria_bgm.py` | Tạo nhạc nền bằng Lyria | 06 |
@@ -68,3 +69,4 @@ kit/
 | `gcp.py` | Lấy token Google Cloud từ key (dùng chung) | 01 |
 | `build_library.py` | Gom lại thư viện âm thanh từ repo gốc (hiếm khi cần) | 06 |
 | `make_package.py` | Đóng gói bộ này thành zip | 01 |
+| `check_env.py` · `fetch_sources.py` · `install_skill.py` | Kiểm máy · tải âm thanh Pixabay/Mixkit · cài skill Claude Code | 01 |

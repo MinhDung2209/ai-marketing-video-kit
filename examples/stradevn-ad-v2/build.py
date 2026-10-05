@@ -13,10 +13,18 @@ except Exception: pass   # cửa sổ lệnh Windows mặc định không in đ�
 import json, pathlib, sys
 def _find_tools():
     """Tìm thư mục tools của kit: đi ngược lên tới khi gặp kit/tools/captions.py hoặc tools/captions.py."""
+    # 1) biến VIDEOKIT_TOOLS (make_video.py tự đặt)  2) file .videokit do new_project.py ghi  3) dò thư mục cha
+    import os
+    env = os.environ.get("VIDEOKIT_TOOLS")
+    if env and (pathlib.Path(env) / "captions.py").exists(): return pathlib.Path(env)
+    mark = pathlib.Path(__file__).resolve().parent / ".videokit"
+    if mark.exists():
+        cand = pathlib.Path(mark.read_text(encoding="utf-8").strip())
+        if (cand / "captions.py").exists(): return cand
     for up in pathlib.Path(__file__).resolve().parents:
         for cand in (up / "kit" / "tools", up / "tools"):
             if (cand / "captions.py").exists(): return cand
-    raise SystemExit("Không tìm thấy kit/tools — đặt dự án bên trong thư mục kit hoặc cạnh nó.")
+    raise SystemExit("Không tìm thấy kit/tools — chạy bằng make_video.py, hoặc ghi đường dẫn <kit>/tools vào file .videokit cạnh build.py.")
 TOOLS = _find_tools()
 sys.path.insert(0, str(TOOLS))
 from captions import build as build_captions

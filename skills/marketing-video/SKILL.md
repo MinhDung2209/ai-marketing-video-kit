@@ -35,6 +35,7 @@ KIT = <ĐƯỜNG DẪN TỚI THƯ MỤC kit>   ← cài bằng `python tools/ins
    Mốc hoạt ảnh bám lời bằng `speech_segments.py` (không ước lượng ký tự). Clip lỗi đoạn cuối: `data-offset/data-end/data-rate`.
 7. **Trộn:** `python KIT/tools/mix_audio.py cues.json assets/final_audio.mp3` (SFX tự chuẩn hoá đỉnh; nhạc duck).
 8. **Xem thử:** `python KIT/tools/render.py . --snap 1,5,12,…` → Read `_snap_*.png` → sửa.
+8b. **Chạy gộp:** `python KIT/tools/make_video.py <dự án> [--from mix|--only snap]` (không đọc lại giọng đã có).
 9. **Render:** `python KIT/tools/render.py . --fps 30 --audio assets/final_audio.mp3 --out <tên>.mp4`
 10. **Kiểm** (KIT/docs/08): ffprobe, volumedetect, cắt khung từ MP4, checklist → báo người dùng đường dẫn + điều cần nghe/xem.
 

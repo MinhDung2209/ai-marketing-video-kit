@@ -47,6 +47,15 @@ python <kit>/tools/render.py . --snap 1,5,12,20          # _snap_*.png — MỞ 
 python <kit>/tools/render.py . --fps 30 --audio assets/final_audio.mp3 --out video.mp4   # ~5 phút / 50s video
 ```
 
+### Gộp bước 4–8 bằng 1 lệnh
+```bash
+python <kit>/tools/make_video.py <thư mục dự án>              # giọng (nếu chưa có) → dựng → trộn → xem thử → render → kiểm tra
+python <kit>/tools/make_video.py <dự án> --from mix           # sửa xong 1 chỗ → chạy lại từ bước đó (voice·build·mix·snap·render·check)
+python <kit>/tools/make_video.py <dự án> --only snap --snap 2,9,30
+```
+Giọng đã có thì **không đọc lại** (tránh tốn tiền và mất bản đã duyệt) — đọc lại hết: `--redo-voice`.
+Ra `<tên thư mục>.mp4` + `_check_*.png` cắt từ chính MP4. Đã chạy thật trên ví dụ v2: ~3 phút, đỉnh -3,1 dB.
+
 ## Bước 8 — Kiểm tra & sửa vòng lặp (docs/08)
 Cắt khung từ MP4, đo âm lượng, xem trên điện thoại, người duyệt xem bản đầy đủ → sửa → chạy lại từ bước bị ảnh hưởng:
 | Sửa gì | Chạy lại |
