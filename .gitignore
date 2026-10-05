@@ -17,3 +17,6 @@ _thu/
 
 # Đường dẫn kit riêng máy (new_project.py ghi vào dự án)
 .videokit
+
+# Repo tham khảo — clone bằng scripts/clone_repos.sh
+_repos/

@@ -14,6 +14,8 @@ bản đã kiểm giấy phép ngày 30/09/2026.
 Lưu ý: kit **gọi** FFmpeg như chương trình ngoài (không nhúng, không sửa mã) nên không bị GPL "lây" sang code kit.
 
 ## 2. Repo mã nguồn mở
+
+Clone tất cả về `_repos/` đúng commit đã đọc (để tra cứu, học tiếp): `bash scripts/clone_repos.sh`.
 | Repo | Commit | Giấy phép | Kit dùng gì |
 | --- | --- | --- | --- |
 | [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | 9a27b9f | Apache-2.0 | **Định dạng trang dựng** (data-start/duration, GSAP timeline `window.__timelines`). `render.py` tự viết lại runtime tối thiểu. 19 SFX Pixabay. CLI `npx hyperframes check` (tuỳ chọn) |
