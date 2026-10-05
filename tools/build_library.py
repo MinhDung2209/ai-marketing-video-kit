@@ -27,7 +27,8 @@ def dur(p):
         return None
 
 def add(src, rel, kind, source, license_, note=""):
-    dst = OUT / rel; dst.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(src, dst)
+    dst = OUT / rel; dst.parent.mkdir(parents=True, exist_ok=True)
+    if pathlib.Path(src).resolve() != dst.resolve(): shutil.copy2(src, dst)   # uisfx: nguồn chính là thư mục trong kit
     catalog.append({"id": rel.rsplit(".", 1)[0].replace("/", "."), "path": rel, "kind": kind, "source": source,
                     "license": license_, "duration": dur(dst), "note": note})
 
@@ -62,6 +63,7 @@ for line in att.splitlines():
 
 # 3) uisfx — CC0
 us = R / "uisfx/packages/uisfx/sounds"
+if not us.exists(): us = OUT / "sfx/uisfx"   # repo gốc đã 404 (10/2026) → dùng bản lưu trong git của kit
 for f in sorted(us.glob("*/*.mp3")):
     add(f, f"sfx/uisfx/{f.parent.name}/{f.name}", "sfx", "uisfx", "CC0 1.0")
 

@@ -18,7 +18,7 @@ Lưu ý: kit **gọi** FFmpeg như chương trình ngoài (không nhúng, không
 | --- | --- | --- | --- |
 | [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | 9a27b9f | Apache-2.0 | **Định dạng trang dựng** (data-start/duration, GSAP timeline `window.__timelines`). `render.py` tự viết lại runtime tối thiểu. 19 SFX Pixabay. CLI `npx hyperframes check` (tuỳ chọn) |
 | [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 5ddbf52 | Apache-2.0 (code) | 148 SFX + 4 nhạc Mixkit — **chỉ file có URL gốc Mixkit** trong ATTRIBUTION.md |
-| [899ms/uisfx](https://github.com/899ms/uisfx) | 9950fe6 | MIT (code) · **CC0 (âm thanh)** | 936 SFX giao diện, 12 bộ phong cách — lưu thẳng trong git |
+| 899ms/uisfx (repo gốc **đã 404 từ 10/2026**) | 9950fe6 | MIT (code) · **CC0 (âm thanh)** | 936 SFX giao diện, 12 bộ phong cách — lưu thẳng trong git, kèm `LICENSE-AUDIO` gốc |
 | [arhamhi/hooksmith](https://github.com/arhamhi/hooksmith) | 1a1c13c | MIT | Nguyên tắc hook (viết lại bằng lời mình trong `library/hooks/`) |
 | [sharon-laicc/viral-video-decomposer](https://github.com/sharon-laicc/viral-video-decomposer) | 3409359 | MIT | Cách mổ xẻ video viral (tham khảo) |
 | [shixinzhang/tiktok-viral-hooks](https://github.com/shixinzhang/tiktok-viral-hooks) | eaae981 | **CC BY-NC-SA 4.0 — cấm thương mại** | Chỉ đọc tham khảo, **không chép nội dung** vào kit |

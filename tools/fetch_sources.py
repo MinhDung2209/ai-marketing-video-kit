@@ -16,8 +16,9 @@ KIT = pathlib.Path(__file__).resolve().parent.parent
 SOURCES = [
     ("hyperframes", "https://github.com/heygen-com/hyperframes.git", "9a27b9f", "skills/media-use/audio/assets/sfx"),
     ("video-shotcraft", "https://github.com/Vincentwei1021/video-shotcraft.git", "5ddbf52", "assets/audio"),
-    ("uisfx", "https://github.com/899ms/uisfx.git", "9950fe6", "packages/uisfx/sounds"),
 ]
+# uisfx (CC0) KHÔNG tải: repo gốc github.com/899ms/uisfx đã 404 từ 10/2026 — 936 file nằm sẵn trong git của kit
+# (audio-library/sfx/uisfx/, kèm LICENSE-AUDIO gốc).
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--repos", default=str(KIT.parent / "_repos"), help="nơi clone (mặc định: cạnh thư mục kit)")
