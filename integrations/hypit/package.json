@@ -1,0 +1,13 @@
+{
+  "name": "videokit-hypit",
+  "private": true,
+  "description": "Hypit cài cục bộ cho marketing-video-kit (không cài toàn máy)",
+  "scripts": {
+    "up": "hypit runtime up",
+    "down": "hypit programs down && hypit runtime down",
+    "doctor": "hypit doctor"
+  },
+  "devDependencies": {
+    "@hypit/hypit": "0.2.17"
+  }
+}

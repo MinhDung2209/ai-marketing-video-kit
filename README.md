@@ -64,6 +64,7 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 | `audio-library/` | 1.103 hiệu ứng + nhạc nền (uisfx, Pixabay, Mixkit) + nhạc Lyria — có sẵn trong repo. Nguồn + giấy phép từng file: `catalog.json` |
 | `library/hooks/` | 40+ kiểu hook tiếng Việt |
 | `skills/marketing-video/` | Skill cho Claude Code |
+| `integrations/hypit/` | (Tuỳ chọn) cài nhanh [Hypit](https://github.com/hypit-ai/hypit): nhân bản video mẫu, mốc từng chữ — kèm kết quả đã đo |
 | `docs/` | 11 tài liệu (00–10) |
 
 ## Dịch vụ cần tài khoản riêng

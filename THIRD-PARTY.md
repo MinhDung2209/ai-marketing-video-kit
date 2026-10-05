@@ -23,6 +23,7 @@ Lưu ý: kit **gọi** FFmpeg như chương trình ngoài (không nhúng, không
 | [sharon-laicc/viral-video-decomposer](https://github.com/sharon-laicc/viral-video-decomposer) | 3409359 | MIT | Cách mổ xẻ video viral (tham khảo) |
 | [shixinzhang/tiktok-viral-hooks](https://github.com/shixinzhang/tiktok-viral-hooks) | eaae981 | **CC BY-NC-SA 4.0 — cấm thương mại** | Chỉ đọc tham khảo, **không chép nội dung** vào kit |
 | [jakeolschewski/short-form-video-scripts](https://github.com/jakeolschewski/short-form-video-scripts) | f4f83d2 | không ghi giấy phép | Chỉ đọc tham khảo |
+| [hypit-ai/hypit](https://github.com/hypit-ai/hypit) | 7f730ab (npm 0.2.17) | Apache-2.0 **có điều kiện** (cấm SaaS nhiều khách / bán lại khi chưa mua giấy phép) | Tuỳ chọn, cài riêng ở `integrations/hypit/` — không chép code |
 | [calesthio/OpenMontage](https://github.com/calesthio/OpenMontage) | 08e2151 | **AGPL-3.0** | Học kiến trúc; **dùng nội bộ thoải mái** (người phụ trách đã cho phép). AGPL chỉ ràng buộc khi phát hành hoặc cho người ngoài dùng qua mạng (vd bán webapp) → lúc đó phải mở mã phần dùng nó |
 | [zhuyansen/awesome-claude-video-skills](https://github.com/zhuyansen/awesome-claude-video-skills) | b116824 | CC0 | Danh sách để tìm repo |
 | [wilwaldon/Claude-Code-Video-Toolkit](https://github.com/wilwaldon/Claude-Code-Video-Toolkit) | a6e9e52 | không ghi | Danh sách để tìm repo |
