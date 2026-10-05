@@ -1,22 +1,95 @@
 {
-  "_huong_dan": "Mỗi cảnh gắn 1 câu (line). type: media | screenshot | logo | cta. Ảnh/clip đặt trong assets/. Clip lỗi đoạn cuối: dùng rate/offset/end.",
-  "width": 1080, "height": 1920,
-  "brand": {
-    "name": "TênSảnPhẩm",
-    "logo": "assets/img/logo.png",
-    "tagline": "[Dòng mô tả ngắn thương hiệu]",
-    "accent": "#4F46E5",
-    "highlight": "#FBBF24",
-    "glow": "#1E1B4B"
+ "_huong_dan": "Mỗi cảnh gắn 1 câu (line). type: media | screenshot | logo | cta. Ảnh/clip đặt trong assets/. Clip lỗi đoạn cuối: dùng rate/offset/end. safe: vùng an toàn theo nền tảng — xem _safe_presets (chép 1 bộ vào 'safe'; bỏ 'safe' = bố cục cũ).",
+ "width": 1080,
+ "height": 1920,
+ "_safe_presets": {
+  "reels": {
+   "title_top": 270,
+   "chips_top": 560,
+   "shot_top": 590,
+   "shot_left": 50,
+   "shot_right": 50,
+   "tag_top": 1070,
+   "cta_shift": 290,
+   "cap_top": 1150,
+   "cap_chars": 30
   },
-  "bgm": {"file": "bgm/nhac-nen.wav", "start": 4.0},
-  "scenes": [
-    {"line": "V1", "type": "media", "media": "assets/clips/hook.mp4", "title": "[Chữ hook dòng 1]", "title2": "[dòng 2]", "rate": 1.0},
-    {"line": "V2", "type": "media", "media": "assets/img/noi-dau.png", "title": "[Nỗi đau]", "title2": "[dòng 2]",
-     "chips": ["[Việc khổ 1]", "[Việc khổ 2]", "[Việc khổ 3]"]},
-    {"line": "V3", "type": "logo", "subtitle": "[Dòng phụ dưới logo]"},
-    {"line": "V4", "type": "screenshot", "background": "assets/img/nen.png", "screenshot": "assets/img/man-hinh-san-pham.png",
-     "title": "[Tính năng]", "title2": "[dòng 2]", "tag": "VÍ DỤ THẬT"},
-    {"line": "V5", "type": "cta", "media": "assets/img/kol.png", "button": "[Nhắn Zalo / Đăng ký ngay]", "contact": "[website · hotline]"}
-  ]
+  "tiktok": {
+   "title_top": 270,
+   "chips_top": 560,
+   "shot_top": 590,
+   "shot_left": 40,
+   "shot_right": 170,
+   "tag_top": 1070,
+   "cta_shift": 290,
+   "cap_top": 1150,
+   "cap_chars": 30
+  }
+ },
+ "safe": {
+  "title_top": 270,
+  "chips_top": 560,
+  "shot_top": 590,
+  "shot_left": 50,
+  "shot_right": 50,
+  "tag_top": 1070,
+  "cta_shift": 290,
+  "cap_top": 1150,
+  "cap_chars": 30
+ },
+ "brand": {
+  "name": "TênSảnPhẩm",
+  "logo": "assets/img/logo.png",
+  "tagline": "[Dòng mô tả ngắn thương hiệu]",
+  "accent": "#4F46E5",
+  "highlight": "#FBBF24",
+  "glow": "#1E1B4B"
+ },
+ "bgm": {
+  "file": "bgm/nhac-nen.wav",
+  "start": 4.0
+ },
+ "scenes": [
+  {
+   "line": "V1",
+   "type": "media",
+   "media": "assets/clips/hook.mp4",
+   "title": "[Chữ hook dòng 1]",
+   "title2": "[dòng 2]",
+   "rate": 1.0
+  },
+  {
+   "line": "V2",
+   "type": "media",
+   "media": "assets/img/noi-dau.png",
+   "title": "[Nỗi đau]",
+   "title2": "[dòng 2]",
+   "chips": [
+    "[Việc khổ 1]",
+    "[Việc khổ 2]",
+    "[Việc khổ 3]"
+   ]
+  },
+  {
+   "line": "V3",
+   "type": "logo",
+   "subtitle": "[Dòng phụ dưới logo]"
+  },
+  {
+   "line": "V4",
+   "type": "screenshot",
+   "background": "assets/img/nen.png",
+   "screenshot": "assets/img/man-hinh-san-pham.png",
+   "title": "[Tính năng]",
+   "title2": "[dòng 2]",
+   "tag": "VÍ DỤ THẬT"
+  },
+  {
+   "line": "V5",
+   "type": "cta",
+   "media": "assets/img/kol.png",
+   "button": "[Nhắn Zalo / Đăng ký ngay]",
+   "contact": "[website · hotline]"
+  }
+ ]
 }
