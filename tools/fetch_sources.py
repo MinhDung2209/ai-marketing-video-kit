@@ -1,7 +1,7 @@
-"""Tải lại các repo nguồn âm thanh (đúng commit đã kiểm giấy phép) rồi dựng lại audio-library.
+"""(Hiếm khi cần) Tải lại các repo nguồn âm thanh rồi dựng lại audio-library + catalog.json.
 
-Vì sao cần: âm thanh Pixabay / Mixkit được dùng miễn phí trong video, nhưng giấy phép CẤM phân phối lại file rời
-→ không lưu trong git của kit. Máy mới chạy lệnh này 1 lần. (uisfx CC0 + nhạc Lyria tự tạo thì có sẵn trong git.)
+Toàn bộ thư viện âm thanh ĐÃ nằm sẵn trong git của kit → máy mới clone về là đủ, KHÔNG cần chạy lệnh này.
+Chỉ dùng khi muốn cập nhật từ nguồn gốc (repo nguồn có thể đã đổi / biến mất — uisfx đã 404 từ 10/2026).
 
 Dùng: python tools/fetch_sources.py [--repos ../_repos]
 """

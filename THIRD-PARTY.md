@@ -33,8 +33,8 @@ Lưu ý: kit **gọi** FFmpeg như chương trình ngoài (không nhúng, không
 | --- | --- | --- | --- |
 | `sfx/uisfx/` | uisfx | CC0 1.0 | ✅ có |
 | `bgm/lyria/` | Tự tạo bằng Google Lyria | Thuộc người tạo (điều khoản Google Cloud) | ✅ có |
-| `sfx/pixabay/` | hyperframes → Pixabay | Pixabay Content License: dùng trong video thương mại OK, **cấm phân phối lại file rời** | ❌ chạy `tools/fetch_sources.py` |
-| `sfx/mixkit/`, `bgm/mixkit/` | video-shotcraft → Mixkit | Mixkit Free License: như trên | ❌ chạy `tools/fetch_sources.py` |
+| `sfx/pixabay/` | hyperframes → Pixabay | Pixabay Content License: dùng trong video thương mại OK, **cấm phân phối lại file rời** | ✅ có (dùng nội bộ; xem lại khi thương mại hoá) |
+| `sfx/mixkit/`, `bgm/mixkit/` | video-shotcraft → Mixkit | Mixkit Free License: như trên | ✅ có (dùng nội bộ; xem lại khi thương mại hoá) |
 
 Nguồn + giấy phép **từng file**: `audio-library/catalog.json`.
 

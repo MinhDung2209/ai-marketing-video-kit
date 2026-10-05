@@ -62,7 +62,7 @@ if cat.exists():
     items = json.load(open(cat, encoding="utf-8"))
     missing = [i["path"] for i in items if not (KIT / "audio-library" / i["path"]).exists()]
     show(not missing, "Thư viện âm thanh", f"{len(items) - len(missing)}/{len(items)} file",
-         "python tools/fetch_sources.py  (tải lại phần Pixabay/Mixkit — không lưu trong git vì giấy phép)")
+         "git pull lại kit (âm thanh nằm sẵn trong git) — hoặc python tools/fetch_sources.py để dựng lại từ nguồn")
 else:
     show(False, "Thư viện âm thanh", "thiếu catalog.json", "python tools/fetch_sources.py")
 

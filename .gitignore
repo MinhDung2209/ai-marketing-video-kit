@@ -7,10 +7,6 @@ config.json
 __pycache__/
 *.pyc
 
-# Âm thanh Pixabay/Mixkit: giấy phép cấm phân phối lại file rời → tải bằng tools/fetch_sources.py
-audio-library/sfx/pixabay/
-audio-library/sfx/mixkit/
-audio-library/bgm/mixkit/
 
 # File tạm khi dựng / xem thử
 _snap_*.png

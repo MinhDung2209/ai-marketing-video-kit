@@ -11,7 +11,7 @@ EXCEPT the following, which keep their own terms:
    SIL Open Font License 1.1 (see OFL.txt next to the font files).
 3. audio-library/sfx/uisfx/ — from github.com/899ms/uisfx (repository no longer available as of 10/2026), CC0 1.0;
    original LICENSE-AUDIO kept in that folder.
-4. Pixabay / Mixkit sounds are NOT distributed in this repository; tools/fetch_sources.py downloads them
-   from their source repositories. Per-file source and license: audio-library/catalog.json.
+4. audio-library/sfx/pixabay/, sfx/mixkit/, bgm/mixkit/ — Pixabay Content License / Mixkit Free License,
+   included for internal use. Per-file source and license: audio-library/catalog.json.
 
 Third-party projects, services and their licenses: THIRD-PARTY.md.

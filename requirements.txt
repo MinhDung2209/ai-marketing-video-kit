@@ -16,7 +16,7 @@ playwright>=1.45       # điều khiển Chrome để render từng khung hình
 #     máy không có Chrome: python -m playwright install chromium
 
 # ---- 3. Tuỳ chọn ---------------------------------------------------------------
-# Git              — tools/fetch_sources.py tải lại âm thanh Pixabay/Mixkit (không lưu trong git)
+# Git              — clone / cập nhật kit
 # Node.js 22+      — chỉ khi dùng CLI HyperFrames (npx hyperframes check)
 # Claude Code + plenxai MCP (https://mcp.plenxai.com/mcp) — tạo ảnh/clip AI
 

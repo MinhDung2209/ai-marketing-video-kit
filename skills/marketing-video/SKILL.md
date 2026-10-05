@@ -17,7 +17,7 @@ KIT = <ĐƯỜNG DẪN TỚI THƯ MỤC kit>   ← cài bằng `python tools/ins
 6. Người dùng chưa duyệt kịch bản thì chỉ chạy thử công cụ, không dựng bản chính.
 
 ## Quy trình
-0. **Máy mới:** `python KIT/tools/check_env.py` — có ❌ thì sửa theo dòng → (thiếu âm thanh: `fetch_sources.py`).
+0. **Máy mới:** `python KIT/tools/check_env.py` — có ❌ thì sửa theo dòng →.
 1. **Dự án:** `python KIT/tools/new_project.py <thư mục>`.
 2. **Kịch bản `BRIEF.md`** (KIT/docs/03 + `KIT/library/hooks/THU-VIEN-HOOK.md`): ý tưởng lớn · 3–4 hook (đánh vào cảm xúc,
    không bám số liệu) · 5 nhịp Hook → Nỗi đau → Lời giải/rehook → Bằng chứng → Kêu gọi · từng cảnh: lời + hình + chữ + âm

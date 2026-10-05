@@ -69,4 +69,4 @@ kit/
 | `gcp.py` | Lấy token Google Cloud từ key (dùng chung) | 01 |
 | `build_library.py` | Gom lại thư viện âm thanh từ repo gốc (hiếm khi cần) | 06 |
 | `make_package.py` | Đóng gói bộ này thành zip | 01 |
-| `check_env.py` · `fetch_sources.py` · `install_skill.py` | Kiểm máy · tải âm thanh Pixabay/Mixkit · cài skill Claude Code | 01 |
+| `check_env.py` · `fetch_sources.py` · `install_skill.py` | Kiểm máy · (hiếm khi cần) dựng lại thư viện âm thanh từ nguồn · cài skill Claude Code | 01 |

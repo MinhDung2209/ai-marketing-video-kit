@@ -8,7 +8,7 @@
 | Python ≥ 3.11 | `python --version` | python.org (tick "Add to PATH") |
 | FFmpeg (bản *full*, có ffprobe) — **bắt buộc**, không cài qua pip | `ffmpeg -version` | Windows: `winget install Gyan.FFmpeg` · macOS: `brew install ffmpeg` · Ubuntu: `sudo apt install ffmpeg` (cài xong mở lại cửa sổ lệnh) |
 | Google Chrome | có biểu tượng Chrome | google.com/chrome — `render.py` tự dò; chỗ cài lạ → biến `VIDEOKIT_CHROME`; không có Chrome → `python -m playwright install chromium` |
-| Git (+ Git Bash trên Windows) | `git --version` | git-scm.com — cần cho `tools/fetch_sources.py` |
+| Git (+ Git Bash trên Windows) | `git --version` | git-scm.com — để clone / cập nhật kit |
 | Node.js 22+ (tuỳ chọn) | `node -v` | chỉ cần nếu dùng CLI HyperFrames (`npx hyperframes check`) |
 | Claude Code (khuyên dùng) | `claude --version` | docs.claude.com |
 
@@ -18,9 +18,8 @@ pip install -r kit/requirements.txt
 ```
 (Playwright ở đây chỉ điều khiển Chrome có sẵn — **không** cần `playwright install` nếu máy có Chrome.)
 
-Rồi tải phần âm thanh Pixabay/Mixkit (không lưu trong git vì giấy phép cấm phân phối lại file rời) và kiểm cả máy:
+Rồi kiểm cả máy (thư viện âm thanh có sẵn trong repo, không phải tải thêm):
 ```bash
-python kit/tools/fetch_sources.py   # clone 3 repo nguồn vào _repos/ → dựng lại kit/audio-library
 python kit/tools/check_env.py       # ✅/❌ từng mục: Python, pip, FFmpeg, Chrome, key Google, âm thanh
 ```
 
