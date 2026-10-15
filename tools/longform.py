@@ -292,7 +292,9 @@ def render(proj, a):
         for j, s in enumerate(segs): inp += ["-i", str(proj / "footage/seg" / s["seg"])]
         for j in range(1, len(segs)):
             off += segs[j - 1]["dur"]
-            flt.append(f"{last}[{j}:v]xfade=transition=fade:duration={XF}:offset={off - XF:.3f}[x{j}]"); last = f"[x{j}]"
+            # cảnh j-1 dài dur+XF → mờ sang cảnh j bắt đầu đúng ở mốc cộng dồn dur
+            # (đo 15/10/2026: lấy off - XF làm mỗi chương hụt 0,5s → 11 chương lệch tiếng ~5s)
+            flt.append(f"{last}[{j}:v]xfade=transition=fade:duration={XF}:offset={off:.3f}[x{j}]"); last = f"[x{j}]"
         fo = max(0, cd - 0.8)
         flt.append(f"{last}fade=t=in:st=0:d=0.8,fade=t=out:st={fo:.3f}:d=0.8,trim=duration={cd},setpts=PTS-STARTPTS[v]")
         sh(["ffmpeg", "-y", "-loglevel", "error", *inp, "-filter_complex", ";".join(flt), "-map", "[v]", "-c:v", "libx264", "-preset", "veryfast",
@@ -328,7 +330,8 @@ def render(proj, a):
     caps = build_caps(proj / "audio/timing.json", 84)
     (proj / pathlib.Path(a.out).with_suffix(".srt").name).write_text(
         "\n".join(f"{i + 1}\n{srt_time(c['start'])} --> {srt_time(c['end'])}\n{c['text']}\n" for i, c in enumerate(caps)), encoding="utf-8")
-    chap_txt = "\n".join(f"{int(c['start'] // 60):02d}:{int(c['start'] % 60):02d} {c['title'] or c['id']}" for c in tm["chapters"])
+    names = {c["id"]: c.get("chapter_name") or c.get("title") or c["id"] for c in sc["chapters"]}   # chương không tiêu đề: "chapter_name"
+    chap_txt = "\n".join(f"{int(c['start'] // 60):02d}:{int(c['start'] % 60):02d} {names[c['id']]}" for c in tm["chapters"])
     (proj / "youtube_chapters.txt").write_text(chap_txt + "\n", encoding="utf-8")
     print(f"xong: {out} · phụ đề .srt · mốc chương youtube_chapters.txt")
 
