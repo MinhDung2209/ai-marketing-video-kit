@@ -2,11 +2,14 @@
  "_huong_dan": [
   "Mỗi chương = 1 địa danh. title rỗng = không hiện tiêu đề (mở đầu/kết). Mỗi câu (lines) đọc riêng 1 lần TTS.",
   "must: từ khoá địa danh (viết thường, nối bằng '-') phải có trong đường dẫn Pexels / tag Pixabay thì clip mới được nhận. fallback: lấy khi thiếu (vd 'vietnam').",
-  "queries: từ khoá tìm (tiếng Anh). kw từng câu: ưu tiên clip có từ này (vd 'lantern', 'boat').",
+  "queries: từ khoá tìm Pexels/Pixabay (tiếng Anh). kw từng câu: ưu tiên clip có từ này (vd 'lantern', 'boat').",
+  "place: tên địa danh tiếng Anh của chương (vd 'Da Nang'). q (từng câu, khi câu có chủ thể cụ thể): từ khoá tìm Envato/Storyblocks = chủ thể + địa danh + kiểu quay, vd 'dragon bridge fire breathing da nang night'.",
+  "Footage tải tay (Envato/Storyblocks): longform.py collect . → bấm câu → bấm link → Download; file tự vào footage/local/<chương>/<số câu>/. res: '4k' để xuất 3840×2160.",
   "wm_queries (tuỳ chọn): tìm thêm trên Wikimedia Commons bằng tên có dấu — kết quả lẫn nhiều rác, phải xem ảnh ghép rồi blacklist.",
-  "Chạy: python <kit>/tools/longform.py tts . → footage . → xem footage/_sheet_*.jpg → blacklist → footage . → render ."
+  "Chạy: tts . → (collect . nếu tải tay) → footage . → xem footage/_sheet_*.jpg → blacklist → footage . → render ."
  ],
  "title": "Kỳ quan Việt Nam — Hành trình dải đất hình chữ S",
+ "res": "1080p",
  "voice": {
   "model": "gemini-3.1-flash-tts-preview",
   "voice": "Kore",
@@ -84,6 +87,7 @@
    "id": "ha-long",
    "title": "VỊNH HẠ LONG",
    "subtitle": "Di sản thiên nhiên thế giới",
+   "place": "Ha Long Bay",
    "must": [
     "ha-long",
     "halong",
@@ -146,6 +150,7 @@
     },
     {
      "text": "Có hòn giống hai con gà đang chọi nhau, có hòn như một lư hương khổng lồ giữa biển.",
+     "q": "ha long bay fighting cocks rock islet",
      "kw": [
       "rock",
       "island",
@@ -154,6 +159,7 @@
     },
     {
      "text": "Ẩn sâu trong lòng đảo là những hang động lộng lẫy, với nhũ đá được thời gian tạc nên qua hàng triệu năm.",
+     "q": "ha long bay cave stalactites sung sot",
      "kw": [
       "cave",
       "rock",
@@ -162,6 +168,7 @@
     },
     {
      "text": "Chèo một chiếc thuyền kayak luồn qua những hang đá thấp, bạn sẽ chạm vào những góc vịnh yên tĩnh như chưa từng có ai đặt chân tới.",
+     "q": "ha long bay kayak limestone cave",
      "kw": [
       "kayak",
       "boat",
@@ -170,6 +177,7 @@
     },
     {
      "text": "Những làng chài nổi vẫn lặng lẽ tồn tại giữa vịnh, nơi người dân sống trọn đời trên mặt nước.",
+     "q": "ha long bay floating fishing village",
      "kw": [
       "village",
       "fishing",
@@ -179,6 +187,7 @@
     },
     {
      "text": "Và khi hoàng hôn buông xuống, cả vịnh chìm trong một sắc vàng tím huyền ảo, [short pause] đẹp như một bức tranh thuỷ mặc.",
+     "q": "ha long bay sunset aerial",
      "kw": [
       "sunset",
       "evening",

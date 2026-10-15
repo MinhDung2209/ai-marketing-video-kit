@@ -31,7 +31,7 @@ Từng bước chi tiết, kể cả tạo key Google Cloud và kết nối plen
 
 ## Làm video đầu tiên
 
-**Với Claude Code** (khuyên dùng): cài skill xong, nói *"làm video marketing cho …"*. Agent làm theo quy trình và dừng
+**Với Claude Code** (khuyên dùng): cài skill xong, nói *"làm video marketing cho …"* hoặc *"làm video dài 15 phút về …"*. Agent làm theo quy trình và dừng
 lại xin duyệt ở các bước tốn tiền hoặc cần tai người (ảnh/clip AI, giọng, nhạc, hiệu ứng).
 
 **Tự chạy bằng lệnh:**
@@ -65,7 +65,7 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 | `examples/stradevn-ad-v2/` | Video thật đã làm, đủ nguồn để dựng và render lại |
 | `audio-library/` | 1.103 hiệu ứng + nhạc nền (uisfx, Pixabay, Mixkit) + nhạc Lyria — có sẵn trong repo. Nguồn + giấy phép từng file: `catalog.json` |
 | `library/hooks/` | 40+ kiểu hook tiếng Việt |
-| `skills/marketing-video/` | Skill cho Claude Code |
+| `skills/marketing-video/`, `skills/longform-video/` | Skill cho Claude Code (video ngắn · video dài 10–60 phút, footage Envato/Storyblocks tải tay) |
 | `scripts/clone_repos.sh` | Clone 12 repo mã nguồn mở đã nghiên cứu (HyperFrames, Hypit, OpenMontage, shotcraft, hook…) vào `_repos/` |
 | `integrations/hypit/` | (Tuỳ chọn) cài nhanh [Hypit](https://github.com/hypit-ai/hypit): nhân bản video mẫu, mốc từng chữ — kèm kết quả đã đo |
 | `docs/` | 11 tài liệu (00–10) |

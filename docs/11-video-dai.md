@@ -17,6 +17,31 @@ python <kit>/tools/longform.py footage .         # chọn + tải + cắt; ~8 GB
 #   → MỞ footage/_sheet_*.jpg (mỗi chương 1 ảnh, số vàng = đúng địa danh) — ghi id cảnh sai vào footage/blacklist.txt → chạy lại footage
 python <kit>/tools/longform.py render . --out video.mp4   # + video.srt (phụ đề YouTube) + youtube_chapters.txt + footage_credits.txt
 ```
+
+## Footage trả phí tải tay — Envato Elements, Storyblocks (đo 15/10/2026)
+Envato Elements **không có API tải** (API ở build.envato.com chỉ cho Envato Market — món mua lẻ); Storyblocks có API nhưng
+cho gói doanh nghiệp. Bot đăng nhập + bấm tải hàng loạt vi phạm điều khoản → khoá tài khoản của khách. Nên:
+```bash
+python <kit>/tools/longform.py collect .          # trang http://127.0.0.1:8765 — mỗi chương 1 thẻ, mỗi câu 1 dòng
+#   bấm vào CÂU (vd "Cầu Rồng phun lửa") → nút Envato/Storyblocks mở trang tìm theo "q" của câu → chọn clip → Download
+#   tool canh thư mục Downloads: tải xong tự chuyển vào footage/local/<chương>/<số câu>/ (zip tự giải nén lấy video)
+#   bấm tiêu đề chương = clip chung của chương. Thẻ hiện "đã có/cần" (xanh = đủ)
+python <kit>/tools/longform.py footage .          # chương có footage/local/… → không gọi API; --source stock để bỏ qua
+```
+- **Khớp lời từng câu**: clip trong thư mục của câu chỉ dùng cho câu đó (dùng trước), clip chung lấp phần còn lại; clip
+  của câu khác không bao giờ bị lấy (bài học video 14/10: câu "Cầu Rồng phun lửa" ra cảnh khác vì chỉ lọc theo chương).
+- Mỗi clip cắt tối đa 4 cảnh ở 4 đoạn khác nhau → video 15 phút cần ~70–100 clip (≈ 45–60 phút bấm tải), không phải 300.
+- Từ khoá tìm `"q"` của câu: chủ thể + địa danh + kiểu quay (`"dragon bridge fire breathing da nang night"`).
+  Thiếu `"q"` thì ghép `"place"` của chương + 2 `kw` đầu.
+- Cài trình duyệt lưu thẳng vào Downloads (không hỏi chỗ lưu); thư mục khác: `--downloads <thư mục>`.
+- Envato: đăng ký license theo tên kênh của khách; `footage_credits.txt` giữ danh sách file làm bằng chứng.
+
+## 4K
+`"res": "4k"` trong script.json → cắt cảnh, ghép, xuất ở 3840×2160 (cảnh để riêng `footage/seg_2160p/`, `render/2160p/` —
+không lẫn bản 1080p). Tiêu đề chương tự phóng theo. `--nvenc` (footage, render) mã hoá bằng card NVIDIA; đo 15/10/2026
+GTX 1650 driver 591.86 báo "Required: 13.1 Found: 13.0" (FFmpeg mới cần driver ≥ 610) → tool tự chuyển CPU:
+1 chương 108s/34 cảnh ở 4K mất ~1,5 phút cắt + ~3 phút dựng bằng CPU.
+
 Xem nhịp dựng của video mẫu: `yt-dlp --skip-download --write-info-json <link>` (tên chương, mô tả), tải 1–2 đoạn ngắn
 `--download-sections "*0:00-1:30"` rồi `ffmpeg -vf "select='gt(scene,0.12)',showinfo"` để đếm điểm cắt.
 
