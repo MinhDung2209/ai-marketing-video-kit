@@ -33,6 +33,10 @@ python <kit>/tools/longform.py footage .          # chương có footage/local/�
 - Mỗi clip cắt tối đa 4 cảnh ở 4 đoạn khác nhau → video 15 phút cần ~70–100 clip (≈ 45–60 phút bấm tải), không phải 300.
 - Từ khoá tìm `"q"` của câu: chủ thể + địa danh + kiểu quay (`"dragon bridge fire breathing da nang night"`).
   Thiếu `"q"` thì ghép `"place"` của chương + 2 `kw` đầu.
+- **Chỉ làm content (bàn giao cho editor khác dựng)**: `collect . --links` — cùng trang nhưng không tải; dưới mỗi câu có
+  ô dán link trang clip (Envato/Storyblocks). Tự lưu `footage/links.json` + xuất `footage_sheet.csv` (Excel / Google
+  Sheets): Chương · Câu · Mốc · Lời đọc · Bản tiếng Việt · Gợi ý cảnh · Link 1..n, thêm dòng "chung" cho clip chung của chương.
+  Editor tải theo sheet bằng tài khoản của họ (license theo tài khoản người tải).
 - Cài trình duyệt lưu thẳng vào Downloads (không hỏi chỗ lưu); thư mục khác: `--downloads <thư mục>`.
 - Envato: đăng ký license theo tên kênh của khách; `footage_credits.txt` giữ danh sách file làm bằng chứng.
 

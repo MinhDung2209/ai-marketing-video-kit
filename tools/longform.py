@@ -343,19 +343,40 @@ COLLECT_CSS = """body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:16px;b
 .top{position:sticky;top:0;background:#1d1d1b;color:#fff;padding:10px 14px;border-radius:8px;margin-bottom:14px;z-index:2}
 .card{background:#fff;border:3px solid transparent;border-radius:10px;padding:12px 14px;margin-bottom:12px;cursor:pointer}
 .card.on{border-color:#1a7f37}.full>h2>.cnt,li.full>.cnt{background:#1a7f37;color:#fff}
-li.ln{border:2px solid transparent;border-radius:6px;padding:4px 6px;margin:2px 0}li.ln.on{border-color:#1a7f37;background:#1a7f3712}
+textarea{width:100%;box-sizing:border-box;margin-top:4px;font:12px monospace}li.ln{border:2px solid transparent;border-radius:6px;padding:4px 6px;margin:2px 0}li.ln.on{border-color:#1a7f37;background:#1a7f3712}
 h2{font-size:17px;margin:0 0 6px;display:flex;gap:10px;align-items:center}.cnt{font-size:13px;padding:2px 8px;border-radius:12px;background:#eee}
 ol{margin:6px 0;padding-left:22px;color:#444;font-size:14px}.kw{color:#8a5a00;font-size:12px}
 a.q{display:inline-block;margin:3px 4px 0 0;padding:4px 10px;border-radius:6px;text-decoration:none;font-size:13px;color:#fff}
 a.Envato{background:#82b541}a.Storyblocks{background:#0b5cad}#log{font-size:12px;opacity:.85;margin-top:4px}
 @media (prefers-color-scheme:dark){body{background:#111;color:#eee}.card{background:#1e1e1e}ol{color:#bbb}.cnt{background:#333}}"""
 
+TOP_DL = ('bấm vào <b>câu</b> cần cảnh riêng (vd "Cầu Rồng phun lửa") hoặc tiêu đề chương (clip chung) — viền xanh = file tải về sẽ vào đó '
+          "→ bấm link tìm → chọn clip → Download. Envato: đăng ký license theo tên kênh của khách. Cài trình duyệt lưu thẳng vào "
+          "<code>{dl}</code>, không hỏi chỗ lưu.")
+TOP_LINKS = ("bấm link tìm của từng câu → mở clip hợp lời → copy địa chỉ trang clip → dán vào ô dưới câu đó (nhiều link = nhiều dòng). "
+             "Tự lưu khi bấm ra ngoài ô; file bàn giao: <code>footage_sheet.csv</code> (mở bằng Excel / nhập vào Google Sheets).")
+
+def export_sheet(proj, sc, tm, links):   # 1 dòng / câu: lời đọc, bản Việt, gợi ý cảnh, link clip — editor tải theo
+    import csv
+    ts = {(m["chapter"], int(m["id"].split("-")[1])): m["start"] for m in tm["lines"]} if tm else {}
+    n = max([len(v) for v in links.values()] + [3]); pad = lambda v: (v + [""] * n)[:n]; rows = []
+    for ci, c in enumerate(sc["chapters"]):
+        name = c.get("title") or c.get("chapter_name") or c["id"]
+        for li, ln in enumerate(c["lines"]):
+            t = ts.get((ci, li)); mm = f"{int(t // 60):02d}:{int(t % 60):02d}" if t is not None else ""
+            rows.append([f"{ci:02d}", name, li + 1, mm, ln["text"], ln.get("text_vi", ""), ln.get("q") or " ".join(ln.get("kw", [])),
+                         *pad(links.get(f"{c['id']}/{li:02d}", []))])
+        if links.get(c["id"]): rows.append([f"{ci:02d}", name, "chung", "", "(clip chung của chương — lấp các câu còn thiếu)", "", "", *pad(links[c["id"]])])
+    with open(proj / "footage_sheet.csv", "w", encoding="utf-8-sig", newline="") as fh:   # BOM → Excel đọc đúng tiếng Việt
+        w = csv.writer(fh)
+        w.writerow(["Chương", "Tên chương", "Câu", "Mốc", "Lời đọc", "Bản tiếng Việt", "Gợi ý cảnh", *[f"Link {i + 1}" for i in range(n)]]); w.writerows(rows)
+
 def collect(proj, a):
     import html as hm, http.server, math, shutil, threading, webbrowser, zipfile
     from urllib.parse import urlparse, parse_qs
     sc = load(proj / "script.json"); root = proj / "footage" / "local"; root.mkdir(parents=True, exist_ok=True)
     dl = pathlib.Path(a.downloads)
-    if not dl.is_dir(): raise SystemExit(f"Không thấy thư mục tải về: {dl} — dùng --downloads <thư mục>")
+    if not a.links and not dl.is_dir(): raise SystemExit(f"Không thấy thư mục tải về: {dl} — dùng --downloads <thư mục>")
     tm = load(proj / "audio/timing.json") if (proj / "audio/timing.json").exists() else None
     # đích nhận file: "<chương>" (clip chung) hoặc "<chương>/<số câu>" (clip riêng cho đúng câu đó)
     need = {}   # số cảnh ~SHOT giây → số clip cần tải (mỗi clip ~3 cảnh)
@@ -369,7 +390,10 @@ def collect(proj, a):
             need[f"{c['id']}/{li:02d}"] = max(1, round(secs / SHOT))   # tạm giữ số cảnh, đổi ra số clip bên dưới
         need[c["id"]] = math.ceil(sum(v for k, v in need.items() if k.startswith(c["id"] + "/")) / 3)
     for k in [k for k in need if "/" in k]: need[k] = math.ceil(need[k] / 3)
+    lf = proj / "footage" / "links.json"   # --links: chọn clip, chỉ ghi LINK (bàn giao sheet cho editor tự tải)
+    links = load(lf) if lf.exists() else {}
     def count(t):
+        if a.links: return sum(len(v) for k, v in links.items() if k == t or k.startswith(t + "/"))
         d = root / t
         return sum(1 for f in d.rglob("*") if f.suffix.lower() in VIDEO_EXT) if d.exists() else 0
     st = {"active": sc["chapters"][0]["id"], "log": []}
@@ -413,13 +437,18 @@ def collect(proj, a):
             return "".join(f"<a class='q {s}' target=_blank href='{hm.escape(u.format(slug=slug))}'>{s if short else s + ': ' + hm.escape(q)}</a>" for s, u in SEARCH.items())
         def line_q(ln):   # "q" do người/AI viết cho đúng cảnh của câu; thiếu thì ghép địa danh + 2 kw đầu
             return ln.get("q") or " ".join([spot] + ln.get("kw", [])[:2]).strip()
-        lines = "".join(f"<li class=ln data-t='{c['id']}/{li:02d}'>{hm.escape(ln['text'])} <span class=cnt></span><br>"
-                        f"<span class=kw>{hm.escape(line_q(ln))}</span> {link(line_q(ln), True)}</li>" for li, ln in enumerate(c["lines"]))
-        links = "".join(link(q) for q in c.get("stock_queries") or c["queries"])
-        cards.append(f"<div class=card data-t='{c['id']}'><h2>{ci:02d} · {hm.escape(name)} <span class=cnt></span></h2><ol>{lines}</ol>{links}</div>")
+        def box(t):
+            if not a.links: return ""
+            return (f"<textarea data-l='{t}' rows=2 placeholder='Dán link clip (Envato/Storyblocks), mỗi dòng 1 link'>"
+                    + hm.escape("\n".join(links.get(t, []))) + "</textarea>")
+        cid = c["id"]
+        lines = "".join(f"<li class=ln data-t='{cid}/{li:02d}'>{hm.escape(ln['text'])} <span class=cnt></span><br>"
+                        f"<span class=kw>{hm.escape(line_q(ln))}</span> {link(line_q(ln), True)}{box(f'{cid}/{li:02d}')}</li>" for li, ln in enumerate(c["lines"]))
+        qlinks = "".join(link(q) for q in c.get("stock_queries") or c["queries"])
+        general = f"<div class=kw>Clip chung của chương (câu nào cũng dùng được):</div>{box(cid)}" if a.links else ""
+        cards.append(f"<div class=card data-t='{cid}'><h2>{ci:02d} · {hm.escape(name)} <span class=cnt></span></h2><ol>{lines}</ol>{qlinks}{general}</div>")
     page = f"""<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Tải footage</title><style>{COLLECT_CSS}</style>
-<div class=top><b>{hm.escape(sc.get('title', proj.name))}</b> — bấm vào <b>câu</b> cần cảnh riêng (vd "Cầu Rồng phun lửa") hoặc tiêu đề chương (clip chung) — viền xanh = file tải về sẽ vào đó → bấm link tìm → chọn clip → Download.
-Envato: đăng ký license theo tên kênh của khách. Cài trình duyệt lưu thẳng vào <code>{hm.escape(str(dl))}</code>, không hỏi chỗ lưu.<div id=log></div></div>
+<div class=top><b>{hm.escape(sc.get('title', proj.name))}</b> — {TOP_LINKS if a.links else TOP_DL.format(dl=hm.escape(str(dl)))}<div id=log></div></div>
 {''.join(cards)}
 <script>
 const pick=t=>fetch('/active?ch='+encodeURIComponent(t)).then(tick);
@@ -428,6 +457,8 @@ async function tick(){{const s=await (await fetch('/status')).json();
  document.querySelectorAll('[data-t]').forEach(c=>{{const t=c.dataset.t,n=s.counts[t],m=s.need[t];
   c.classList.toggle('on',t===s.active);c.classList.toggle('full',n>=m);c.querySelector('.cnt').textContent=n+'/'+m+' clip';}});
  document.getElementById('log').textContent=s.log.join(' · ');}}
+document.querySelectorAll('textarea[data-l]').forEach(x=>x.addEventListener('change',()=>
+ fetch('/links',{{method:'POST',body:JSON.stringify({{t:x.dataset.l,text:x.value}})}}).then(r=>r.json()).then(j=>{{x.value=j.urls.join('\\n');tick();}})));
 tick();setInterval(tick,2000);
 </script>"""
 
@@ -446,10 +477,22 @@ tick();setInterval(tick,2000);
                 return self.send(json.dumps({"active": st["active"], "log": st["log"], "need": need,
                                              "counts": {t: count(t) for t in need}}, ensure_ascii=False), "application/json")
             self.send(page, "text/html")
+        def do_POST(self):
+            if urlparse(self.path).path != "/links" or not a.links: return self.send_error(404)
+            j = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+            urls = list(dict.fromkeys(re.findall(r"https?://[^\s<>\"']+", j.get("text", ""))))
+            if j.get("t") in need:
+                if urls: links[j["t"]] = urls
+                else: links.pop(j["t"], None)
+                save(links, lf); export_sheet(proj, sc, tm, links)
+                st["log"].insert(0, f"{j['t']}: {len(urls)} link"); del st["log"][8:]
+            self.send(json.dumps({"urls": urls}), "application/json")
 
-    threading.Thread(target=watch, daemon=True).start()
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", a.port), Hd); url = f"http://127.0.0.1:{a.port}/"
-    print(f"Trang tải footage: {url}\nĐang canh {dl} → {root} · Ctrl+C để dừng, xong thì chạy: longform.py footage {proj}", flush=True)
+    if a.links: print(f"Trang chọn footage: {url}\nDán link → tự lưu footage/links.json + xuất footage_sheet.csv · Ctrl+C để dừng", flush=True)
+    else:
+        threading.Thread(target=watch, daemon=True).start()
+        print(f"Trang tải footage: {url}\nĐang canh {dl} → {root} · Ctrl+C để dừng, xong thì chạy: longform.py footage {proj}", flush=True)
     if not a.no_open: webbrowser.open(url)
     try: srv.serve_forever()
     except KeyboardInterrupt: pass
@@ -530,5 +573,6 @@ for name in ("tts", "footage", "render", "collect"):
     if name == "collect":
         p.add_argument("--downloads", default=str(pathlib.Path.home() / "Downloads"), help="thư mục trình duyệt lưu file tải về")
         p.add_argument("--port", type=int, default=8765); p.add_argument("--no-open", action="store_true")
+        p.add_argument("--links", action="store_true", help="chỉ chọn clip + dán link → footage_sheet.csv bàn giao editor (không tải)")
 a = ap.parse_args()
 {"tts": tts, "footage": footage, "render": render, "collect": collect}[a.cmd](pathlib.Path(a.project).resolve(), a)
