@@ -37,6 +37,8 @@ KIT = <ĐƯỜNG DẪN TỚI THƯ MỤC kit>   ← cài bằng `python tools/ins
    Download. File tải về tự vào `footage/local/<chương>/<số câu>/`; mỗi thẻ hiện số clip đã có / cần (xanh = đủ).
    Mỗi clip cắt tối đa 4 cảnh ở 4 đoạn khác nhau → 15 phút cần ~70–100 clip, không phải 300.
    Footage miễn phí (demo): bỏ qua bước này, `footage` tự gọi Pexels/Pixabay theo `queries`/`must`.
+   **Chỉ nhận content** (editor bên khách dựng): `longform.py collect <dự án> --links` → người dùng mở clip, dán link vào
+   ô dưới từng câu → bàn giao `footage_sheet.csv` + kịch bản + file giọng. Không chạy footage/render.
 5. `python KIT/tools/longform.py footage <dự án> [--nvenc]` → Read `footage/_sheet_*.jpg`: cảnh sai → id vào
    `footage/blacklist.txt` (id `lcxxxxxxxx` = cả clip, `lcxxxxxxxx-2` = 1 đoạn) → chạy lại.
 6. `python KIT/tools/longform.py render <dự án> --out <tên>.mp4 [--nvenc]` → kèm `.srt`, `youtube_chapters.txt`,
