@@ -306,15 +306,15 @@ def render(proj, a):
     font = a.font
     ass = ["[Script Info]", "ScriptType: v4.00+", f"PlayResX: {W}", f"PlayResY: {H}", "", "[V4+ Styles]",
            "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
-           f"Style: T,{font},112,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,1,0,0,0,100,100,10,0,1,0,4,5,80,80,0,1",
-           f"Style: S,{font},44,&H00E6F0FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,4,0,1,0,3,5,80,80,0,1",
+           f"Style: T,{font},112,&H00FFFFFF,&H00FFFFFF,&H90000000,&H64000000,1,0,0,0,100,100,10,0,1,5,2,5,80,80,0,1",   # viền tối mờ (+\blur) → đọc được cả trên nền sáng
+           f"Style: S,{font},48,&H00FFFFFF,&H00FFFFFF,&H90000000,&H64000000,1,0,0,0,100,100,4,0,1,4,1,5,80,80,0,1",
            "", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
     for ch in tm["chapters"]:
         if not ch["title"]: continue
         t0, t1 = ch["start"] + 0.6, ch["start"] + TITLE_LEAD + 2.2
-        ass.append(f"Dialogue: 0,{ass_time(t0)},{ass_time(t1)},T,,0,0,0,,{{\\pos({W // 2},{H // 2 - 30})\\fad(700,700)\\blur0.6}}{ch['title']}")
+        ass.append(f"Dialogue: 0,{ass_time(t0)},{ass_time(t1)},T,,0,0,0,,{{\\pos({W // 2},{H // 2 - 30})\\fad(700,700)\\blur4}}{ch['title']}")
         if ch["subtitle"]:
-            ass.append(f"Dialogue: 0,{ass_time(t0 + 0.4)},{ass_time(t1)},S,,0,0,0,,{{\\pos({W // 2},{H // 2 + 70})\\fad(700,700)}}{ch['subtitle']}")
+            ass.append(f"Dialogue: 0,{ass_time(t0 + 0.4)},{ass_time(t1)},S,,0,0,0,,{{\\pos({W // 2},{H // 2 + 70})\\fad(700,700)\\blur3}}{ch['subtitle']}")
     (rd / "titles.ass").write_text("\n".join(ass) + "\n", encoding="utf-8")
     # 3c. âm thanh: giọng + nhạc (tự lặp, tự hạ khi có giọng) — dùng lại mix_audio.py
     bgm = sc.get("bgm", {})
