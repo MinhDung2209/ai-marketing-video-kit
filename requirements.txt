@@ -8,6 +8,7 @@ google-auth>=2.30      # token Google Cloud từ service account (TTS, Lyria)
 requests>=2.31         # gọi API Google TTS / Vertex Lyria
 pillow>=10             # ghép ảnh xem trước, cắt ảnh
 playwright>=1.45       # điều khiển Chrome để render từng khung hình
+yt-dlp>=2026.8         # tải video mẫu / phụ đề YouTube để phân tích nhịp dựng (docs/11)
 
 # ---- 2. BẮT BUỘC nhưng KHÔNG cài được bằng pip --------------------------------
 # FFmpeg + ffprobe (bản full, có libx264 + aac) — trộn âm, đo khoảng lặng, ghép MP4

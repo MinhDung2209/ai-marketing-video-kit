@@ -1,0 +1,241 @@
+{
+ "_huong_dan": [
+  "Mỗi chương = 1 địa danh. title rỗng = không hiện tiêu đề (mở đầu/kết). Mỗi câu (lines) đọc riêng 1 lần TTS.",
+  "must: từ khoá địa danh (viết thường, nối bằng '-') phải có trong đường dẫn Pexels / tag Pixabay thì clip mới được nhận. fallback: lấy khi thiếu (vd 'vietnam').",
+  "queries: từ khoá tìm (tiếng Anh). kw từng câu: ưu tiên clip có từ này (vd 'lantern', 'boat').",
+  "wm_queries (tuỳ chọn): tìm thêm trên Wikimedia Commons bằng tên có dấu — kết quả lẫn nhiều rác, phải xem ảnh ghép rồi blacklist.",
+  "Chạy: python <kit>/tools/longform.py tts . → footage . → xem footage/_sheet_*.jpg → blacklist → footage . → render ."
+ ],
+ "title": "Kỳ quan Việt Nam — Hành trình dải đất hình chữ S",
+ "voice": {
+  "model": "gemini-3.1-flash-tts-preview",
+  "voice": "Kore",
+  "language": "vi-VN",
+  "profile": "Bạn là người dẫn phim tài liệu du lịch người Việt, giọng miền Bắc chuẩn, trầm, ấm và truyền cảm như phim tài liệu truyền hình. Kể chuyện chậm rãi, có hồn, có khoảng lặng, nhấn nhá ở hình ảnh đẹp, thỉnh thoảng hạ giọng như kể bí mật. Không đọc như quảng cáo, không vội, không đều đều như máy.",
+  "profile_fallback": "Bạn là người dẫn phim tài liệu du lịch, giọng trầm ấm, truyền cảm, chậm rãi, có nhấn nhá."
+ },
+ "bgm": {
+  "file": "bgm/nhac-nen.wav",
+  "volume": 0.2
+ },
+ "chapters": [
+  {
+   "id": "mo-dau",
+   "title": "",
+   "subtitle": "",
+   "must": [
+    "vietnam",
+    "vietnamese",
+    "ha-long",
+    "halong",
+    "hanoi",
+    "hoi-an",
+    "sapa",
+    "mekong",
+    "ninh-binh"
+   ],
+   "queries": [
+    "vietnam aerial",
+    "vietnam landscape",
+    "ha long bay aerial",
+    "vietnam rice terraces",
+    "hoi an lanterns",
+    "vietnam boat river"
+   ],
+   "lines": [
+    {
+     "text": "Có một đất nước, nơi bạn có thể thức dậy giữa biển mây trên đỉnh núi, [short pause] và đi ngủ bên tiếng sóng của một vịnh biển kỳ vĩ.",
+     "kw": [
+      "mountain",
+      "cloud",
+      "fog",
+      "bay"
+     ]
+    },
+    {
+     "text": "Nơi những dòng sông chở cả một khu chợ, [short pause] và những con phố cổ thắp sáng bằng hàng nghìn chiếc đèn lồng.",
+     "kw": [
+      "river",
+      "boat",
+      "market",
+      "lantern"
+     ]
+    },
+    {
+     "text": "Nơi mỗi bát phở, mỗi ly cà phê, đều mang theo một câu chuyện dài hàng trăm năm.",
+     "kw": [
+      "food",
+      "coffee",
+      "street",
+      "pho"
+     ]
+    },
+    {
+     "text": "Hãy cùng chúng tôi bước vào một hành trình dài hơn một nghìn sáu trăm cây số, [short pause] để khám phá những kỳ quan của Việt Nam.",
+     "kw": [
+      "aerial",
+      "road",
+      "landscape"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ha-long",
+   "title": "VỊNH HẠ LONG",
+   "subtitle": "Di sản thiên nhiên thế giới",
+   "must": [
+    "ha-long",
+    "halong",
+    "lan-ha",
+    "quang-ninh",
+    "cat-ba"
+   ],
+   "queries": [
+    "ha long bay",
+    "halong bay aerial",
+    "ha long bay boat",
+    "ha long bay cruise",
+    "ha long bay kayak",
+    "lan ha bay",
+    "ha long sunset"
+   ],
+   "lines": [
+    {
+     "text": "Rời núi rừng, chúng ta xuôi về phía biển, đến với một kỳ quan đã đi vào huyền thoại.",
+     "kw": [
+      "aerial",
+      "bay",
+      "island"
+     ]
+    },
+    {
+     "text": "Truyền thuyết kể rằng, xưa kia, một đàn rồng đã từ trời cao bay xuống giúp người Việt đánh giặc.",
+     "kw": [
+      "aerial",
+      "island",
+      "fog",
+      "rock"
+     ]
+    },
+    {
+     "text": "Những viên ngọc rồng nhả ra rơi xuống mặt biển, [short pause] hoá thành gần hai nghìn hòn đảo đá vôi nhấp nhô giữa làn nước ngọc bích.",
+     "kw": [
+      "island",
+      "aerial",
+      "water",
+      "limestone"
+     ]
+    },
+    {
+     "text": "Đó là vịnh Hạ Long, [short pause] nơi được UNESCO công nhận là di sản thiên nhiên thế giới từ năm một nghìn chín trăm chín mươi tư.",
+     "kw": [
+      "bay",
+      "aerial",
+      "boat"
+     ]
+    },
+    {
+     "text": "Lênh đênh trên một chiếc du thuyền, bạn sẽ thấy từng hòn đảo hiện ra với những hình thù kỳ lạ.",
+     "kw": [
+      "cruise",
+      "boat",
+      "ship",
+      "deck"
+     ]
+    },
+    {
+     "text": "Có hòn giống hai con gà đang chọi nhau, có hòn như một lư hương khổng lồ giữa biển.",
+     "kw": [
+      "rock",
+      "island",
+      "boat"
+     ]
+    },
+    {
+     "text": "Ẩn sâu trong lòng đảo là những hang động lộng lẫy, với nhũ đá được thời gian tạc nên qua hàng triệu năm.",
+     "kw": [
+      "cave",
+      "rock",
+      "island"
+     ]
+    },
+    {
+     "text": "Chèo một chiếc thuyền kayak luồn qua những hang đá thấp, bạn sẽ chạm vào những góc vịnh yên tĩnh như chưa từng có ai đặt chân tới.",
+     "kw": [
+      "kayak",
+      "boat",
+      "water"
+     ]
+    },
+    {
+     "text": "Những làng chài nổi vẫn lặng lẽ tồn tại giữa vịnh, nơi người dân sống trọn đời trên mặt nước.",
+     "kw": [
+      "village",
+      "fishing",
+      "boat",
+      "floating"
+     ]
+    },
+    {
+     "text": "Và khi hoàng hôn buông xuống, cả vịnh chìm trong một sắc vàng tím huyền ảo, [short pause] đẹp như một bức tranh thuỷ mặc.",
+     "kw": [
+      "sunset",
+      "evening",
+      "boat",
+      "aerial"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ket",
+   "title": "",
+   "subtitle": "",
+   "must": [
+    "vietnam",
+    "vietnamese",
+    "ha-long",
+    "halong",
+    "hoi-an",
+    "sapa",
+    "mekong",
+    "ninh-binh",
+    "hanoi"
+   ],
+   "queries": [
+    "vietnam sunset",
+    "vietnam aerial",
+    "ha long bay sunset",
+    "vietnam rice terraces sunset",
+    "hoi an lanterns night"
+   ],
+   "lines": [
+    {
+     "text": "Từ những đỉnh núi mờ sương của Tây Bắc, đến những dòng sông hiền hoà của miền Tây, [short pause] Việt Nam là một bức tranh không bao giờ vẽ hết.",
+     "kw": [
+      "mountain",
+      "river",
+      "aerial"
+     ]
+    },
+    {
+     "text": "Mỗi vùng đất là một câu chuyện, mỗi con người là một nụ cười, [short pause] và mỗi chuyến đi là một lần ta muốn quay trở lại.",
+     "kw": [
+      "people",
+      "sunset",
+      "boat"
+     ]
+    },
+    {
+     "text": "Nếu bạn yêu thích hành trình này, hãy nhấn thích, đăng ký kênh, và cho chúng tôi biết, [short pause] bạn muốn khám phá vùng đất nào tiếp theo.",
+     "kw": [
+      "sunset",
+      "aerial",
+      "lantern"
+     ]
+    }
+   ]
+  }
+ ]
+}

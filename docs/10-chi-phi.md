@@ -13,3 +13,14 @@
 
 Tổng phần Google cho 1 video: **~5.000–10.000đ**. Phần lớn chi phí là credit ảnh/clip AI + thời gian duyệt.
 Ghi sổ credit từng dự án (`credits.md`), đặt hạn mức trước (StradeVn: 700 credit).
+
+## Video dài (15–60 phút) — footage (tra 15/10/2026, kiểm lại giá trước khi báo khách)
+| Nguồn | Giá | API | Ghi chú |
+| --- | --- | --- | --- |
+| Pexels · Pixabay · Wikimedia Commons | 0 | có | Đủ cho demo; thiếu nhiều địa danh (Huế, Phong Nha, Phú Quốc) — xem docs/11 |
+| Giọng Gemini TTS 15 phút | ~0,5 USD | — | 83 câu |
+| Nhạc Lyria 6 đoạn | ~0,36 USD | — | nối thành 3 phút, tự lặp |
+| **Storyblocks** | ~20–30 USD/tháng cá nhân; API doanh nghiệp báo giá riêng | có | Tải không giới hạn → hợp 300–1.200 cảnh/video. Ứng viên số 1 nếu khách trả phí |
+| Envato Elements | ~16,5 USD/tháng | không | Tải tay |
+| Artgrid / Artlist | ~25–40 USD/tháng | không | Footage điện ảnh, tải tay |
+| Shutterstock / Adobe Stock / Pond5 | ~10–150 USD/clip | có | Kho Việt Nam lớn nhất; quá đắt cho 300 clip |

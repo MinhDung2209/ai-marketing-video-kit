@@ -53,12 +53,14 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 | Người làm hình & tiếng | [04 Giọng đọc](docs/04-giong-doc.md) · [05 Ảnh & clip AI](docs/05-anh-va-clip-ai.md) · [06 Âm thanh](docs/06-am-thanh.md) |
 | Người dựng | [07 Dựng cảnh & render](docs/07-dung-canh-va-render.md) · [08 Kiểm tra trước khi đăng](docs/08-kiem-tra-va-xuat-ban.md) |
 | Gặp lỗi / tính tiền | [09 Lỗi thường gặp](docs/09-loi-thuong-gap.md) · [10 Chi phí](docs/10-chi-phi.md) |
+| Làm video dài 10–60 phút (phim tài liệu từ footage stock) | [11 Video dài](docs/11-video-dai.md) |
 
 ## Trong repo có gì
 
 | Thư mục | Nội dung |
 | --- | --- |
-| `tools/` | 19 công cụ Python: **chạy toàn bộ 1 lệnh (`make_video.py`)**, kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, tải ảnh/clip stock (Pexels, Unsplash), phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
+| `tools/` | 20 công cụ Python: **chạy toàn bộ 1 lệnh (`make_video.py`)**, **video dài 15–60 phút từ footage stock (`longform.py`)**, kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, tải ảnh/clip stock (Pexels, Unsplash), phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
+| `templates/longform/` | Kịch bản mẫu video dài (chương → câu → từ khoá footage) cho `tools/longform.py` |
 | `templates/video-project/` | Khung dự án mới, dựng tự động từ `scenes.json` (4 kiểu cảnh: media · screenshot · logo · cta) |
 | `examples/stradevn-ad-v2/` | Video thật đã làm, đủ nguồn để dựng và render lại |
 | `audio-library/` | 1.103 hiệu ứng + nhạc nền (uisfx, Pixabay, Mixkit) + nhạc Lyria — có sẵn trong repo. Nguồn + giấy phép từng file: `catalog.json` |

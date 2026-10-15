@@ -24,7 +24,7 @@ def show(ok, name, detail="", fix="", required=True):
 show(sys.version_info >= (3, 11), "Python ≥ 3.11", sys.version.split()[0], "cài Python mới ở python.org")
 
 # 2. Thư viện Python
-for mod, pkg in [("google.auth", "google-auth"), ("requests", "requests"), ("PIL", "pillow"), ("playwright", "playwright")]:
+for mod, pkg in [("google.auth", "google-auth"), ("requests", "requests"), ("PIL", "pillow"), ("playwright", "playwright"), ("yt_dlp", "yt-dlp")]:
     try:
         importlib.import_module(mod); show(True, f"pip: {pkg}")
     except ImportError:
