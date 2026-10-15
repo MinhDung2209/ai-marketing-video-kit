@@ -58,7 +58,7 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 
 | Thư mục | Nội dung |
 | --- | --- |
-| `tools/` | 18 công cụ Python: **chạy toàn bộ 1 lệnh (`make_video.py`)**, kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
+| `tools/` | 19 công cụ Python: **chạy toàn bộ 1 lệnh (`make_video.py`)**, kiểm máy, tải nguồn âm thanh, cài skill, giọng đọc, nhạc, tìm/nghe thử hiệu ứng, tải ảnh/clip stock (Pexels, Unsplash), phụ đề, đo cụm nói, trộn âm, render, tạo dự án, đóng gói |
 | `templates/video-project/` | Khung dự án mới, dựng tự động từ `scenes.json` (4 kiểu cảnh: media · screenshot · logo · cta) |
 | `examples/stradevn-ad-v2/` | Video thật đã làm, đủ nguồn để dựng và render lại |
 | `audio-library/` | 1.103 hiệu ứng + nhạc nền (uisfx, Pixabay, Mixkit) + nhạc Lyria — có sẵn trong repo. Nguồn + giấy phép từng file: `catalog.json` |

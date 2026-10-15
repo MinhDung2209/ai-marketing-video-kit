@@ -46,3 +46,15 @@ Công thức: `The same woman [1 ĐỘNG TÁC]. [CHUYỂN ĐỘNG MÁY: slow pus
 ## 7. Ảnh chụp sản phẩm thật (bằng chứng)
 Chụp màn hình app/sản phẩm bằng Chrome headless (2x) — xem ví dụ `assets/img/map-988.png`, `ranking.png`. Dùng dữ liệu của
 tài khoản demo, không dữ liệu khách thật; làm mờ phần nhạy cảm. Ảnh app thật tạo độ tin cậy mà ảnh AI không thay được.
+
+## 8. Ảnh/clip stock miễn phí (Pexels, Unsplash) — không tốn credit
+Hợp với video du lịch, ẩm thực, phong cảnh: không cần nhân vật đồng bộ thì dùng stock thật thay ảnh AI.
+- Key: `PEXELS_API_KEY`, `UNSPLASH_ACCESS_KEY` trong file `.env` ở thư mục dự án (hoặc biến môi trường). Không commit.
+- Tìm: `python KIT/tools/stock_media.py search "dalat" --type video` → in ứng viên + ảnh ghép `_stock_sheet.jpg` (đánh số)
+  để xem bằng mắt. Ảnh: `--type photo`, thêm `--source unsplash` để lấy Unsplash.
+- Tải: `python KIT/tools/stock_media.py get pexels:video:<id> assets/clips/x.mp4` — tự chọn bản dọc gần 1080×1920,
+  ghi tác giả + link vào `stock_credits.json`.
+- **Đúng địa danh:** tìm theo tên địa danh vẫn ra cảnh nơi khác (đo 15/10/2026: "tea plantation" toàn Ấn Độ, "night market"
+  ra Hà Nội khi làm video Đà Lạt). Đọc link/mô tả từng clip; không chắc nơi chụp thì lời đọc nói chung chung, không gọi tên.
+- Clip Pexels hay là 60 fps, GOP dài → render tua chậm. Chuẩn hoá trước khi dựng:
+  `ffmpeg -i in.mp4 -t 15 -an -vf "fps=30,scale=1080:1920" -c:v libx264 -crf 18 -g 15 -pix_fmt yuv420p out.mp4`
