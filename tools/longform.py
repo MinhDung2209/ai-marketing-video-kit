@@ -354,22 +354,52 @@ TOP_DL = ('bấm vào <b>câu</b> cần cảnh riêng (vd "Cầu Rồng phun l�
           "→ bấm link tìm → chọn clip → Download. Envato: đăng ký license theo tên kênh của khách. Cài trình duyệt lưu thẳng vào "
           "<code>{dl}</code>, không hỏi chỗ lưu.")
 TOP_LINKS = ("bấm link tìm của từng câu → mở clip hợp lời → copy địa chỉ trang clip → dán vào ô dưới câu đó (nhiều link = nhiều dòng). "
-             "Tự lưu khi bấm ra ngoài ô; file bàn giao: <code>footage_sheet.csv</code> (mở bằng Excel / nhập vào Google Sheets).")
+             "Tự lưu khi bấm ra ngoài ô; file bàn giao: <code>footage_sheet.xlsx</code> (Google Sheets: Tệp → Nhập) — cột theo mẫu Number / English / VN / Footage EN / File name EN / ID / Status.")
 
-def export_sheet(proj, sc, tm, links):   # 1 dòng / câu: lời đọc, bản Việt, gợi ý cảnh, link clip — editor tải theo
+SHEET_COLS = ["Number", "English", "VN", "Footage EN", "File name EN", "ID", "Status"]   # theo mẫu sheet của khách (Earthcue)
+
+def clip_id(url):   # Envato: ...-QS9NYFF  ·  Storyblocks: ...-SBV-338492858
+    m = re.search(r"(SBV-\d+)", url) or re.search(r"-([A-Z0-9]{6,8})/?(?:[?#].*)?$", url)
+    return m.group(1) if m else ""
+
+def export_sheet(proj, sc, tm, links):
+    """Bàn giao content: 1 dòng / câu (số câu chạy liên tục cả video), dòng tiêu đề chương EN | VN,
+    link footage + File name "<số>-<ID>" + ID. Câu có >1 link → thêm dòng phụ "12.2" (lời để trống).
+    Xuất footage_sheet.xlsx (định dạng như mẫu, nhập thẳng Google Sheets) + footage_sheet.csv."""
     import csv
-    ts = {(m["chapter"], int(m["id"].split("-")[1])): m["start"] for m in tm["lines"]} if tm else {}
-    n = max([len(v) for v in links.values()] + [3]); pad = lambda v: (v + [""] * n)[:n]; rows = []
-    for ci, c in enumerate(sc["chapters"]):
-        name = c.get("title") or c.get("chapter_name") or c["id"]
+    clean = lambda t: re.sub(r"\s+", " ", re.sub(r"\[[^\]]*\]", " ", t or "")).strip()   # bỏ thẻ TTS [short pause]
+    rows, n = [], 0   # (kiểu, ô...) kiểu: "sec" | "line"
+    for c in sc["chapters"]:
+        en = c.get("title") or c.get("chapter_name") or ("Introduction" if not rows else c["id"])
+        rows.append(("sec", ["", en, c.get("title_vi") or c.get("chapter_name_vi") or ("Giới thiệu" if not rows else en), "", "", "", ""]))
         for li, ln in enumerate(c["lines"]):
-            t = ts.get((ci, li)); mm = f"{int(t // 60):02d}:{int(t % 60):02d}" if t is not None else ""
-            rows.append([f"{ci:02d}", name, li + 1, mm, ln["text"], ln.get("text_vi", ""), ln.get("q") or " ".join(ln.get("kw", [])),
-                         *pad(links.get(f"{c['id']}/{li:02d}", []))])
-        if links.get(c["id"]): rows.append([f"{ci:02d}", name, "chung", "", "(clip chung của chương — lấp các câu còn thiếu)", "", "", *pad(links[c["id"]])])
+            n += 1; us = links.get(f"{c['id']}/{li:02d}", []) or [""]
+            for k, u in enumerate(us):
+                num = str(n) if k == 0 else f"{n}.{k + 1}"; i = clip_id(u)
+                rows.append(("line", [num, clean(ln["text"]) if k == 0 else "", clean(ln.get("text_vi")) if k == 0 else "",
+                                      u, f"{num}-{i}" if i else "", i, ""]))
+        for u in links.get(c["id"], []):   # clip chung của chương
+            i = clip_id(u); rows.append(("line", ["chung", "", "", u, f"chung-{i}" if i else "", i, ""]))
     with open(proj / "footage_sheet.csv", "w", encoding="utf-8-sig", newline="") as fh:   # BOM → Excel đọc đúng tiếng Việt
-        w = csv.writer(fh)
-        w.writerow(["Chương", "Tên chương", "Câu", "Mốc", "Lời đọc", "Bản tiếng Việt", "Gợi ý cảnh", *[f"Link {i + 1}" for i in range(n)]]); w.writerows(rows)
+        w = csv.writer(fh); w.writerow(SHEET_COLS); w.writerows(r for _, r in rows)
+    try: from openpyxl import Workbook; from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+    except ImportError: return
+    wb = Workbook(); ws = wb.active; ws.title = "Script"
+    fill = lambda c: PatternFill("solid", fgColor=c); thin = Side(style="thin", color="CCCCCC")
+    mid = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    ws.append(SHEET_COLS); ws.append(["", "", "", sum(1 for _, r in rows if r[3]), "", "", ""])
+    for r in (1, 2):
+        for cell in ws[r]: cell.fill = fill("EAD1DC"); cell.font = Font(bold=True); cell.alignment = mid
+    for kind, r in rows:
+        ws.append(r); row = ws[ws.max_row]
+        for cell in row: cell.alignment = mid; cell.border = Border(top=thin, bottom=thin, left=thin, right=thin)
+        if kind == "sec":
+            for cell in row[1:3]: cell.fill = fill("00FFFF")
+        elif r[3]:
+            row[3].hyperlink = r[3]; row[3].fill = fill("6AA84F"); row[3].font = Font(color="1155CC", underline="single")
+            if r[4]: row[4].hyperlink = r[3]; row[4].font = Font(color="1155CC", underline="single")
+    for col, wd in zip("ABCDEFG", (9, 60, 60, 40, 18, 14, 18)): ws.column_dimensions[col].width = wd
+    ws.freeze_panes = "A3"; wb.save(proj / "footage_sheet.xlsx")
 
 def collect(proj, a):
     import html as hm, http.server, math, shutil, threading, webbrowser, zipfile
@@ -573,6 +603,6 @@ for name in ("tts", "footage", "render", "collect"):
     if name == "collect":
         p.add_argument("--downloads", default=str(pathlib.Path.home() / "Downloads"), help="thư mục trình duyệt lưu file tải về")
         p.add_argument("--port", type=int, default=8765); p.add_argument("--no-open", action="store_true")
-        p.add_argument("--links", action="store_true", help="chỉ chọn clip + dán link → footage_sheet.csv bàn giao editor (không tải)")
+        p.add_argument("--links", action="store_true", help="chỉ chọn clip + dán link → footage_sheet.xlsx/.csv bàn giao editor (không tải)")
 a = ap.parse_args()
 {"tts": tts, "footage": footage, "render": render, "collect": collect}[a.cmd](pathlib.Path(a.project).resolve(), a)

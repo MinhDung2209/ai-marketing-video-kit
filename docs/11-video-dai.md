@@ -34,8 +34,11 @@ python <kit>/tools/longform.py footage .          # chương có footage/local/�
 - Từ khoá tìm `"q"` của câu: chủ thể + địa danh + kiểu quay (`"dragon bridge fire breathing da nang night"`).
   Thiếu `"q"` thì ghép `"place"` của chương + 2 `kw` đầu.
 - **Chỉ làm content (bàn giao cho editor khác dựng)**: `collect . --links` — cùng trang nhưng không tải; dưới mỗi câu có
-  ô dán link trang clip (Envato/Storyblocks). Tự lưu `footage/links.json` + xuất `footage_sheet.csv` (Excel / Google
-  Sheets): Chương · Câu · Mốc · Lời đọc · Bản tiếng Việt · Gợi ý cảnh · Link 1..n, thêm dòng "chung" cho clip chung của chương.
+  ô dán link trang clip (Envato/Storyblocks). Tự lưu `footage/links.json` + xuất `footage_sheet.xlsx` (Google Sheets:
+  Tệp → Nhập) và `footage_sheet.csv`, theo mẫu khách: **Number · English · VN · Footage EN · File name EN · ID · Status**.
+  Số câu chạy liên tục cả video; dòng tiêu đề chương (EN = `title`, VN = `title_vi`) tô xanh; ID lấy từ link
+  (Envato `…-QS9NYFF`, Storyblocks `SBV-…`), File name = `<số>-<ID>`; câu có 2 link → dòng phụ `12.2`; dòng "chung" =
+  clip chung của chương. Thẻ TTS `[short pause]` tự bỏ. Status để trống cho editor ghi.
   Editor tải theo sheet bằng tài khoản của họ (license theo tài khoản người tải).
 - Cài trình duyệt lưu thẳng vào Downloads (không hỏi chỗ lưu); thư mục khác: `--downloads <thư mục>`.
 - Envato: đăng ký license theo tên kênh của khách; `footage_credits.txt` giữ danh sách file làm bằng chứng.

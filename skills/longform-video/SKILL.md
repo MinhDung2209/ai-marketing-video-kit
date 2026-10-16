@@ -38,7 +38,12 @@ KIT = <ĐƯỜNG DẪN TỚI THƯ MỤC kit>   ← cài bằng `python tools/ins
    Mỗi clip cắt tối đa 4 cảnh ở 4 đoạn khác nhau → 15 phút cần ~70–100 clip, không phải 300.
    Footage miễn phí (demo): bỏ qua bước này, `footage` tự gọi Pexels/Pixabay theo `queries`/`must`.
    **Chỉ nhận content** (editor bên khách dựng): `longform.py collect <dự án> --links` → người dùng mở clip, dán link vào
-   ô dưới từng câu → bàn giao `footage_sheet.csv` + kịch bản + file giọng. Không chạy footage/render.
+   ô dưới từng câu → bàn giao `footage_sheet.xlsx` (mẫu khách: Number · English · VN · Footage EN · File name EN · ID ·
+   Status, dòng tiêu đề chương xanh) + file giọng. Không chạy footage/render. Không cần tài khoản Envato/Storyblocks để
+   chọn link — editor tải bằng tài khoản của họ.
+   Kịch bản cho kiểu bàn giao này: câu NGẮN (1 dòng ≈ 1 cảnh ≈ 3–4 s, cắt câu dài thành 2–3 dòng), có `text_vi`, chương
+   có `title_vi`. **30 giây đầu** phải đủ hook + hình + âm để giữ chân (soát kỹ phút đầu). **Kết: không cảm ơn, không
+   tổng kết, không báo hiệu sắp hết** — người xem nghe "thank you" là thoát.
 5. `python KIT/tools/longform.py footage <dự án> [--nvenc]` → Read `footage/_sheet_*.jpg`: cảnh sai → id vào
    `footage/blacklist.txt` (id `lcxxxxxxxx` = cả clip, `lcxxxxxxxx-2` = 1 đoạn) → chạy lại.
 6. `python KIT/tools/longform.py render <dự án> --out <tên>.mp4 [--nvenc]` → kèm `.srt`, `youtube_chapters.txt`,

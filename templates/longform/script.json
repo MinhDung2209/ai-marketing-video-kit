@@ -3,6 +3,7 @@
   "Mỗi chương = 1 địa danh. title rỗng = không hiện tiêu đề (mở đầu/kết). Mỗi câu (lines) đọc riêng 1 lần TTS.",
   "must: từ khoá địa danh (viết thường, nối bằng '-') phải có trong đường dẫn Pexels / tag Pixabay thì clip mới được nhận. fallback: lấy khi thiếu (vd 'vietnam').",
   "queries: từ khoá tìm Pexels/Pixabay (tiếng Anh). kw từng câu: ưu tiên clip có từ này (vd 'lantern', 'boat').",
+  "title_vi / text_vi (tuỳ chọn): bản tiếng Việt của tiêu đề chương / câu — vào cột VN của footage_sheet khi bàn giao content.",
   "place: tên địa danh tiếng Anh của chương (vd 'Da Nang'). q (từng câu, khi câu có chủ thể cụ thể): từ khoá tìm Envato/Storyblocks = chủ thể + địa danh + kiểu quay, vd 'dragon bridge fire breathing da nang night'.",
   "Footage tải tay (Envato/Storyblocks): longform.py collect . → bấm câu → bấm link → Download; file tự vào footage/local/<chương>/<số câu>/. res: '4k' để xuất 3840×2160.",
   "wm_queries (tuỳ chọn): tìm thêm trên Wikimedia Commons bằng tên có dấu — kết quả lẫn nhiều rác, phải xem ảnh ghép rồi blacklist.",
