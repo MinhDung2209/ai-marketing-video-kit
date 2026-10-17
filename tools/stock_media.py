@@ -1,6 +1,6 @@
 """Tìm + tải ảnh/clip stock miễn phí (Pexels video/ảnh, Unsplash ảnh) cho cảnh không cần ảnh AI.
 
-Key (không commit): biến môi trường PEXELS_API_KEY / UNSPLASH_ACCESS_KEY, hoặc file .env ở thư mục đang chạy,
+Key (không commit): biến môi trường PEXELS_API_KEY / UNSPLASH_ACCESS_KEY, hoặc file .env ở thư mục đang chạy / kit/.env (mẫu: .env.example),
 hoặc "pexels_api_key" / "unsplash_access_key" trong kit/config.json.
 
 Dùng (chạy ở thư mục dự án):
@@ -22,15 +22,15 @@ KIT = pathlib.Path(__file__).resolve().parent.parent
 
 def key(name):
     if os.environ.get(name): return os.environ[name]
-    env = pathlib.Path(".env")
-    if env.exists():
-        for ln in env.read_text(encoding="utf-8").splitlines():
-            k, _, v = ln.partition("=")
-            if k.strip() == name: return v.strip()
+    for env in (pathlib.Path(".env"), KIT / ".env"):
+        if env.exists():
+            for ln in env.read_text(encoding="utf-8").splitlines():
+                k, _, v = ln.partition("=")
+                if k.strip() == name: return v.strip()
     cfg = KIT / "config.json"
     v = json.load(open(cfg, encoding="utf-8")).get(name.lower()) if cfg.exists() else None
     if v: return v
-    raise SystemExit(f"Thiếu {name}: đặt biến môi trường hoặc ghi vào .env của dự án.")
+    raise SystemExit(f"Thiếu {name}: đặt biến môi trường hoặc ghi vào .env của dự án / kit/.env.")
 
 def pexels(path, **params):
     r = requests.get(f"https://api.pexels.com/{path}", params=params, headers={"Authorization": key("PEXELS_API_KEY")}, timeout=30)

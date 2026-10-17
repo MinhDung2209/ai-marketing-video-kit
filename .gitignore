@@ -1,5 +1,6 @@
 # Đường dẫn key riêng máy — KHÔNG commit
 config.json
+.env
 *.key.json
 *service-account*.json
 

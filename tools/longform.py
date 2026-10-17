@@ -69,12 +69,12 @@ def fold(t):   # "Hội An" → "-hoi-an-" để so với must / kw
 
 def env_key(proj, name):
     if os.environ.get(name): return os.environ[name]
-    for f in (proj / ".env", pathlib.Path(".env")):
+    for f in (proj / ".env", pathlib.Path(".env"), TOOLS.parent / ".env"):
         if f.exists():
             for ln in f.read_text(encoding="utf-8").splitlines():
                 k, _, v = ln.partition("=")
                 if k.strip() == name: return v.strip()
-    raise SystemExit(f"Thiếu {name} (biến môi trường hoặc .env của dự án)")
+    raise SystemExit(f"Thiếu {name} (biến môi trường, .env của dự án hoặc kit/.env)")
 
 # ------------------------------------------------------------------ 1. giọng đọc
 def tts(proj, a):
