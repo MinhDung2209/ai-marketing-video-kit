@@ -11,17 +11,19 @@ Dùng:
   python <kit>/tools/ai33.py sfx "waves crashing on rocks" --seconds 5 -o sfx/waves.mp3      → tải xong xóa task
   python <kit>/tools/ai33.py music "calm acoustic guitar, travel" --instrumental -o music/   → tải xong xóa task
   python <kit>/tools/ai33.py image "prompt" [--model bytedance-seedream-4.5] -o img/         → tải xong xóa task
-  python <kit>/tools/ai33.py clean [--yes]   → liệt kê (và xóa với --yes) mọi task không phải voice còn trên AI33
+  python <kit>/tools/ai33.py clean [--yes] [--since 2026-10-17]   → liệt kê (và xóa với --yes) task không phải voice
+        tạo từ ngày --since (mặc định 2026-10-17); task cũ hơn để nguyên
 """
 import sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
 except Exception: pass   # cửa sổ lệnh Windows mặc định không in được tiếng Việt
-import argparse, json, os, pathlib, random, time
+import argparse, datetime, json, os, pathlib, random, time
 import requests
 
 KIT = pathlib.Path(__file__).resolve().parent.parent
 BASE = "https://api.ai33.pro"
 VOICE_TYPES = {"tts", "dialogue", "tts_dialogue"}   # loại task được giữ lịch sử
+CLEAN_SINCE = "2026-10-17"   # clean chỉ đụng task tạo từ ngày này (giờ máy); trước đó để nguyên
 
 def key():
     if os.environ.get("AI33_API_KEY"): return os.environ["AI33_API_KEY"]
@@ -121,15 +123,19 @@ def cmd_voices(a):
     for v in d["data"]:
         print(v["voice_id"], "|", v.get("name"), "|", v.get("gender"), v.get("age"), v.get("accent"))
 
+def local_day(iso):
+    return datetime.datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone().date().isoformat()
+
 def cmd_clean(a):
     junk, page = [], 1
     while True:
         d = call("GET", "/v1/tasks", params={"page": page, "limit": 100})
-        junk += [t for t in d["data"] if t.get("type") not in VOICE_TYPES and t.get("status") != "doing"]
+        junk += [t for t in d["data"] if t.get("type") not in VOICE_TYPES and t.get("status") != "doing"
+                 and local_day(t["created_at"]) >= a.since]
         if page * 100 >= int(d.get("total", 0)) or not d["data"]: break
         page += 1
     for t in junk: print(t.get("type"), t.get("status"), t["id"], t.get("created_at"))
-    if not junk: return print("Không còn task nào ngoài voice.")
+    if not junk: return print(f"Không còn task nào ngoài voice tạo từ {a.since}.")
     if not a.yes: return print(f"{len(junk)} task không phải voice — chạy lại với --yes để xóa (file chưa tải sẽ mất).")
     for i in range(0, len(junk), 50):
         call("POST", "/v1/task/delete", json={"task_ids": [t["id"] for t in junk[i:i + 50]]})
@@ -151,5 +157,6 @@ s.set_defaults(fn=cmd_image)
 sp.add_parser("credits").set_defaults(fn=cmd_credits)
 s = sp.add_parser("voices"); s.add_argument("query", nargs="?", default=""); s.add_argument("--provider", default="elevenlabs")
 s.set_defaults(fn=cmd_voices)
-s = sp.add_parser("clean"); s.add_argument("--yes", action="store_true"); s.set_defaults(fn=cmd_clean)
+s = sp.add_parser("clean"); s.add_argument("--yes", action="store_true"); s.add_argument("--since", default=CLEAN_SINCE)
+s.set_defaults(fn=cmd_clean)
 a = p.parse_args(); a.fn(a)
