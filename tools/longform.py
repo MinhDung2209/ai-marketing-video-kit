@@ -31,6 +31,7 @@ import requests
 TOOLS = pathlib.Path(__file__).resolve().parent
 W, H, FPS = 1920, 1080, 30
 XF = 0.5            # giây chuyển mờ giữa 2 cảnh
+FALLBACK_TTS = "gemini-2.5-flash-tts"   # model chính lỗi hẳn → đọc bằng model này (cùng Cloud TTS, cùng prompt)
 SHOT = 3.2          # độ dài cảnh mong muốn (khách yêu cầu ~3s/footage)
 GAP, LEAD, TITLE_LEAD, TAIL = 0.45, 0.8, 3.0, 1.0   # lặng giữa câu · trước câu đầu chương · khi có tiêu đề · cuối chương
 
@@ -87,20 +88,24 @@ def tts(proj, a):
     def one(item):
         lid, ln = item; f = out / f"{lid}.wav"   # WAV: nối concat khớp từng mẫu (mp3 lệch ~26ms/file)
         if f.exists() and (only is None or lid not in only) and not a.force: return lid, "giữ"
-        for attempt in range(5):   # bộ lọc an toàn đôi khi chặn nhầm → thử lại, cuối cùng bỏ lời đạo diễn
-            prof = v["profile"] if attempt < 2 else v.get("profile_fallback", v["profile"])
-            inp = {"text": ln["text"]} if attempt == 4 else {"prompt": prof + " " + ln.get("direction", ""), "text": ln["text"]}
-            r = requests.post("https://texttospeech.googleapis.com/v1/text:synthesize", headers=hdr, timeout=120, json={
-                "input": inp, "voice": {"languageCode": v.get("language", "vi-VN"), "name": v.get("voice", "Kore"), "modelName": v["model"]},
-                "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 44100}})
+        # model chính lỗi hẳn (quá tải mãi, hết hạn mức, model preview bị gỡ…) → đọc lại câu đó bằng model dự phòng
+        for model in dict.fromkeys([v["model"], v.get("model_fallback") or FALLBACK_TTS]):
+            for attempt in range(5):   # bộ lọc an toàn đôi khi chặn nhầm → thử lại, cuối cùng bỏ lời đạo diễn
+                prof = v["profile"] if attempt < 2 else v.get("profile_fallback", v["profile"])
+                inp = {"text": ln["text"]} if attempt == 4 else {"prompt": prof + " " + ln.get("direction", ""), "text": ln["text"]}
+                r = requests.post("https://texttospeech.googleapis.com/v1/text:synthesize", headers=hdr, timeout=120, json={
+                    "input": inp, "voice": {"languageCode": v.get("language", "vi-VN"), "name": v.get("voice", "Kore"), "modelName": model},
+                    "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 44100}})
+                if r.ok: break
+                if r.status_code in (429, 500, 503): time.sleep(5 * (attempt + 1)); continue
+                if "usage guidelines" not in r.text: break   # lỗi không phải bộ lọc → sang model dự phòng
             if r.ok: break
-            if r.status_code in (429, 500, 503): time.sleep(5 * (attempt + 1)); continue
-            if "usage guidelines" not in r.text: raise SystemExit(f"{lid}: {r.status_code} {r.text[:300]}")
+            print(f"  {lid}: {model} lỗi {r.status_code} — thử model dự phòng", flush=True)
         if not r.ok: raise SystemExit(f"{lid}: {r.status_code} {r.text[:300]}")
         raw = out / f"{lid}.raw.mp3"; raw.write_bytes(base64.b64decode(r.json()["audioContent"]))
         trim = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse"
         sh(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw), "-af", f"{trim},atempo={a.tempo},loudnorm=I=-18:TP=-2:LRA=7,apad=pad_dur=0.1", "-ar", "44100", "-ac", "1", "-c:a", "pcm_s16le", str(f)])
-        raw.unlink(); return lid, "đọc" + (" (không kèm đạo diễn)" if attempt == 4 else "")
+        raw.unlink(); return lid, "đọc" + (" (không kèm đạo diễn)" if attempt == 4 else "") + (f" ⚠ bằng {model}" if model != v["model"] else "")
 
     with ThreadPoolExecutor(a.jobs) as ex:
         for lid, st in ex.map(one, lines): print(lid, st, flush=True)

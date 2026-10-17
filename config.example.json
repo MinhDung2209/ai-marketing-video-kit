@@ -2,6 +2,7 @@
   "_ghi_chu": "Chép file này thành config.json rồi sửa. config.json KHÔNG đưa vào gói / git.",
   "gcp_key_path": "C:/duong-dan/toi/service-account.json",
   "tts_model": "gemini-3.1-flash-tts-preview",
+  "tts_fallback_model": "gemini-2.5-flash-tts",
   "tts_voice": "Kore",
   "tts_language": "vi-VN",
   "plenxai_credit_limit": 700

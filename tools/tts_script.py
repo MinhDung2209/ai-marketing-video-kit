@@ -3,7 +3,7 @@
 Dùng: python tts_script.py <kich-ban.json> <thư mục ra> [--voice Kore] [--model gemini-2.5-pro-tts]
 Kịch bản: xem kich-ban-giong-v1.json (profile + direction từng câu + thẻ [short pause]... trong text).
 """
-import sys as _sys
+import time, sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
 except Exception: pass   # cửa sổ lệnh Windows mặc định không in được tiếng Việt
 import sys, os, json, base64, subprocess, argparse, requests
@@ -16,6 +16,7 @@ a = ap.parse_args()
 sc = json.load(open(a.script, encoding="utf-8"))
 cfg = config()
 model = a.model or sc.get("model") or cfg.get("tts_model", "gemini-3.1-flash-tts-preview")
+fallback = sc.get("model_fallback") or cfg.get("tts_fallback_model", "gemini-2.5-flash-tts")   # model chính lỗi hẳn → đọc bằng model này
 voice = a.voice or sc.get("voice") or cfg.get("tts_voice", "Kore")
 gap = float(sc.get("gap_seconds", 0.35)); os.makedirs(a.out, exist_ok=True)
 t, p = token_and_project(); H = {"Authorization": f"Bearer {t}", "x-goog-user-project": p}
@@ -36,18 +37,24 @@ for ln in sc["lines"]:
     # gặp 30/09 ở câu L4 dù 2 lần trước đọc được) → thử lại tối đa 3 lần.
     # Chuỗi thử khi bộ lọc chặn nhầm: 2 lần hồ sơ chính → 2 lần profile_fallback → 1 lần KHÔNG kèm lời đạo diễn
     # (không prompt thì luôn qua, nhưng mất cảm xúc đạo diễn — nghe lại câu đó, nếu cần thì đổi vài chữ và đọc lại --only).
-    for attempt in range(5):
-        if attempt in (2, 3) and sc.get("profile_fallback"):
-            prompt = sc["profile_fallback"] + " " + ln.get("direction", "")
-        inp = {"prompt": prompt, "text": ln["text"]} if attempt < 4 else {"text": ln["text"]}
-        r = requests.post("https://texttospeech.googleapis.com/v1/text:synthesize", headers=H, json={
-            "input": inp,
-            "voice": {"languageCode": sc.get("language") or cfg.get("tts_language", "vi-VN"), "name": voice, "modelName": model},
-            "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 44100}})
-        if r.ok or "usage guidelines" not in r.text:
-            if r.ok and attempt == 4: print(f"  {ln['id']}: ⚠ đọc KHÔNG kèm lời đạo diễn (bộ lọc chặn) — nghe lại câu này", flush=True)
-            break
-        print(f"  {ln['id']}: bộ lọc chặn nhầm, thử lại ({attempt + 1}/5)", flush=True)
+    for m in dict.fromkeys([model, fallback]):
+        prompt = sc["profile"] + " " + ln.get("direction", "")
+        for attempt in range(5):
+            if attempt in (2, 3) and sc.get("profile_fallback"):
+                prompt = sc["profile_fallback"] + " " + ln.get("direction", "")
+            inp = {"prompt": prompt, "text": ln["text"]} if attempt < 4 else {"text": ln["text"]}
+            r = requests.post("https://texttospeech.googleapis.com/v1/text:synthesize", headers=H, json={
+                "input": inp,
+                "voice": {"languageCode": sc.get("language") or cfg.get("tts_language", "vi-VN"), "name": voice, "modelName": m},
+                "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 44100}})
+            if r.status_code in (429, 500, 503): time.sleep(5 * (attempt + 1)); continue
+            if r.ok or "usage guidelines" not in r.text:
+                if r.ok and attempt == 4: print(f"  {ln['id']}: ⚠ đọc KHÔNG kèm lời đạo diễn (bộ lọc chặn) — nghe lại câu này", flush=True)
+                break
+            print(f"  {ln['id']}: bộ lọc chặn nhầm, thử lại ({attempt + 1}/5)", flush=True)
+        if r.ok or "usage guidelines" in r.text: break   # bộ lọc chặn thì model khác cũng vậy → báo đổi chữ
+        print(f"  {ln['id']}: {m} lỗi {r.status_code} — thử model dự phòng {fallback}", flush=True)
+    if r.ok and m != model: print(f"  {ln['id']}: ⚠ đọc bằng model dự phòng {m}", flush=True)
     if not r.ok:
         hint = (" → Bộ lọc an toàn của Google chặn câu này. Đổi vài chữ trong câu (vd bỏ tên riêng, đổi từ nhấn mạnh) "
                 "rồi chạy lại với --only " + ln["id"]) if "usage guidelines" in r.text else ""
