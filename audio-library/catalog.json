@@ -9925,5 +9925,14 @@
   "license": "CC0 1.0",
   "duration": 0.52,
   "note": ""
+ },
+ {
+  "id": "bgm.lyria.news-explainer-100bpm",
+  "path": "bgm/lyria/news-explainer-100bpm.mp3",
+  "kind": "bgm",
+  "source": "Google Lyria lyria-002 (tự tạo 20/10/2026, seed 21–28 nối crossfade 3s)",
+  "license": "Tự tạo bằng Lyria — không cần ghi nguồn",
+  "duration": 241.15,
+  "note": "news explainer, tin tức, giải thích, kinh tế: synth bass đều, hi-hat nhỏ, pad hồi hộp nhẹ, piano rất khẽ, 100 BPM, không lời — dùng mặc định cho tools/news_video.py"
  }
 ]

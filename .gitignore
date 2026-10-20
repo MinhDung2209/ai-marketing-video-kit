@@ -20,3 +20,6 @@ _thu/
 
 # Repo tham khảo — clone bằng scripts/clone_repos.sh
 _repos/
+
+# Token đăng nhập YouTube của youtube_upload.py — KHÔNG commit
+.youtube_token.json

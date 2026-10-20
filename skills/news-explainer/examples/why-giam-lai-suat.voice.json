@@ -1,0 +1,63 @@
+{
+ "title": "15 ngân hàng giảm lãi trong 1 ngày: chuyện gì vừa xảy ra?",
+ "model": "gemini-3.1-flash-tts-preview",
+ "voice": "Kore",
+ "language": "vi-VN",
+ "gap_seconds": 0.28,
+ "profile": "Bạn là nữ người dẫn chuyện thời sự Việt Nam, giọng miền Bắc chuẩn, ấm, rõ, cuốn hút. Đang kể một tin nóng về tiền bạc cho người xem phổ thông, như kể cho một người bạn thông minh. Có nhấn nhá, lên xuống tự nhiên, tò mò ở câu hỏi, chắc chắn ở dữ kiện. Nhịp nhanh và gọn nhưng số liệu phải rõ ràng. Không lên giọng quảng cáo, không đọc đều như máy. Giữ cùng một chất giọng và nhịp suốt bài.",
+ "profile_fallback": "Nữ dẫn chuyện thời sự tiếng Việt giọng Bắc, ấm, tự nhiên, rành mạch, nhịp nhanh gọn, có nhấn nhá. Đọc đúng nguyên văn.",
+ "lines": [
+  {"id": "V01", "chapter": "Mở đầu", "text": "Ngày mười chín tháng mười, chỉ trong một ngày, mười lăm ngân hàng tư nhân cùng lúc hạ lãi suất tiết kiệm.",
+   "caption": "Ngày 19/10, chỉ trong một ngày, 15 ngân hàng tư nhân cùng lúc hạ lãi suất tiết kiệm.", "direction": "Mở đầu dứt khoát, như báo tin nóng, nhấn 'chỉ trong một ngày' và 'cùng lúc'."},
+  {"id": "V02", "chapter": "Mở đầu", "text": "Còn những ông lớn như Vietcombank, BIDV, Agribank thì công bố giảm lãi cho vay tới hai phần trăm một năm.",
+   "caption": "Còn những ông lớn như Vietcombank, BIDV, Agribank thì công bố giảm lãi cho vay tới 2%/năm.", "direction": "Tiếp nối nhanh, nhấn 'hai phần trăm'."},
+  {"id": "V03", "chapter": "Mở đầu", "text": "Chuyện gì vừa xảy ra? [short pause] Và tiền gửi, khoản vay của bạn sẽ thay đổi thế nào?",
+   "caption": "Chuyện gì vừa xảy ra? Và tiền gửi, khoản vay của bạn sẽ thay đổi thế nào?", "direction": "Câu hỏi tò mò, hạ giọng gần gũi ở vế sau."},
+
+  {"id": "V04", "chapter": "Lãi đã cao đến đâu", "text": "Trước đợt này, lãi suất đã leo rất cao. Theo ghi nhận của báo Tuổi Trẻ, có nơi trả lãi tiết kiệm gần mười phần trăm một năm.",
+   "caption": "Trước đợt này, lãi suất đã leo rất cao. Theo ghi nhận của báo Tuổi Trẻ, có nơi trả lãi tiết kiệm gần 10%/năm.", "direction": "Kể lại bối cảnh, nhấn 'gần mười phần trăm'."},
+  {"id": "V05", "chapter": "Lãi đã cao đến đâu", "text": "Ở chiều đi vay, vay cá nhân lên mười bảy, mười tám phần trăm. Vay mua ô tô ở vài ngân hàng còn vượt mười chín phần trăm.",
+   "caption": "Ở chiều đi vay, vay cá nhân lên 17–18%. Vay mua ô tô ở vài ngân hàng còn vượt 19%.", "direction": "Tăng dần độ ngạc nhiên, nhấn 'vượt mười chín phần trăm'."},
+  {"id": "V06", "chapter": "Lãi đã cao đến đâu", "text": "Một chủ doanh nghiệp làm rượu vang ở Tây Ninh nói: lãi trên mười hai, mười ba phần trăm như hiện nay, làm không khéo là không đủ trả lãi ngân hàng.",
+   "caption": "Một chủ doanh nghiệp làm rượu vang ở Tây Ninh nói: lãi trên 12–13% như hiện nay, làm không khéo là không đủ trả lãi ngân hàng.", "direction": "Trích lời người thật, chậm lại một chút, đồng cảm."},
+
+  {"id": "V07", "chapter": "Bốn ngày dồn dập", "text": "Rồi mọi thứ diễn ra rất nhanh. Ngày mười sáu tháng mười, Phó thủ tướng yêu cầu các ngân hàng giảm lãi suất cho vay.",
+   "caption": "Rồi mọi thứ diễn ra rất nhanh. Ngày 16/10, Phó thủ tướng yêu cầu các ngân hàng giảm lãi suất cho vay.", "direction": "Chuyển nhịp nhanh, như đếm từng mốc."},
+  {"id": "V08", "chapter": "Bốn ngày dồn dập", "text": "Ngày mười bảy, Chủ tịch Vietcombank nói tại Quốc hội: từ nay đến cuối năm, giảm tối thiểu hai phần trăm lãi cho vay.",
+   "caption": "Ngày 17, Chủ tịch Vietcombank nói tại Quốc hội: từ nay đến cuối năm, giảm tối thiểu 2% lãi cho vay.", "direction": "Nhịp đếm mốc, nhấn 'tối thiểu hai phần trăm'."},
+  {"id": "V09", "chapter": "Bốn ngày dồn dập", "text": "Ngày mười tám, Ngân hàng Nhà nước ra văn bản. Và ngày mười chín, Thống đốc họp trực tiếp với các ngân hàng.",
+   "caption": "Ngày 18, Ngân hàng Nhà nước ra văn bản. Và ngày 19, Thống đốc họp trực tiếp với các ngân hàng.", "direction": "Dồn dập, câu cuối chắc nịch."},
+  {"id": "V10", "chapter": "Bốn ngày dồn dập", "text": "Yêu cầu rất cụ thể. Lãi tiết kiệm niêm yết, kỳ hạn từ sáu tháng, giảm ít nhất không phẩy năm điểm phần trăm. Lãi cho vay sản xuất, kinh doanh và lĩnh vực ưu tiên, giảm một phẩy năm đến hai điểm phần trăm.",
+   "caption": "Yêu cầu rất cụ thể. Lãi tiết kiệm niêm yết, kỳ hạn từ 6 tháng, giảm ít nhất 0,5 điểm %. Lãi cho vay sản xuất, kinh doanh và lĩnh vực ưu tiên, giảm 1,5–2 điểm %.", "direction": "Rành mạch từng con số, như đọc điều khoản."},
+  {"id": "V11", "chapter": "Bốn ngày dồn dập", "text": "Kèm theo là cảnh báo: ngân hàng nào không làm có thể bị xem xét lại hạn mức tín dụng còn lại của năm nay, tức số tiền còn được phép cho vay; bị giao chỉ tiêu thấp hơn vào năm sau, hoặc phải áp tỷ lệ an toàn cao hơn.",
+   "caption": "Kèm theo là cảnh báo: ngân hàng nào không làm có thể bị xem xét lại hạn mức tín dụng còn lại của năm nay, tức số tiền còn được phép cho vay; bị giao chỉ tiêu thấp hơn vào năm sau, hoặc phải áp tỷ lệ an toàn cao hơn.", "direction": "Giọng nghiêm hơn, nhấn 'cảnh báo'."},
+
+  {"id": "V12", "chapter": "Vì sao giảm lãi gửi trước?", "text": "Nhưng khoan. Muốn giảm lãi vay, tại sao lại phải giảm lãi tiết kiệm trước?",
+   "caption": "Nhưng khoan. Muốn giảm lãi vay, tại sao lại phải giảm lãi tiết kiệm trước?", "direction": "Dừng lại đặt câu hỏi, tò mò thật sự."},
+  {"id": "V13", "chapter": "Vì sao giảm lãi gửi trước?", "text": "Vì tiền lãi trả cho người gửi là một phần lớn trong chi phí vốn của ngân hàng. Thống đốc nói thẳng: nếu tiếp tục đẩy lãi huy động lên cao, sẽ khó có cơ sở để giảm lãi cho vay.",
+   "caption": "Vì tiền lãi trả cho người gửi là một phần lớn trong chi phí vốn của ngân hàng. Thống đốc nói thẳng: nếu tiếp tục đẩy lãi huy động lên cao, sẽ khó có cơ sở để giảm lãi cho vay.", "direction": "Giải thích dễ hiểu, chắc chắn ở câu trích dẫn."},
+  {"id": "V14", "chapter": "Vì sao giảm lãi gửi trước?", "text": "Văn bản của Ngân hàng Nhà nước còn yêu cầu tuyệt đối không chạy đua tăng lãi huy động. Nói cách khác: các ngân hàng đã tranh nhau trả lãi cao để hút tiền gửi, và giờ cuộc đua đó phải dừng.",
+   "caption": "Văn bản của Ngân hàng Nhà nước còn yêu cầu tuyệt đối không chạy đua tăng lãi huy động. Nói cách khác: các ngân hàng đã tranh nhau trả lãi cao để hút tiền gửi, và giờ cuộc đua đó phải dừng.", "direction": "Nhấn 'chạy đua', 'phải dừng'."},
+  {"id": "V15", "chapter": "Vì sao giảm lãi gửi trước?", "text": "Bối cảnh là nhu cầu vốn rất lớn. Đến ngày mười bốn tháng mười, dư nợ cho vay toàn nền kinh tế đã tăng mười một phẩy bốn bốn phần trăm so với cuối năm trước, lên hơn hai mươi triệu tỷ đồng.",
+   "caption": "Bối cảnh là nhu cầu vốn rất lớn. Đến ngày 14/10, dư nợ cho vay toàn nền kinh tế đã tăng 11,44% so với cuối năm trước, lên hơn 20 triệu tỷ đồng.", "direction": "Rõ số, nhịp vừa."},
+
+  {"id": "V16", "chapter": "Ngân hàng phản ứng", "text": "Các ngân hàng phản ứng ngay. BIDV công bố gói khoảng một trăm nghìn tỷ đồng, lãi vay từ sáu đến bảy phần trăm, chấp nhận giảm thu nhập khoảng năm trăm tỷ.",
+   "caption": "Các ngân hàng phản ứng ngay. BIDV công bố gói khoảng 100.000 tỷ đồng, lãi vay từ 6–7%, chấp nhận giảm thu nhập khoảng 500 tỷ.", "direction": "Nhanh, năng lượng, nhấn các con số lớn."},
+  {"id": "V17", "chapter": "Ngân hàng phản ứng", "text": "Sacombank dành bốn mươi nghìn tỷ, giảm hai phần trăm. Vietcombank nói sẽ giảm tự động, khách không cần làm đơn.",
+   "caption": "Sacombank dành 40.000 tỷ, giảm 2%. Vietcombank nói sẽ giảm tự động, khách không cần làm đơn.", "direction": "Liệt kê gọn, nhấn 'không cần làm đơn'."},
+
+  {"id": "V18", "chapter": "Tiền của bạn", "text": "Vậy với người gửi tiết kiệm? Kỳ hạn mười hai tháng ở phần lớn ngân hàng giờ niêm yết dưới bảy phần trăm. Khoảng mười lăm ngân hàng còn dưới sáu phần trăm.",
+   "caption": "Vậy với người gửi tiết kiệm? Kỳ hạn 12 tháng ở phần lớn ngân hàng giờ niêm yết dưới 7%. Khoảng 15 ngân hàng còn dưới 6%.", "direction": "Chuyển sang nói trực tiếp với người xem, gần gũi."},
+  {"id": "V19", "chapter": "Tiền của bạn", "text": "Nhưng có một chi tiết: nhiều nơi trên thực tế vẫn trả cao hơn mức niêm yết hai đến ba phần trăm, qua mã ưu đãi trên ứng dụng hay mã giới thiệu của nhân viên. Lãi suất vẫn có hai giá.",
+   "caption": "Nhưng có một chi tiết: nhiều nơi trên thực tế vẫn trả cao hơn mức niêm yết 2–3%, qua mã ưu đãi trên ứng dụng hay mã giới thiệu của nhân viên. Lãi suất vẫn có hai giá.", "direction": "Hạ giọng như tiết lộ một bí mật nhỏ, nhấn 'hai giá'."},
+  {"id": "V20", "chapter": "Tiền của bạn", "text": "Với người đi vay: mức giảm một phẩy năm đến hai phần trăm nhắm vào sản xuất, kinh doanh và lĩnh vực ưu tiên. Thống đốc nói không cào bằng, nhưng yêu cầu xem xét cả khoản vay đang có, không chỉ khoản vay mới.",
+   "caption": "Với người đi vay: mức giảm 1,5–2% nhắm vào sản xuất, kinh doanh và lĩnh vực ưu tiên. Thống đốc nói không cào bằng, nhưng yêu cầu xem xét cả khoản vay đang có, không chỉ khoản vay mới.", "direction": "Rõ ràng, cân bằng."},
+  {"id": "V21", "chapter": "Tiền của bạn", "text": "Nếu bạn vay mua nhà, mua xe để tiêu dùng, đừng mặc định mình được giảm ngay. Hãy hỏi lại ngân hàng khoản vay của mình có thuộc diện được giảm hay không.",
+   "caption": "Nếu bạn vay mua nhà, mua xe để tiêu dùng, đừng mặc định mình được giảm ngay. Hãy hỏi lại ngân hàng khoản vay của mình có thuộc diện được giảm hay không.", "direction": "Lời khuyên thân thiện, chân thành."},
+
+  {"id": "V22", "chapter": "Cần theo dõi gì", "text": "Theo Ngân hàng Nhà nước, lãi cho vay bình quân tháng tám là mười phẩy bảy phần trăm. Con số của tháng mười, tháng mười một có giảm thật hay không, mới là câu trả lời cuối cùng.",
+   "caption": "Theo Ngân hàng Nhà nước, lãi cho vay bình quân tháng 8 là 10,7%. Con số của tháng 10, tháng 11 có giảm thật hay không, mới là câu trả lời cuối cùng.", "direction": "Chốt vấn đề, chậm lại, chắc chắn."},
+  {"id": "V23", "chapter": "Cần theo dõi gì", "text": "Bạn đang gửi tiết kiệm hay đang trả nợ ngân hàng? Lãi của bạn đã thay đổi chưa? Kể cho mình nghe ở phần bình luận nhé.",
+   "caption": "Bạn đang gửi tiết kiệm hay đang trả nợ ngân hàng? Lãi của bạn đã thay đổi chưa? Kể cho mình nghe ở phần bình luận nhé.", "direction": "Thân thiện, mời gọi, mỉm cười."}
+ ]
+}
