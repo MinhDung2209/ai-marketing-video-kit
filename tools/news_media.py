@@ -196,7 +196,10 @@ def browse(url, folder, video, shot, known=(), prefix=""):
 
 def cmd_grab(a):
     art = article(a.url)
-    aid = re.search(r"(\d{7,})\.html?$", a.url); folder = pathlib.Path(a.dir) / f"{art['site']}-{aid.group(1) if aid else 'bai'}"
+    # mã bài cuối link: .html / .htm / .vnp (Vietnam+, 20/10: 2 bài cùng rơi vào "vietnamplus-bai" → đè nhau) / không đuôi
+    aid = re.search(r"(\d{6,})(?:\.\w{2,4})?/?(?:\?.*)?$", a.url)
+    slug = re.sub(r"\W+", "-", a.url.split("?")[0].rstrip("/").rsplit("/", 1)[-1])[:40]
+    folder = pathlib.Path(a.dir) / f"{art['site']}-{aid.group(1) if aid else slug}"
     folder.mkdir(parents=True, exist_ok=True)
     figs = art.pop("figures") or ([(art["og_image"], "")] if art["og_image"] else [])
     items = []

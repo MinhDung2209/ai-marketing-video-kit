@@ -23,3 +23,10 @@ _repos/
 
 # Token đăng nhập YouTube của youtube_upload.py — KHÔNG commit
 .youtube_token.json
+
+# Profile trình duyệt của social_radar.py (cookie đăng nhập mạng xã hội) — KHÔNG commit
+.social-profile/
+tmp_*_check.png
+
+# Số đo radar mạng xã hội hằng ngày (dữ liệu, không phải mã)
+newsroom/signals/
