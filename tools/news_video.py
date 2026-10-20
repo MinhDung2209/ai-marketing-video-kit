@@ -22,6 +22,8 @@
   - Cảnh kéo dài tới cảnh sau; "over" = lớp đè (handwrite, scribble, lowerThird…) — mặc định tới hết cảnh, hoặc "d".
   - "fn"/"args" = hàm Motion (xem templates/news-motion/README.md) bỏ 2 tham số đầu (t, d) — build tự điền.
   - "sfx": [{"at","phrase","shift","name","vol"}] thêm tiếng tuỳ ý; tiếng mặc định theo từng hàm ở AUTO_SFX.
+  - "format": "reel" → khung dọc 1080×1920 (Reels/Shorts/TikTok): phụ đề ngắn, đặt cao tránh giao diện nền tảng;
+    tọa độ handwrite/scribble theo khung 1080×1920 (chừa ~250px trên, ~450px dưới).
 Nguồn: mọi "credit" trên hình + SOURCES.md (từ media/*/media.json) để dán mô tả.
 """
 import sys as _sys
@@ -43,7 +45,8 @@ SFX = {   # tên ngắn → audio-library (Mixkit/Pixabay: dùng thương mại,
     "page": "sfx/mixkit/paper/paper-page-turn.mp3"}
 VOL = {"whoosh": .3, "whoosh-short": .35, "swoosh": .3, "pen": .4, "pencil": .4, "marker": .4, "tick": .25, "pop": .3, "pop-dry": .3,
        "hit": .4, "impact": .45, "shutter": .3, "paper": .35, "page": .35}
-CAP_MAX = 52     # ký tự / dòng phụ đề
+CAP_MAX = 52     # ký tự / dòng phụ đề (khung ngang)
+CAP_MAX_REEL = 30
 FPS = 30
 
 def load(p): return json.load(open(p, encoding="utf-8"))
@@ -65,19 +68,22 @@ def assign(ph, segs):
             t += b - a
     return out
 
-def split_even(text, a, b):   # dòng quá dài → cắt ở khoảng trắng gần giữa, chia thời gian theo ký tự
-    if len(text) <= CAP_MAX: return [(a, b, text)]
+def split_even(text, a, b, cap=CAP_MAX):   # dòng quá dài → cắt ở khoảng trắng gần giữa, chia thời gian theo ký tự
+    if len(text) <= cap or " " not in text: return [(a, b, text)]
     sp = [i for i, c in enumerate(text) if c == " "]; cut = min(sp, key=lambda i: abs(i - len(text) / 2))
     m = a + (b - a) * cut / len(text)
-    return split_even(text[:cut], a, m) + split_even(text[cut + 1:], m, b)
+    return split_even(text[:cut], a, m, cap) + split_even(text[cut + 1:], m, b, cap)
+
+def is_reel(plan): return plan.get("format") in ("reel", "vertical", "9:16")
 
 def cmd_subs(proj):
     tm = load(proj / "audio/timing.json"); subs = []
+    cap = CAP_MAX_REEL if (proj / "plan.json").exists() and is_reel(load(proj / "plan.json")) else CAP_MAX
     for ln in tm["lines"]:
         segs = segments(proj / "audio" / ln["file"]) or [(0, ln["dur"])]
         text = re.sub(r"\[[^\]]*\]", "", ln.get("caption") or ln["text"])
         for (a, b), g in zip(segs, assign(phrases(text), segs)):
-            for s, e, t in split_even(" ".join(g), ln["start"] + a, ln["start"] + b) if g else []:
+            for s, e, t in split_even(" ".join(g), ln["start"] + a, ln["start"] + b, cap) if g else []:
                 subs.append({"line": ln["id"], "start": round(s, 2), "end": round(e, 2), "text": t})
     for x, y in zip(subs, subs[1:]):   # giữ chữ tới cụm sau khi nghỉ ngắn (đỡ nháy)
         if y["start"] - x["end"] < 1.2: x["end"] = y["start"]
@@ -153,6 +159,8 @@ def cmd_build(proj):
     for x in plan.get("sfx", []): sfx.append((x["name"], anchor(x, lines, subs), x.get("d")))
     sfx = [{"name": n, "t": round(max(0, t), 3), "d": d and round(d, 3), "vol": VOL.get(n, .3)} for n, t, d in sorted(sfx, key=lambda e: e[1])]
     save({"total": total, "events": sfx}, proj / "audio/sfx.json"); save(timeline, proj / "timeline.json")
+    W, H = (1080, 1920) if is_reel(plan) else (1920, 1080)
+    capcss = ("bottom:430px", "max-width:960px", "52px") if is_reel(plan) else ("bottom:64px", "max-width:1500px", "44px")
     caps = "\n".join(f'<div class="cap" data-start="{c["start"]}" data-duration="{round(c["end"] - c["start"], 3)}"><span>{cap_html(c["text"])}</span></div>'
                      for c in subs)
     page = f"""<!doctype html>
@@ -162,12 +170,12 @@ def cmd_build(proj):
 <script src="motion/fonts/Pangolin.js"></script><script src="motion/fonts/PatrickHand.js"></script><script src="motion/fonts/Itim.js"></script>
 <script src="motion/motion.js"></script>
 <style>
-.cap{{position:absolute;left:0;right:0;bottom:64px;text-align:center;z-index:900;pointer-events:none}}
-.cap span{{display:inline-block;max-width:1500px;padding:10px 26px 12px;background:rgba(10,12,16,.82);border-radius:10px;
-  font:700 44px/1.3 'Be Vietnam Pro',sans-serif;color:#fff;letter-spacing:-.3px;box-shadow:0 6px 24px rgba(0,0,0,.35)}}
+.cap{{position:absolute;left:0;right:0;{capcss[0]};text-align:center;z-index:900;pointer-events:none}}
+.cap span{{display:inline-block;{capcss[1]};padding:10px 26px 12px;background:rgba(10,12,16,.82);border-radius:10px;
+  font:700 {capcss[2]}/1.3 'Be Vietnam Pro',sans-serif;color:#fff;letter-spacing:-.3px;box-shadow:0 6px 24px rgba(0,0,0,.35)}}
 .cap b{{color:#ffc531;font-weight:800}}
 </style></head><body>
-<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="{total}">
+<div id="root" data-composition-id="main" data-start="0" data-width="{W}" data-height="{H}" data-duration="{total}">
 {caps}
 </div>
 <script>
@@ -217,15 +225,21 @@ def cmd_publish(proj):
     """Đăng YouTube (API ở chế độ Testing → khoá private: đổi 'Không công khai' trong Studio) + thumbnail; lưu youtube-upload.json."""
     import types, youtube_upload as yt
     plan = load(proj / "plan.json"); rec = proj / "youtube-upload.json"
-    if rec.exists() and load(rec).get("video_id"): print("đã đăng:", load(rec)["url"]); return
+    old = load(rec) if rec.exists() and load(rec).get("video_id") else None
+    # YouTube không cho thay file: bản render mới hơn lần đăng → đăng bản mới, bản cũ chuyển riêng tư
+    if old and (proj / "video.mp4").stat().st_mtime <= rec.stat().st_mtime: print("đã đăng:", old["url"]); return
     (proj / "youtube-description.txt").write_text(description(proj), encoding="utf-8")
-    th = plan.get("thumb", {}); thumb = proj / "thumbnail.jpg"
-    yt.thumb(types.SimpleNamespace(video=str(proj / "video.mp4"), out=str(thumb), t=th.get("t", 1.5), text=th.get("text", "")))
+    th = plan.get("thumb", {}); thumb = None if is_reel(plan) else proj / "thumbnail.jpg"   # video dọc ≤ 3 phút = Shorts: không đặt thumbnail
+    if thumb: yt.thumb(types.SimpleNamespace(video=str(proj / "video.mp4"), out=str(thumb), t=th.get("t", 1.5), text=th.get("text", "")))
     vid = yt.upload(types.SimpleNamespace(video=str(proj / "video.mp4"), title=plan["title"], desc=str(proj / "youtube-description.txt"),
-                                          chapters=None, credits=None, thumb=str(thumb), tags=plan.get("tags", ""),
+                                          chapters=None, credits=None, thumb=thumb and str(thumb), tags=plan.get("tags", ""),
                                           privacy=plan.get("privacy", "private"), category="25"))
     save({"video_id": vid, "url": f"https://youtu.be/{vid}", "studio": f"https://studio.youtube.com/video/{vid}/edit",
-          "privacy": plan.get("privacy", "private")}, rec)
+          "privacy": plan.get("privacy", "private"),
+          "replaced": ([old["video_id"]] + old.get("replaced", [])) if old else []}, rec)
+    if old:
+        yt.update(types.SimpleNamespace(id=old["video_id"], title=None, desc=None, chapters=None, credits=None, tags=None,
+                                        privacy="private", thumb=None))
     print("đăng xong:", f"https://youtu.be/{vid}")
 
 # ------------------------------------------------------------------ duyệt / render
@@ -238,9 +252,10 @@ def cmd_snap(proj):
     for f in proj.glob("_snap_*.png"): f.unlink()
     render_py(proj, "--snap", ",".join(map(str, ts)))
     (proj / "review").mkdir(exist_ok=True); font = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 20)
-    W, H, n = 480, 290, len(ts); sheet = Image.new("RGB", (W * 4, math.ceil(n / 4) * H), "#111"); d = ImageDraw.Draw(sheet)
+    K = 6 if is_reel(load(proj / "plan.json")) else 4   # khung dọc: 6 ảnh / hàng
+    W, H, n = (320, 600, len(ts)) if K == 6 else (480, 290, len(ts)); sheet = Image.new("RGB", (W * K, math.ceil(n / K) * H), "#111"); d = ImageDraw.Draw(sheet)
     for i, (s, t) in enumerate(zip(tl, ts)):
-        im = Image.open(proj / f"_snap_{t:05.1f}.png"); im.thumbnail((W - 6, H - 30)); x, y = i % 4 * W, i // 4 * H
+        im = Image.open(proj / f"_snap_{t:05.1f}.png"); im.thumbnail((W - 6, H - 30)); x, y = i % K * W, i // K * H
         sheet.paste(im, (x + 3, y + 3)); d.text((x + 6, y + H - 26), f"{i} {s['fn']} {s['at']} {t}s", font=font, fill="#ffc531")
     sheet.save(proj / "review/scenes.jpg", quality=88)
     for f in proj.glob("_snap_*.png"): f.unlink()

@@ -133,6 +133,24 @@ def upload(a):
         print("  thumbnail: đã đặt" if t.ok else f"  thumbnail lỗi: {t.text[:200]}")
     return vid
 
+def update(a):
+    """Sửa video đã đăng (title/mô tả/tag/chế độ/thumbnail). File video thì YouTube không cho thay — phải đăng mới."""
+    v = api("GET", "videos", params={"id": a.id, "part": "snippet,status"}).json()["items"]
+    if not v: raise SystemExit(f"không thấy video {a.id}")
+    sn, st = v[0]["snippet"], v[0]["status"]
+    if a.title: sn["title"] = a.title[:100]
+    if a.desc or a.chapters or a.credits: sn["description"] = description(a)
+    if a.tags is not None: sn["tags"] = [t.strip() for t in a.tags.split(",") if t.strip()]
+    if a.privacy: st["privacyStatus"] = a.privacy
+    body = {"id": a.id, "snippet": {k: sn[k] for k in ("title", "description", "categoryId", "tags", "defaultLanguage") if k in sn},
+            "status": {k: st[k] for k in ("privacyStatus", "selfDeclaredMadeForKids", "embeddable", "license", "publicStatsViewable") if k in st}}
+    api("PUT", "videos", params={"part": "snippet,status"}, json=body)
+    print(f"đã sửa ({st['privacyStatus']}): https://youtu.be/{a.id} · {sn['title']}")
+    if a.thumb:
+        t = api("POST", "thumbnails/set", upload=True, params={"videoId": a.id}, data=open(a.thumb, "rb").read(),
+                headers={"Content-Type": "image/jpeg"}, timeout=120)
+        print("  thumbnail: đã đặt" if t.ok else f"  thumbnail lỗi: {t.text[:200]}")
+
 def thumb(a):
     """Khung hình ở giây --t, thu về 1280×720, chữ to viền đậm (đọc được trên điện thoại) → JPG ≤ 2 MB."""
     from PIL import Image, ImageDraw, ImageFont
@@ -162,6 +180,9 @@ if __name__ == "__main__":
     u.add_argument("--chapters"); u.add_argument("--credits"); u.add_argument("--thumb"); u.add_argument("--tags")
     u.add_argument("--privacy", default="private", choices=("private", "unlisted", "public")); u.add_argument("--category", default="19")   # 19 = Travel & Events
     u.set_defaults(fn=upload)
+    e = sp.add_parser("update"); e.add_argument("id"); e.add_argument("--title"); e.add_argument("--desc")
+    e.add_argument("--chapters"); e.add_argument("--credits"); e.add_argument("--thumb"); e.add_argument("--tags")
+    e.add_argument("--privacy", choices=("private", "unlisted", "public")); e.set_defaults(fn=update)
     t = sp.add_parser("thumb"); t.add_argument("video"); t.add_argument("out"); t.add_argument("--t", type=float, default=3)
     t.add_argument("--text", help="chữ trên ảnh; '|' để xuống dòng"); t.set_defaults(fn=thumb)
     a = ap.parse_args(); a.fn(a)

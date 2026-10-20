@@ -94,3 +94,30 @@ html,body{margin:0;background:#000}
 .m-tr .panel{position:absolute;top:-10%;bottom:-10%;width:130%;left:-130%;transform:skewX(-14deg)}
 .m-tr .flash{position:absolute;inset:0;background:#fff}
 .m-tr .streak{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.0) 0 40px,rgba(255,255,255,.18) 40px 44px);filter:blur(2px)}
+
+/* khung dọc 9:16 (Reels/Shorts/TikTok): #root.v — chừa ~250px trên, ~420px dưới cho giao diện nền tảng */
+.v .m-credit{left:40px;bottom:auto;top:250px;font-size:24px;max-width:820px}
+.v .m-kicker{font-size:30px;letter-spacing:4px;max-width:960px;line-height:1.35}
+.v .m-num{font-size:190px;letter-spacing:-8px}
+.v .m-label{font-size:46px;max-width:940px}
+.v .m-sub{font-size:28px}
+.v .m-title{left:70px;right:70px;top:300px;font-size:62px}
+.v .m-bars{bottom:640px;height:700px;gap:100px}
+.v .m-bar{width:250px}
+.v .m-bar .val{font-size:84px}
+.v .m-bar .lab{width:320px;white-space:normal;text-align:center;font-size:34px}
+.v .m-delta{top:500px;font-size:46px;white-space:normal;width:940px}
+.v .m-floor{left:110px;right:110px;bottom:640px}
+.v .m-tl-vbox{position:absolute;right:60px}
+.v .m-tl-vbox .m-tl-date{position:static;font-size:58px;text-align:left}
+.v .m-tl-vbox .m-tl-text{margin-top:8px;font-size:36px;text-align:left}
+.v .m-quote{left:70px;right:70px}
+.v .m-quote.with-photo{left:70px;right:70px;top:auto;bottom:560px;transform:none}
+.v .m-qphoto{right:0;width:auto;bottom:auto;height:860px}
+.v .m-qphoto:after{background:linear-gradient(180deg,transparent 55%,var(--ink) 100%)}
+.v .m-qtext{font-size:58px}
+.v .m-big{left:70px;right:70px;font-size:118px;letter-spacing:-3px}
+.v .m-big-kicker{left:70px;font-size:30px}
+.v .m-tag{left:50px;top:300px}
+.v .m-l3{left:50px;bottom:640px}
+.v .m-bug{top:150px;right:40px}

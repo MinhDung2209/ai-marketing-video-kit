@@ -1,10 +1,10 @@
-/* Motion HTML cho video tin tức 1920×1080 — chạy với tools/render.py (GSAP timeline "main", seek từng khung).
+/* Motion HTML cho video tin tức 1920×1080 (hoặc dọc 1080×1920: #root data-width/height, class "v") — chạy với tools/render.py (GSAP timeline "main", seek từng khung).
    Cần nạp trước: gsap.min.js, opentype.min.js, fonts/<Font>.js (chữ viết tay, base64 — file:// không fetch được .ttf).
    Mọi hàm nhận (t, d, …): t = giây bắt đầu, d = thời lượng. Mỗi cảnh/lớp là 1 div có data-start/data-duration
    → render.py tự ẩn/hiện; <video> trong cảnh được render.py tua đúng khung. Xem README.md. */
 (function () {
   const SVGNS = 'http://www.w3.org/2000/svg';
-  const W = 1920, H = 1080;
+  let W = 1920, H = 1080;   // lấy theo #root data-width/height khi tạo Motion
 
   function el(tag, cls, parent, html) {
     const e = document.createElement(tag);
@@ -63,6 +63,8 @@
   class Motion {
     constructor(opts = {}) {
       this.root = typeof opts.root === 'string' ? document.querySelector(opts.root) : (opts.root || document.getElementById('root'));
+      W = +this.root.dataset.width || 1920; H = +this.root.dataset.height || 1080;
+      this.vertical = H > W; if (this.vertical) this.root.classList.add('v');
       this.tl = gsap.timeline({ paused: true });
       this.end = 0;
       window.__timelines = window.__timelines || {};
@@ -118,7 +120,7 @@
     }
 
     /** ảnh chụp đầu bài báo: trượt vào, nghiêng, bút dạ quang quét các ô box [x,y,w,h] (tỉ lệ 0–1 của ảnh) */
-    headline(t, d, src, { box, boxes, tag, width = 1500, tilt = -2, zoom = 1.1, crop = [0, 0], credit } = {}) {
+    headline(t, d, src, { box, boxes, tag, width = Math.min(1500, W - 90), tilt = -2, zoom = 1.1, crop = [0, 0], credit } = {}) {
       const s = this.scene(t, d);
       const paper = el('div', 'm-paper', s); paper.style.width = width + 'px'; paper.style.overflow = 'hidden';
       const inner = el('div', '', paper); inner.style.position = 'relative';
@@ -299,6 +301,7 @@
       const hasImg = items.some(i => i.img);
       const Y = lineY || (hasImg ? 640 : 560);
       if (title) { const ti = el('div', 'm-title', s, esc(title)); tl.fromTo(ti, { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: .5 }, t); }
+      if (this.vertical) return this._vtimeline(s, t, d, items);
       const line = el('div', 'm-tl-line', s), prog = el('div', 'm-tl-prog', s);
       line.style.top = prog.style.top = Y + 'px';
       tl.fromTo(line, { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: .6, ease: 'power2.out' }, t + .15);
@@ -322,6 +325,33 @@
         }
       });
       tl.fromTo(prog, { scaleX: px }, { scaleX: 1, duration: .5, ease: 'power2.inOut', immediateRender: false }, t + .6 + (n - 1) * step + .5);
+      return s;
+    }
+
+    // khung dọc: đường thời gian chạy từ trên xuống, chữ bên phải, ảnh (nếu có) nhỏ bên phải chữ
+    _vtimeline(s, t, d, items) {
+      const tl = this.tl, X = 120, top = 520, bot = H - 640, n = items.length;
+      const line = el('div', 'm-tl-line', s), prog = el('div', 'm-tl-prog', s);
+      for (const e of [line, prog]) Object.assign(e.style, { left: X + 'px', right: 'auto', width: '6px', top: top + 'px', height: (bot - top) + 'px' });
+      tl.fromTo(line, { scaleY: 0, transformOrigin: '50% 0' }, { scaleY: 1, duration: .6, ease: 'power2.out' }, t + .15);
+      tl.set(prog, { scaleY: 0, transformOrigin: '50% 0' }, t);
+      const step = Math.max(.5, (d - 1.2) / n); let py = 0;
+      items.forEach((it, i) => {
+        const y = n === 1 ? (top + bot) / 2 : top + (bot - top) * i / (n - 1), at = t + .6 + i * step;
+        const dot = el('div', 'm-tl-dot', s); Object.assign(dot.style, { position: 'absolute', left: (X - 14) + 'px', top: (y - 17) + 'px', margin: 0 });
+        const box = el('div', 'm-tl-vbox', s); box.style.left = (X + 60) + 'px'; box.style.top = (y - 46) + 'px';
+        if (it.img) box.style.right = '360px';
+        const date = el('div', 'm-tl-date', box, esc(it.date)), tx = el('div', 'm-tl-text', box, esc(it.text));
+        tl.fromTo(prog, { scaleY: py }, { scaleY: (y - top) / (bot - top), duration: .45, ease: 'power2.inOut', immediateRender: false }, at - .35); py = (y - top) / (bot - top);
+        tl.fromTo(dot, { scale: 0 }, { scale: 1, duration: .4, ease: 'back.out(3)' }, at);
+        tl.fromTo(date, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, at + .05);
+        tl.fromTo(tx, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, at + .15);
+        if (it.img) {
+          const im = el('img', 'm-tl-img', s); im.src = it.img;
+          Object.assign(im.style, { left: 'auto', right: '50px', width: '290px', top: (y - 95) + 'px', bottom: 'auto', height: '190px' });
+          tl.fromTo(im, { opacity: 0, y: 40, rotation: i % 2 ? 3 : -3 }, { opacity: 1, y: 0, rotation: i % 2 ? 1.5 : -1.5, duration: .5, ease: 'power3.out' }, at + .1);
+        }
+      });
       return s;
     }
 
