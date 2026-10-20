@@ -1,5 +1,19 @@
 # Biên tập cho người xem phổ thông
 
+## Chọn phong cách theo đề tài (agent tự quyết, ghi lý do trong đề xuất)
+
+Không có một phong cách cố định cho kênh. Đọc đề tài rồi chọn; một ngày có thể ra nhiều phong cách khác nhau.
+
+| Đề tài | Phong cách | Độ dài | Giọng (`profile` + nhạc) | Hình & nhịp dựng |
+|---|---|---|---|---|
+| Tiền, lãi suất, giá cả, chính sách kinh tế, thị trường | Kênh tài chính: theo dòng tiền, ai được/ai mất, nối chính sách ↔ túi tiền | Bản dài 10–15' + 3–4 short 60–90" | Chắc, rõ số, điềm tĩnh; nhạc news-explainer | Văn bản/tiêu đề báo tô dạ quang, số chạy, cột, mốc thời gian; đổi hình 4–6" |
+| Xã hội, chính sách đời sống, khoa học, "vì sao" phổ thông | Kiến thức gần gũi, ví dụ đời thường trước, cơ chế sau | 5–8' + short | Ấm, tò mò, như kể bạn nghe | Ảnh/video thật + chữ viết tay, sơ đồ động đơn giản |
+| Tin nóng đang diễn ra (biểu tình, thiên tai, sự cố) | Thời sự: chuyện gì – ở đâu – khi nào – điều chưa rõ; không suy đoán | 1–3' (dọc + ngang) | Nhanh, trung tính, nghiêm | Video hiện trường từ báo/đài là chính, mốc giờ, bản đồ; ít hiệu ứng |
+| Tin hot đời thường, trend, chuyện lạ | Casual, nói chuyện như bạn bè, có chút hài | 45"–2' dọc | Tươi, nhanh, tự nhiên | Clip/ảnh thật, chữ sticker, zoom giật, nhạc vui |
+| Clip hài lan truyền | Giải trí: clip gốc là chính, phụ đề sát, chêm meme tự dựng | 30"–90" dọc | Ít lời dẫn, tinh nghịch | Dừng hình, tua lại, zoom, tiếng hài; không miệt thị người thường |
+
+Độ sâu nghiên cứu luôn cần ở mọi phong cách (sai dữ kiện thì casual cũng hỏng); thứ thay đổi là độ dài, giọng, nhịp và mức chi tiết đưa lên màn hình.
+
 ## WHY
 
 **Xâu chuỗi trước, viết sau (người dùng chốt 20/10/2026).** Tin tức hay nằm ở bối cảnh nối các tin lại với nhau, không ở một bài báo. Trước khi viết kịch bản, nghiên cứu song song 3 nhánh rồi ghi `RESEARCH.md` (timeline có ngày + số hiệu văn bản, chuỗi nhân quả, nguồn từng dữ kiện, điều chưa xác minh) và cho người dùng duyệt góc nhìn:
