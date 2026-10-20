@@ -2,6 +2,12 @@
 
 ## WHY
 
+**Xâu chuỗi trước, viết sau (người dùng chốt 20/10/2026).** Tin tức hay nằm ở bối cảnh nối các tin lại với nhau, không ở một bài báo. Trước khi viết kịch bản, nghiên cứu song song 3 nhánh rồi ghi `RESEARCH.md` (timeline có ngày + số hiệu văn bản, chuỗi nhân quả, nguồn từng dữ kiện, điều chưa xác minh) và cho người dùng duyệt góc nhìn:
+- Kênh chính thức: NHNN, Chính phủ, Quốc hội, bộ ngành — văn bản, số liệu, họp báo.
+- Thị trường & chuyên gia: báo kinh tế, báo cáo công ty chứng khoán, số liệu theo mốc thời gian.
+- Mạng xã hội & dư luận: voz, Reddit, Facebook chuyên gia, bình luận báo, TikTok/YouTube — người xem đang lo, đang hỏi gì.
+Kịch bản phải giải được nghịch lý người xem thấy (vd "chính sách bảo giảm, sao lãi tiết kiệm vừa tăng?") bằng chuỗi nguyên nhân có số liệu, và chỉ ra điều không phải ai cũng thấy. Bản lãi suất 20/10 lần đầu chỉ thuật lại tin họp 19/10 → bị chê "chưa sâu".
+
 Mở bằng hệ quả người xem cảm nhận được hoặc một nghịch lý có thật. Dẫn về 2–4 cơ chế chính, rồi giải thích các điều kiện làm chúng mạnh/yếu đi. Chốt bằng dấu hiệu cần theo dõi, không dự báo chắc chắn điều chưa biết.
 
 Ví dụ tiền đề cần sửa: 'NHNN vừa tăng lãi suất' có thể thực ra là ngân hàng thương mại tăng lãi tiền gửi trong khi lãi điều hành giữ nguyên. Tách sự kiện đã xác minh trước khi tìm nguyên nhân.
