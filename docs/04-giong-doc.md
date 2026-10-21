@@ -16,6 +16,13 @@ Giọng dùng: **Kore** (nữ, miền Bắc qua lời dặn). Giọng khác: Aoe
    > "Câu đầu dứt khoát, hơi 'chơi lớn'. Câu sau hạ giọng, tinh nghịch như đang nháy mắt."
 3. **Thẻ trong lời:** `[short pause]` `[medium pause]` `[long pause]` `[whispering]` `[shouting]` `[extremely fast]`
    `[sigh]` `[laughing]` `[uhm]`. `...` = ngập ngừng; chữ VIẾT HOA = nhấn (phụ đề tự đổi về chữ thường).
+   Thẻ nhận cả mô tả tự do — nhưng **dùng thẻ TIẾNG ANH ngắn** (1–3 từ): `[curious]` `[serious]` `[softly]` `[playful]`
+   `[storytelling]` `[reflective]` `[brighter]` `[whispering]` — viết thẻ ở MỌI kịch bản, đặt ngay trước cụm cần đổi cảm xúc/nhịp
+   (phụ đề tự bỏ phần `[...]`).
+   ⚠ **Thẻ mô tả tiếng Việt bị ĐỌC THÀNH LỜI** (20/10/2026: `[tò mò]` `[ấm, thấu hiểu]` `[hào hứng dần, dồn dập]` → giọng đọc to
+   "tò mò… ấm, thấu hiểu") — người duyệt nghe là "đọc tiếng Việt fail". Không viết thẻ tiếng Việt.
+   ⚠ **Hạn chế thẻ cười** (`[laughing]` `[cười]` `[nhịn cười]`): người duyệt chê nghe giả (20/10/2026) — câu hài để chữ + ngắt nhịp tạo duyên.
+   ⚠ Thẻ tiếng Anh ổn định hơn; thẻ mô tả dài đôi khi làm model đọc lố (câu dài gấp đôi) → kiểm tra số âm tiết/giây (~2,7–3,7) rồi `--only` đọc lại.
 (Chirp3-HD thì nhận SSML: `<break> <prosody> <say-as> <sub> <p> <s> <phoneme>`, không có `<emphasis>`.)
 
 ## 3. Tốc độ — bài học
@@ -30,6 +37,14 @@ Số đọc bằng chữ để đọc đúng ("chín trăm tám mươi tám"); t
 Lỗi `400 … violates Vertex AI's usage guidelines` với câu hoàn toàn bình thường, **ngẫu nhiên**, phụ thuộc tổ hợp profile +
 câu chữ (vd "kèm lý do rõ ràng cho từng công ty" bị chặn, "lý do cụ thể" thì qua). `tts_script.py` tự xử lý:
 2 lần profile chính → 2 lần `profile_fallback` → 1 lần **không kèm lời đạo diễn** (in ⚠ để nghe lại). Vẫn lỗi → đổi vài chữ.
+
+## 5b. Nghe lại tự động — BẮT BUỘC trước khi dựng
+`python <kit>/tools/tts_qa.py voice.json audio` → transcribe từng câu (Gemini) và so với lời: ⚠ thẻ bị đọc thành lời, nhịp ngoài
+~2,4–3,9 âm tiết/giây (đọc lố/lề rề), nghe thừa chữ; `?` = khác chữ (tên riêng — máy nghe cũng có thể nhầm, nghe lại câu đó).
+Câu ⚠ → sửa lời/thẻ, `tts_script.py ... --only <id>`, chạy lại `tts_qa.py --only <id>`.
+- Từ tiếng Anh trong lời (vd "file") hay bị đọc lệch → viết bằng tiếng Việt ("dữ liệu ẩn trong ảnh").
+- `...` + `[softly]` dồn nhiều trong một câu làm câu lề rề (2,2 âm tiết/giây) → bớt.
+- Giọng kênh "Ít xem TikTok" chốt 21/10/2026: **Gemini 3.1 · Puck** (người duyệt: 3.1 hay nhất, không đổi engine).
 
 ## 6. Lệnh
 ```bash

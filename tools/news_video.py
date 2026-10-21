@@ -22,6 +22,8 @@
   - Cảnh kéo dài tới cảnh sau; "over" = lớp đè (handwrite, scribble, lowerThird…) — mặc định tới hết cảnh, hoặc "d".
   - "fn"/"args" = hàm Motion (xem templates/news-motion/README.md) bỏ 2 tham số đầu (t, d) — build tự điền.
   - "sfx": [{"at","phrase","shift","name","vol"}] thêm tiếng tuỳ ý; tiếng mặc định theo từng hàm ở AUTO_SFX.
+  - video {"sound": 1.0} = phát tiếng gốc của clip (từ offset, tốc độ 1) — đặt cảnh vào câu "pause" của voice.json
+    để giọng đọc lặng; nhạc nền tự hạ dưới tiếng gốc như dưới giọng.
   - "format": "reel" → khung dọc 1080×1920 (Reels/Shorts/TikTok): phụ đề ngắn, đặt cao tránh giao diện nền tảng;
     tọa độ handwrite/scribble theo khung 1080×1920 (chừa ~250px trên, ~450px dưới).
 Nguồn: mọi "credit" trên hình + SOURCES.md (từ media/*/media.json) để dán mô tả.
@@ -80,6 +82,9 @@ def cmd_subs(proj):
     tm = load(proj / "audio/timing.json"); subs = []
     cap = CAP_MAX_REEL if (proj / "plan.json").exists() and is_reel(load(proj / "plan.json")) else CAP_MAX
     for ln in tm["lines"]:
+        if ln.get("pause"):   # khoảng tiếng gốc: phụ đề (nếu có) hiện suốt khoảng
+            if ln.get("caption"): subs.append({"line": ln["id"], "start": ln["start"], "end": round(ln["start"] + ln["dur"], 2), "text": ln["caption"]})
+            continue
         segs = segments(proj / "audio" / ln["file"]) or [(0, ln["dur"])]
         text = re.sub(r"\[[^\]]*\]", "", ln.get("caption") or ln["text"])
         for (a, b), g in zip(segs, assign(phrases(text), segs)):
@@ -141,11 +146,14 @@ def cmd_build(proj):
     if not (proj / "motion").exists(): shutil.copytree(KIT / "templates/news-motion", proj / "motion")
     scenes = plan["scenes"]; starts = [0.0 if i == 0 else anchor(s, lines, subs) for i, s in enumerate(scenes)]
     if any(b <= a for a, b in zip(starts, starts[1:])): raise SystemExit(f"plan: cảnh không tăng dần {starts}")
-    js, sfx, timeline = [], [], []
+    js, sfx, timeline, clips = [], [], [], []
     for i, (s, t) in enumerate(zip(scenes, starts)):
         end = starts[i + 1] if i + 1 < len(scenes) else total; d = round(end - t, 3)
         js.append(f"m.{s['fn']}({t:.3f}, {d:.3f}, {', '.join(json.dumps(a, ensure_ascii=False) for a in s.get('args', []))});")
         sfx += auto_sfx(s["fn"], t, d, s.get("args", []))
+        o = s["args"][-1] if s["fn"] == "video" and len(s.get("args", [])) > 1 else {}
+        if isinstance(o, dict) and o.get("sound"):   # tiếng gốc: [offset, offset+d] của clip
+            clips.append({"src": s["args"][0], "t": round(t, 3), "d": d, "offset": o.get("offset", 0), "vol": o["sound"]})
         timeline.append({"i": i, "fn": s["fn"], "start": round(t, 2), "end": round(end, 2), "at": s["at"], "phrase": s.get("phrase", "")})
         for o in s.get("over", []):
             ot = anchor({"shift": 0, **o}, lines, subs) if o.get("at") else t + o.get("t", .3)
@@ -158,7 +166,7 @@ def cmd_build(proj):
             sfx.append(("whoosh-short" if s["transition"] != "flash" else "swoosh", end - .25, None))
     for x in plan.get("sfx", []): sfx.append((x["name"], anchor(x, lines, subs), x.get("d")))
     sfx = [{"name": n, "t": round(max(0, t), 3), "d": d and round(d, 3), "vol": VOL.get(n, .3)} for n, t, d in sorted(sfx, key=lambda e: e[1])]
-    save({"total": total, "events": sfx}, proj / "audio/sfx.json"); save(timeline, proj / "timeline.json")
+    save({"total": total, "events": sfx, "clips": clips}, proj / "audio/sfx.json"); save(timeline, proj / "timeline.json")
     W, H = (1080, 1920) if is_reel(plan) else (1920, 1080)
     capcss = ("bottom:430px", "max-width:960px", "52px") if is_reel(plan) else ("bottom:64px", "max-width:1500px", "44px")
     caps = "\n".join(f'<div class="cap" data-start="{c["start"]}" data-duration="{round(c["end"] - c["start"], 3)}"><span>{cap_html(c["text"])}</span></div>'
@@ -269,13 +277,21 @@ def cmd_render(proj):
     cat = {c["id"]: c for c in load(LIB / "catalog.json")}; b = plan.get("bgm", {})
     bgm = LIB / cat[b.get("id", "bgm.lyria.news-explainer-100bpm")]["path"]
     inp = ["-i", proj / "picture.mp4", "-i", proj / "audio/narration.mp3", "-stream_loop", "-1", "-i", bgm]
-    fx, mix = [], []
+    fx, mix, keys, cin = [], [], [], []
+    n0 = 3 + len(ev["events"])
+    for j, c in enumerate(ev.get("clips", [])):   # tiếng gốc clip: cắt đoạn, đặt đúng giây, vào cả khoá hạ nhạc nền
+        ms = int(c["t"] * 1000)
+        cin += ["-ss", c["offset"], "-t", c["d"], "-i", proj / c["src"]]
+        fx.append(f"[{n0 + j}:a]aformat=sample_rates=44100:channel_layouts=stereo,afade=t=in:d=0.08,afade=t=out:st={max(0, c['d'] - 0.2):.3f}:d=0.2,"
+                  f"volume={c['vol']},adelay={ms}|{ms},asplit=2[c{j}][ck{j}]"); mix.append(f"[c{j}]"); keys.append(f"[ck{j}]")
     for k, e in enumerate(ev["events"]):
         inp += (["-stream_loop", "-1"] if e["d"] else []) + ["-i", LIB / SFX[e["name"]]]
         ms = int(e["t"] * 1000); trim = f"atrim=0:{e['d']},afade=t=out:st={max(0, e['d'] - 0.15):.3f}:d=0.15," if e["d"] else ""   # ffmpeg 8: "d=.15" lỗi
         fx.append(f"[{k + 3}:a]{trim}aformat=sample_rates=44100:channel_layouts=stereo,volume={e['vol']},adelay={ms}|{ms}[s{k}]"); mix.append(f"[s{k}]")
+    inp += cin
     v = b.get("volume", .08)
-    graph = ";".join([f"[1:a]aformat=sample_rates=44100:channel_layouts=stereo,apad,asplit=2[v][key]",
+    key = (f"[k0]{''.join(keys)}amix=inputs={1 + len(keys)}:normalize=0[key]",) if keys else ()
+    graph = ";".join([f"[1:a]aformat=sample_rates=44100:channel_layouts=stereo,apad,asplit=2[v][{'k0' if keys else 'key'}]", *key,
         f"[2:a]aformat=sample_rates=44100:channel_layouts=stereo,volume={v},afade=t=in:d=1.5,afade=t=out:st={max(0, total - 4)}:d=4[bed]",
         "[bed][key]sidechaincompress=threshold=0.025:ratio=6:attack=15:release=450[duck]", *fx,
         f"[v][duck]{''.join(mix)}amix=inputs={2 + len(mix)}:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=44100,alimiter=limit=0.89:level=false[a]"])

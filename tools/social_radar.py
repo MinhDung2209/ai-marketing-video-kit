@@ -3,11 +3,19 @@
 Tầng 1 — không cần đăng nhập:
   python <kit>/tools/social_radar.py trends                 → Google Trends "đang thịnh hành" VN + YouTube thịnh hành VN (mọi mục, tin tức, giải trí, hài)
   python <kit>/tools/social_radar.py youtube "<từ khoá>" [--days 3]   → video mới theo lượt xem (token youtube_upload.py)
+  python <kit>/tools/social_radar.py discover "<từ khoá>" [--extra "<từ khoá 2>" …]  → clip TikTok của trend qua trang
+      tiktok.com/discover/<từ-khoá> (xem được khi CHƯA đăng nhập; trang tag/tìm kiếm thì không) + lượt xem/ngày/âm thanh (yt-dlp)
+  python <kit>/tools/social_radar.py clips <dự án>/media/tiktok <link> [<link> …]  → tải clip gốc (ưu tiên H.264 — HEVC trình duyệt
+      dựng hình giải mã chập chờn → khung đen/trắng; còn HEVC thì tự đổi) + .info.json (tác giả, ngày, lượt xem) để ghi nguồn
 Tầng 3 — trình duyệt đã đăng nhập (profile riêng kit/.social-profile, KHÔNG commit; nên dùng tài khoản PHỤ):
   python <kit>/tools/social_radar.py login                  → mở Edge: đăng nhập Facebook, TikTok, X … rồi ĐÓNG cửa sổ
   python <kit>/tools/social_radar.py check                  → báo đã đăng nhập nền tảng nào (đọc cookie, không mở trang)
   python <kit>/tools/social_radar.py tiktok "<từ khoá>"     → video tìm được + lượt xem/thích/chia sẻ/giờ đăng (bắt JSON trang tự tải)
   python <kit>/tools/social_radar.py facebook "<từ khoá>"   → bài đăng tìm được (đọc từ trang, mục Bài viết + Video)
+  python <kit>/tools/social_radar.py ttcc [--days 7]          → TikTok Creative Center: top 100 hashtag VN + đường phổ biến 7 ngày
+      (cần đăng nhập Creative Center = TikTok for Business, khác đăng nhập tiktok.com; chưa đăng nhập chỉ ra top 3)
+  python <kit>/tools/social_radar.py weibo                     → Weibo: 热搜 (hot search ~50 chủ đề + lượt tìm) + bảng bài/video hot
+  python <kit>/tools/social_radar.py scan                      → chạy trends + ttcc + weibo một lượt (dùng cho bản tin 3 lần/ngày)
 Báo cáo:
   python <kit>/tools/social_radar.py report [--hours 24]    → gộp mọi lần quét: xếp theo tốc độ tăng (cần ≥ 2 lần đo cùng link)
 
@@ -19,15 +27,19 @@ tài khoản có thể bị khoá: dùng tài khoản phụ, quét thưa (vài l
 import sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
 except Exception: pass   # cửa sổ lệnh Windows mặc định không in được tiếng Việt
-import argparse, contextlib, datetime as dt, html, json, os, pathlib, random, re, socket, subprocess, time
+import argparse, contextlib, sys, datetime as dt, html, json, os, pathlib, random, re, socket, subprocess, time
 import requests
 
 KIT = pathlib.Path(__file__).resolve().parent.parent
 PROFILE = KIT / ".social-profile"
 OUT = KIT / "newsroom" / "signals"
 VN = dt.timezone(dt.timedelta(hours=7))
-SITES = {"facebook": "https://www.facebook.com/", "tiktok": "https://www.tiktok.com/login", "x": "https://x.com/login"}
-AUTH = {"facebook": ("facebook.com", ("c_user",)), "tiktok": ("tiktok.com", ("sessionid",)), "x": ("x.com", ("auth_token",))}
+SITES = {"facebook": "https://www.facebook.com/", "tiktok": "https://www.tiktok.com/login", "x": "https://x.com/login",
+         # Creative Center: bảng trend hashtag/bài hát/video theo nước — chưa đăng nhập thì trang không tải danh sách (API "invalid user")
+         "creative": "https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=VN&period=7",
+         "weibo": "https://weibo.com/login.php"}
+AUTH = {"facebook": ("facebook.com", ("c_user",)), "tiktok": ("tiktok.com", ("sessionid",)), "x": ("x.com", ("auth_token",)),
+        "weibo": ("weibo.com", ("SUB",))}
 
 def now(): return dt.datetime.now(VN)
 
@@ -139,7 +151,7 @@ def cmd_tiktok(a):
     """Trang tìm kiếm tự gọi /api/search/... trả JSON (item_list: desc, createTime, stats, author) → bắt từ lưu lượng mạng."""
     got = {}
     def on_resp(r):
-        if not re.search(r"/api/(search/(general|item)/full|recommend/item_list|explore/item_list)", r.url): return
+        if not re.search(r"/api/(search/(general|item)/full|recommend/item_list|explore/item_list|challenge/item_list|music/item_list)", r.url): return
         with contextlib.suppress(Exception):
             j = r.json()
             for x in j.get("item_list") or [d.get("item") for d in j.get("data", []) if d.get("item")]:
@@ -151,12 +163,64 @@ def cmd_tiktok(a):
                     "metrics": {"views": st.get("playCount"), "likes": st.get("diggCount"), "comments": st.get("commentCount"), "shares": st.get("shareCount")}}
     with browser() as ctx:
         pg = ctx.new_page(); pg.on("response", on_resp)
-        url = "https://www.tiktok.com/explore" if a.query == "explore" else f"https://www.tiktok.com/search/video?q={requests.utils.quote(a.query)}"
+        q = a.query   # "explore" | "#hashtag" (xem được khi chưa đăng nhập) | link trang nhạc/âm thanh | từ khoá (tìm kiếm: cần đăng nhập)
+        url = ("https://www.tiktok.com/explore" if q == "explore" else f"https://www.tiktok.com/tag/{requests.utils.quote(q[1:])}" if q.startswith("#")
+               else q if q.startswith("https://") else f"https://www.tiktok.com/search/video?q={requests.utils.quote(q)}")
         pg.goto(url, wait_until="domcontentloaded", timeout=60000); time.sleep(random.uniform(4, 7)); human_scroll(pg, a.scrolls)
-        if not got: pg.screenshot(path=str(KIT / "tmp_tiktok_check.png")); print("  ⚠ không bắt được dữ liệu — xem tmp_tiktok_check.png (chưa đăng nhập / captcha?)")
+        links = [] if got else list(dict.fromkeys(m.group(0) for h in pg.eval_on_selector_all("a[href*='/video/']", "els => els.map(e => e.href)")
+                                                    if (m := re.search(r"https://www\.tiktok\.com/@[\w.]+/video/\d+", h))))
+        if not got and not links: pg.screenshot(path=str(KIT / "tmp_tiktok_check.png")); print("  ⚠ không bắt được dữ liệu — xem tmp_tiktok_check.png (chưa đăng nhập / captcha?)")
+    if links:   # TikTok đổi đường API → đọc link trên trang, yt-dlp lấy số đo từng clip
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(8) as ex: got = {x["url"]: x for x in ex.map(ytdlp_meta, links[:40]) if x}
     items = sorted(got.values(), key=lambda x: -(x["metrics"]["views"] or 0))
     for x in items[:15]: print(f"  {x['metrics']['views'] or 0:>11,}  {(x['published'] or '')[:10]}  @{x['author'] or '':<18} {x['text'][:60]}")
     save("tiktok", a.query, items)
+
+def tiktok_slug(q): return requests.utils.quote(re.sub(r"\s+", "-", q.strip().lower()))
+
+def ytdlp_meta(url):
+    r = subprocess.run([sys.executable, "-m", "yt_dlp", "--skip-download", "--no-warnings", "-J", url], capture_output=True, text=True, encoding="utf-8", timeout=90)
+    if r.returncode: return None
+    d = json.loads(r.stdout)
+    return {"platform": "tiktok", "url": url, "text": d.get("title") or d.get("description") or "", "author": d.get("uploader"),
+            "published": dt.datetime.fromtimestamp(d["timestamp"], VN).isoformat() if d.get("timestamp") else None, "duration": d.get("duration"),
+            "sound": d.get("track"), "metrics": {"views": d.get("view_count"), "likes": d.get("like_count"),
+                                                 "comments": d.get("comment_count"), "shares": d.get("repost_count")}}
+
+def cmd_discover(a):
+    """Trang /discover/<từ-khoá> là trang SEO của TikTok: hiện danh sách clip cả khi chưa đăng nhập → lấy link, rồi yt-dlp đọc số đo từng clip."""
+    from concurrent.futures import ThreadPoolExecutor
+    links = {}
+    with browser() as ctx:
+        pg = ctx.new_page()
+        for q in [a.query, *a.extra]:
+            pg.goto(f"https://www.tiktok.com/discover/{tiktok_slug(q)}", wait_until="domcontentloaded", timeout=60000)
+            time.sleep(random.uniform(4, 6)); human_scroll(pg, a.scrolls)
+            for h in pg.eval_on_selector_all("a[href*='/video/']", "els => els.map(e => e.href)"):
+                m = re.search(r"https://www\.tiktok\.com/@[\w.]+/video/\d+", h)
+                if m: links[m.group(0)] = 1
+            print(f"  discover/{tiktok_slug(q)}: {len(links)} link", flush=True)
+    with ThreadPoolExecutor(8) as ex: items = [x for x in ex.map(ytdlp_meta, links) if x]
+    items.sort(key=lambda x: -(x["metrics"]["views"] or 0))
+    for x in items[:25]: print(f"  {x['metrics']['views'] or 0:>11,}  {(x['published'] or '')[:10]}  {x['duration'] or 0:>4}s  @{x['author'] or '':<20} {x['text'][:55]}")
+    save("tiktok-discover", a.query, items)
+
+def cmd_clips(a):
+    out = pathlib.Path(a.dir); out.mkdir(parents=True, exist_ok=True)
+    for u in a.urls:
+        r = subprocess.run([sys.executable, "-m", "yt_dlp", "-q", "--no-warnings", "-S", "vcodec:h264,res:1080", "--write-info-json",
+                            "-o", str(out / "%(uploader)s-%(id)s.%(ext)s"), "--print", "after_move:filepath", u], capture_output=True, text=True, encoding="utf-8")
+        f = pathlib.Path(r.stdout.strip().splitlines()[-1]) if r.returncode == 0 and r.stdout.strip() else None
+        if not f: print(f"  ✗ {u}: {r.stderr.strip()[-200:]}"); continue
+        codec = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name", "-of", "csv=p=0", str(f)],
+                               capture_output=True, text=True).stdout.strip()
+        if codec != "h264":   # TikTok hay chỉ có HEVC → đổi H.264 cho trình duyệt dựng hình
+            tmp = f.with_suffix(".h264.mp4")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(f), "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p",
+                            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(tmp)], check=True)
+            tmp.replace(f)
+        print(f"  ✓ {f.name} ({codec}{' → h264' if codec != 'h264' else ''})")
 
 FB_JS = r"""() => {
   const out = [];
@@ -198,6 +262,59 @@ def cmd_facebook(a):
     save("facebook", a.query, items)
 
 # ------------------------------------------------------------------ báo cáo
+CC_API = "https://ads.tiktok.com/CreativeOne/KnowledgeAPI/GetHashtagList"
+
+def cmd_ttcc(a):
+    """Gọi API trang Creative Center tự dùng, từ chính trang đó (cookie đăng nhập đi kèm). rise = độ phổ biến cuối − đầu kỳ (−100…+100)."""
+    items = []
+    with browser() as ctx:
+        pg = ctx.new_page()
+        with contextlib.suppress(Exception): pg.goto(f"https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=VN&period={a.days}", wait_until="commit", timeout=90000)
+        time.sleep(random.uniform(8, 11))
+        for page in range(1, 6):
+            d = pg.evaluate("""([u, b]) => fetch(u, {method: 'POST', credentials: 'include', headers: {'content-type': 'application/json'},
+                                body: JSON.stringify(b)}).then(r => r.json())""", [CC_API, {"timeRange": a.days, "countryCode": "VN", "page": page, "limit": 20}])
+            got = d.get("items") or []
+            for x in got:
+                c = [p["value"] for p in x.get("popularityCurve") or []]
+                items.append({"platform": "tiktok_hashtag", "url": f"https://www.tiktok.com/tag/{x['hashtagName']}", "text": "#" + x["hashtagName"],
+                              "author": None, "published": None, "rank": int(x.get("rankIndex") or 0), "rise": round(c[-1] - c[0]) if c else None,
+                              "metrics": {"views": num(x.get("vv")), "videos": num(x.get("publishCnt"))}})
+            if not (d.get("pagination") or {}).get("hasMore"): break
+            time.sleep(random.uniform(1.5, 3))
+    if len(items) <= 3: print("  ⚠ chỉ có top 3 → Creative Center chưa đăng nhập (chạy login, tab Creative Center → Log in)")
+    for x in items[:30]: print(f"  {x['rank']:>3} {x['text']:<32} {(x['metrics']['views'] or 0) / 1e6:7.1f}M view  {x['rise']:+4}")
+    save("tiktok_creative_center", "VN", items)
+
+WB = {"hot": "/ajax/feed/hottimeline?since_id=0&refresh=0&group_id=102803&containerid=102803&extparam=discover%7Cnew_feed&max_id=0&count=30"}
+
+def cmd_weibo(a):
+    with browser() as ctx:
+        pg = ctx.new_page()
+        with contextlib.suppress(Exception): pg.goto("https://weibo.com/", wait_until="domcontentloaded", timeout=60000)
+        time.sleep(random.uniform(4, 6))
+        get = lambda u: pg.evaluate("u => fetch(u, {credentials: 'include', headers: {'x-requested-with': 'XMLHttpRequest'}}).then(r => r.json())", u)
+        hs = (get("/ajax/side/hotSearch").get("data") or {}).get("realtime") or []
+        time.sleep(random.uniform(1.5, 3)); feed = get(WB["hot"]).get("statuses") or []
+    save("weibo_hotsearch", "CN", [{"platform": "weibo_hotsearch", "url": f"https://s.weibo.com/weibo?q=%23{requests.utils.quote(x['word'])}%23",
+                                    "text": x["word"], "author": None, "published": None, "rank": i + 1, "label": x.get("label_name"),
+                                    "metrics": {"searches": x.get("num")}} for i, x in enumerate(hs) if x.get("word")])
+    for i, x in enumerate(hs[:20]): print(f"  热搜 {i + 1:>2} {x.get('num') or 0:>9,}  {x.get('word')}")
+    items = []
+    for st in feed:
+        pi = st.get("page_info") or {}; mi = pi.get("media_info") or {}; u = st.get("user") or {}
+        items.append({"platform": "weibo", "url": f"https://weibo.com/{u.get('idstr')}/{st.get('mblogid')}", "text": st.get("text_raw") or "",
+                      "author": u.get("screen_name"), "published": st.get("created_at"), "video": bool(mi),
+                      "metrics": {"views": num(mi.get("online_users_number")), "likes": st.get("attitudes_count"),
+                                  "comments": st.get("comments_count"), "shares": st.get("reposts_count")}})
+    for x in items[:15]: print(f"  {'🎬' if x['video'] else '  '} {x['metrics']['views'] or 0:>11,}  @{x['author']}: {x['text'][:50]!r}")
+    save("weibo_hot", "CN", items)
+
+def cmd_scan(a):
+    for fn, aa in ((cmd_trends, a), (cmd_ttcc, argparse.Namespace(days=7)), (cmd_weibo, a)):
+        try: fn(aa)
+        except Exception as e: print(f"  ⚠ {fn.__name__}: {e}")
+
 def cmd_report(a):
     since = now() - dt.timedelta(hours=a.hours); obs = {}
     for f in sorted(OUT.rglob("*.json")):
@@ -223,9 +340,14 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Radar mạng xã hội (chỉ đọc)"); sp = ap.add_subparsers(dest="cmd", required=True)
     sp.add_parser("trends").set_defaults(fn=cmd_trends)
     s = sp.add_parser("youtube"); s.add_argument("query"); s.add_argument("--days", type=float, default=3); s.set_defaults(fn=cmd_youtube)
+    s = sp.add_parser("discover"); s.add_argument("query"); s.add_argument("--extra", nargs="*", default=[]); s.add_argument("--scrolls", type=int, default=3)
+    s.set_defaults(fn=cmd_discover)
+    s = sp.add_parser("clips"); s.add_argument("dir"); s.add_argument("urls", nargs="+"); s.set_defaults(fn=cmd_clips)
     sp.add_parser("login").set_defaults(fn=cmd_login); sp.add_parser("check").set_defaults(fn=cmd_check)
     for name, fn in (("tiktok", cmd_tiktok), ("facebook", cmd_facebook)):
         s = sp.add_parser(name); s.add_argument("query", help="từ khoá ('explore' = trang khám phá TikTok)")
         s.add_argument("--scrolls", type=int, default=6); s.set_defaults(fn=fn)
+    s = sp.add_parser("ttcc"); s.add_argument("--days", type=int, default=7); s.set_defaults(fn=cmd_ttcc)
+    sp.add_parser("weibo").set_defaults(fn=cmd_weibo); sp.add_parser("scan").set_defaults(fn=cmd_scan)
     s = sp.add_parser("report"); s.add_argument("--hours", type=float, default=24); s.add_argument("--top", type=int, default=30); s.set_defaults(fn=cmd_report)
     a = ap.parse_args(); a.fn(a)
