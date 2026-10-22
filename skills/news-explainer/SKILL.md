@@ -44,7 +44,7 @@ Mỗi đề tài một thư mục mới `projects/<dạng>-<chủ-đề>-<YYYY-M
 
 ### Quy trình dựng (mẫu đầy đủ: `examples/why-giam-lai-suat.voice.json` + `examples/why-giam-lai-suat.plan.json`, video 20/10/2026)
 
-1. `voice.json` (giống mẫu: profile, `lines` V01… có `text` đọc số bằng chữ + `caption` hiện số; thẻ biểu cảm TIẾNG ANH ngắn `[curious]` `[serious]` — thẻ tiếng Việt bị đọc thành lời) → `python <kit>/tools/tts_script.py voice.json audio` → **`python <kit>/tools/tts_qa.py voice.json audio`** (nghe lại bằng máy: thẻ bị đọc, nhịp lố, sai chữ) → câu ⚠ sửa rồi `--only`. Trend: câu `{"id": "C01", "pause": 5.8, "caption": "…"}` = khoảng lặng cho TIẾNG GỐC clip (cảnh video `"sound": 1.0` neo `at: C01`).
+1. `voice.json` với **`"channel": true`** (giọng cố định của kênh: Puck + profile trong `newsroom/channel-voice.json`; người dùng nhắc 22/10/2026 "dùng 1 giọng cố định". Không tự viết `profile`/`voice` mới. Bài cần sắc thái riêng thì thêm `"mood"` 1 câu), `lines` V01… có `text` đọc số bằng chữ + `caption` hiện số; thẻ biểu cảm TIẾNG ANH ngắn `[curious]` `[serious]` — thẻ tiếng Việt bị đọc thành lời) → `python <kit>/tools/tts_script.py voice.json audio` → **`python <kit>/tools/tts_qa.py voice.json audio`** (nghe lại bằng máy: thẻ bị đọc, nhịp lố, sai chữ; thêm `--redo 2` để tự đọc lại câu ⚠) → còn ⚠ thì sửa lời rồi `--only`. `tts_script` **từ chối chạy** nếu thẻ trong lời không phải 1–3 từ tiếng Anh thường (vd `[ấm]`, `[trình bày diễn giải]`). Cảm xúc dài viết ở `direction`, đó là lời dặn, không bị đọc. Trend: câu `{"id": "C01", "pause": 5.8, "caption": "…"}` = khoảng lặng cho TIẾNG GỐC clip (cảnh video `"sound": 1.0` neo `at: C01`).
 2. Hình thật — thứ tự ưu tiên:
    - **Ảnh/video trong bài báo đưa tin chính sự kiện** (người dùng chọn, 20/10/2026): `python <kit>/tools/news_media.py search "<từ khoá>" --days 3` → `grab <link> media --shot --video`. `media.json` giữ báo, link, giờ đăng, chú thích, tác giả ảnh → ghi nguồn trên hình (`credit: "Ảnh: SBV · Dân trí"`) và trong mô tả. Không xoá logo/watermark.
    - `--shot` = ảnh chụp tiêu đề bài → cảnh `headline` có bút dạ quang tô câu chính.
@@ -53,6 +53,10 @@ Mỗi đề tài một thư mục mới `projects/<dạng>-<chủ-đề>-<YYYY-M
 3. Đồ họa: **chỉ motion HTML** (người dùng chê thẻ tĩnh) — `templates/news-motion` (số chạy, cột tụt, mốc thời gian, chữ viết tay có đầu bút, khoanh/gạch chân, trích dẫn hiện theo từ). Số liệu trên đồ họa phải có trong nguồn; không dựng "ví dụ" bằng số tự đặt.
 4. `plan.json`: mỗi cảnh neo vào câu (`at`) + cụm chữ (`phrase`) để hình đổi ĐÚNG lúc giọng nói tới — xem docstring `tools/news_video.py`. Đổi hình 3–6 giây/lần; ảnh/video thật là nền, motion đè lên hoặc xen giữa.
 5. `python <kit>/tools/news_video.py all <dự án>` → phụ đề khớp giọng (khoảng lặng thật, không ước lượng), index.html, `review/scenes.jpg`, `video.mp4` (nhạc `bgm.lyria.news-explainer-100bpm` tự duck dưới giọng + SFX tự khớp hiệu ứng), `QA.json`. Xem `review/scenes.jpg` trước khi render dài (~3 s render / 1 s video).
+
+**Hook, giữ chân, vòng lặp (chốt 22/10/2026):** soi hook video đang chạy trước khi viết; mở bằng "<khái niệm> là gì mà <hệ quả có số>?"; câu cuối nối vào câu đầu (loop). Xem `references/editorial.md`.
+
+**Câu kết (người dùng chốt 21/10/2026):** hỏi khán giả còn trend/tin nào thấy ai cũng nói mà chưa hiểu vì sao → comment, kênh sẽ làm video giải thích (comment = nguồn đề tài); follow chỉ là phụ. Khi quét đề tài, đọc comment các video đã đăng.
 
 Ảnh AI chỉ dành cho minh họa phù hợp, không giả làm bằng chứng hay hiện trường. Chỉ gọi công cụ tạo ảnh khi cần, không mặc định mọi video phải dùng AI image.
 

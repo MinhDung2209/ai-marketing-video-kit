@@ -8,6 +8,9 @@
 | `gemini-2.5-flash-tts` | Rẻ hơn (0,5 / 10 USD) | |
 | Chirp3-HD (`vi-VN-Chirp3-HD-Kore`…) | Đều, phẳng — người duyệt chê "lỏ"; miễn phí 1 triệu ký tự/tháng | 30 USD/1M ký tự |
 Giọng dùng: **Kore** (nữ, miền Bắc qua lời dặn). Giọng khác: Aoede, Puck (nam), Charon (nam trầm)…
+**Kênh tin tức (news-explainer): MỘT giọng cố định** — `newsroom/channel-voice.json` (Puck + profile chung). voice.json đặt
+`"channel": true` → `tts_script` bỏ qua voice/profile trong file, lấy giọng kênh; chỉ thêm `"mood"` (1 câu) nếu bài cần sắc thái riêng.
+Đổi giọng kênh = sửa đúng file đó (người dùng duyệt), không đổi theo từng video.
 
 ## 2. Gemini-TTS KHÔNG nhận SSML — điều khiển bằng 3 lớp
 1. **`profile`** (chung mọi câu): ai đọc, vùng miền, không khí, **tốc độ**.
@@ -22,6 +25,9 @@ Giọng dùng: **Kore** (nữ, miền Bắc qua lời dặn). Giọng khác: Aoe
    ⚠ **Thẻ mô tả tiếng Việt bị ĐỌC THÀNH LỜI** (20/10/2026: `[tò mò]` `[ấm, thấu hiểu]` `[hào hứng dần, dồn dập]` → giọng đọc to
    "tò mò… ấm, thấu hiểu") — người duyệt nghe là "đọc tiếng Việt fail". Không viết thẻ tiếng Việt.
    ⚠ **Hạn chế thẻ cười** (`[laughing]` `[cười]` `[nhịn cười]`): người duyệt chê nghe giả (20/10/2026) — câu hài để chữ + ngắt nhịp tạo duyên.
+   🛑 `tts_script` **chặn trước khi gọi API** mọi thẻ không phải 1–3 từ tiếng Anh thường (`[ấm]`, `[trình bày diễn giải]`,
+   `[Serious tone]`…). Mô tả cảm xúc dài → `direction` (vào prompt, không bị đọc). Thẻ tiếng Anh thỉnh thoảng VẪN bị đọc →
+   `tts_qa.py --redo 2` tự đọc lại câu ⚠.
    ⚠ Thẻ tiếng Anh ổn định hơn; thẻ mô tả dài đôi khi làm model đọc lố (câu dài gấp đôi) → kiểm tra số âm tiết/giây (~2,7–3,7) rồi `--only` đọc lại.
 (Chirp3-HD thì nhận SSML: `<break> <prosody> <say-as> <sub> <p> <s> <phoneme>`, không có `<emphasis>`.)
 

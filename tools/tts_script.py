@@ -7,7 +7,7 @@ Câu {"id": "C01", "pause": 3.5, "caption"?: "..."} (không text) = KHOẢNG L�
 import sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
 except Exception: pass   # cửa sổ lệnh Windows mặc định không in được tiếng Việt
-import sys, os, json, base64, subprocess, argparse, requests
+import sys, os, re, json, base64, subprocess, argparse, requests
 from gcp import token_and_project, config
 
 ap = argparse.ArgumentParser()
@@ -15,6 +15,14 @@ ap.add_argument("script"); ap.add_argument("out"); ap.add_argument("--voice"); a
 ap.add_argument("--only", help="chỉ đọc lại các câu này (vd V5,V7); câu khác dùng lại mp3 đã có")
 a = ap.parse_args()
 sc = json.load(open(a.script, encoding="utf-8"))
+if sc.get("channel"):   # giọng cố định của kênh (newsroom/channel-voice.json); kịch bản chỉ thêm "mood" cho bài này
+    ch = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "newsroom", "channel-voice.json"), encoding="utf-8"))
+    sc.update(voice=ch["name"], model=ch["model"], profile=(ch["profile"] + " " + sc.get("mood", "")).strip(),
+              profile_fallback=ch["profile_fallback"])
+# Thẻ trong lời: CHỈ tiếng Anh ngắn ([serious], [short pause]). Thẻ tiếng Việt / mô tả dài bị Gemini đọc thành lời → chặn trước khi gọi API
+bad = [f"{ln['id']} [{t}]" for ln in sc["lines"] for t in re.findall(r"\[([^\]]*)\]", ln.get("text", ""))
+       if not re.fullmatch(r"[a-z]+( [a-z]+){0,2}", t)]
+if bad: sys.exit("thẻ không hợp lệ (chỉ 1–3 từ tiếng Anh thường; cảm xúc dài → \"direction\"): " + ", ".join(bad))
 cfg = config()
 model = a.model or sc.get("model") or cfg.get("tts_model", "gemini-3.1-flash-tts-preview")
 voice = a.voice or sc.get("voice") or cfg.get("tts_voice", "Kore")

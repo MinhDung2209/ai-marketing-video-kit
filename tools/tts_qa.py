@@ -8,6 +8,7 @@ Bắt 3 loại lỗi (đã gặp 20/10/2026):
   - sai chữ: tên riêng ("Lãm Làng" → "lãng làng") — máy nghe cũng có thể nghe nhầm → câu bị cờ thì người nghe lại
 Số trong kịch bản viết bằng chữ, máy nghe hay ghi số → bỏ qua khác biệt số↔chữ. Ra: <audio>/tts_qa.json.
 Câu lỗi → sửa lời/thẻ rồi: python tts_script.py voice.json audio --only <id>
+--redo 2 = tự đọc lại câu ⚠ (tối đa 2 lần) rồi nghe lại; vẫn ⚠ thì sửa lời/thẻ bằng tay.
 """
 import sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
@@ -45,10 +46,18 @@ def check(ln, audio):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("script"); ap.add_argument("audio"); ap.add_argument("--only")
+    ap.add_argument("--redo", type=int, default=0, help="tự đọc lại câu ⚠ tối đa N lần (Gemini thỉnh thoảng vẫn đọc thẻ thành lời)")
     a = ap.parse_args(); sc = json.load(open(a.script, encoding="utf-8")); audio = pathlib.Path(a.audio)
     only = set(a.only.split(",")) if a.only else None
     lines = [ln for ln in sc["lines"] if ln.get("text") and (only is None or ln["id"] in only)]
     with ThreadPoolExecutor(6) as ex: res = list(ex.map(lambda ln: check(ln, audio), lines))
+    for k in range(a.redo):
+        ids = [r["id"] for r in res if r["flags"]]
+        if not ids: break
+        print(f"đọc lại lần {k + 1}: {', '.join(ids)}", flush=True)
+        subprocess.run([sys.executable, str(pathlib.Path(__file__).with_name("tts_script.py")), a.script, a.audio, "--only", ",".join(ids)], check=True)
+        with ThreadPoolExecutor(6) as ex: new = {r["id"]: r for r in ex.map(lambda ln: check(ln, audio), [ln for ln in lines if ln["id"] in ids])}
+        res = [new.get(r["id"], r) for r in res]
     bad = 0
     for r in res:
         mark = "⚠" if r["flags"] else ("?" if r["diffs"] else "✓")

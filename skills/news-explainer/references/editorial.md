@@ -14,6 +14,28 @@ Không có một phong cách cố định cho kênh. Đọc đề tài rồi ch�
 
 Độ sâu nghiên cứu luôn cần ở mọi phong cách (sai dữ kiện thì casual cũng hỏng); thứ thay đổi là độ dài, giọng, nhịp và mức chi tiết đưa lên màn hình.
 
+## Hook, giữ chân và vòng lặp (người dùng chốt 22/10/2026)
+
+**Soi hook đối thủ trước khi viết.** Hook lấy từ video thật đang chạy, không đoán:
+`social_radar.py tiktok "<chủ đề>"` (và `youtube "<chủ đề>" --days 30`) → `clips <scratch> <top 5 link>` → `clip_transcribe.py` → đọc 10 giây đầu + câu kết.
+Ghi vào `RESEARCH.md` mục "Hook đang chạy": lượt xem, câu mở, kiểu hook, cách kết.
+Ví dụ 22/10 (chủ đề lãi thả nổi):
+- 1,3 triệu view mở bằng một kịch bản ngôi "bạn" có số cụ thể ("Bạn mua nhà 5 tỷ, vay 3 tỷ lãi 6%… tháng thứ 25 hoá đơn vọt lên 52 triệu… không một cuộc gọi báo trước").
+- 985 nghìn view mở bằng ảnh chụp "bill" thật đang lan truyền.
+- Video tên "Lãi suất thả nổi là gì?" chỉ được 1,5 nghìn view. **Định nghĩa khô không phải hook. Hệ quả, con số và nghịch lý mới là hook.**
+
+**Công thức mở (3 giây đầu):** câu hỏi chủ đề + hệ quả gây sốc, viết thành một câu, kiểu "<Khái niệm> là gì mà <hệ quả có số cụ thể>?". Ngay sau đó là bằng chứng (người thật trong báo, tiêu đề, ảnh chụp). Rồi hứa trước "điều ít ai để ý" để giữ người xem tới giữa video.
+
+**Giữ chân:** cứ 30–45 giây lại mở một vòng tò mò mới ("nhưng điều đáng nói là…", "câu hỏi tự nhiên là…"). Mỗi phần mở bằng câu hỏi người xem thật sự hỏi, lấy từ bình luận.
+
+**Meme / nhấn hài:** dùng meme tự dựng, nhẹ tay với đề tài tiền bạc: zoom giật hoặc dừng hình ở con số sốc, chữ sticker ("ủa?", "khoan…"), SFX từ audio-library. Không dùng ảnh meme của người khác, không đùa trên nỗi khổ của người vay thật.
+
+**Vòng lặp (loop):** câu cuối viết để **nối thẳng vào câu đầu**. Người xem xem hết, video tự phát lại, và cảm giác câu chuyện chưa dứt.
+- Ví dụ: kết "…Và bạn có biết, vì sao chỉ bốn chữ trong hợp đồng lại khiến tiền trả mỗi tháng tự tăng?" (cắt luôn, không chào) → mở "Lãi suất thả nổi là gì mà…".
+- Câu kết đọc giọng lửng, không hạ giọng chốt (ghi ở `direction`). Hình cuối khớp được với hình đầu.
+- Lời mời comment (mục Câu kết trong SKILL) đặt **ngay trước** câu loop, không đặt sau.
+- Câu đầu vẫn phải đứng được một mình cho người xem lần đầu.
+
 ## WHY
 
 **Xâu chuỗi trước, viết sau (người dùng chốt 20/10/2026).** Tin tức hay nằm ở bối cảnh nối các tin lại với nhau, không ở một bài báo. Trước khi viết kịch bản, nghiên cứu song song 3 nhánh rồi ghi `RESEARCH.md` (timeline có ngày + số hiệu văn bản, chuỗi nhân quả, nguồn từng dữ kiện, điều chưa xác minh) và cho người dùng duyệt góc nhìn:
