@@ -281,14 +281,14 @@
       const oa = { v: 0 }, ob = { v: 0 };
       tl.fromTo(A.fill, { height: 0 }, { height: hA, duration: .9, ease: 'power3.out' }, t + .4);
       tl.fromTo(oa, { v: 0 }, { v: before.value, duration: .9, ease: 'power3.out', onUpdate: () => A.vs.textContent = fmt(oa.v, decimals) }, t + .4);
-      // after: mọc lên ngang before rồi tụt
+      // after: mọc lên ngang before rồi tụt (hoặc vọt lên nếu after > before)
       tl.fromTo(B.fill, { height: 0 }, { height: hA, duration: .8, ease: 'power3.out' }, t + 1.0);
       tl.fromTo(ob, { v: 0 }, { v: before.value, duration: .8, ease: 'power3.out', onUpdate: () => B.vs.textContent = fmt(ob.v, decimals) }, t + 1.0);
       const drop = t + 2.0;
       tl.fromTo(B.fill, { height: hA }, { height: hB, duration: .9, ease: 'power2.inOut', immediateRender: false }, drop);
       tl.fromTo(ob, { v: before.value }, { v: after.value, duration: .9, ease: 'power2.inOut', immediateRender: false, onUpdate: () => B.vs.textContent = fmt(ob.v, decimals) }, drop);
       if (delta) {
-        const dl = el('div', 'm-delta', s, '▼ ' + esc(delta));
+        const dl = el('div', 'm-delta', s, (after.value > before.value ? '▲ ' : '▼ ') + esc(delta));   // tăng thì mũi tên lên
         tl.fromTo(dl, { opacity: 0, y: -30, scale: .8 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(2)' }, drop + .6);
       }
       return s;
