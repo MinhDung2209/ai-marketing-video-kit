@@ -30,7 +30,7 @@ Ví dụ 22/10 (chủ đề lãi thả nổi):
 
 **Meme / nhấn hài:** dùng meme tự dựng, nhẹ tay với đề tài tiền bạc: zoom giật hoặc dừng hình ở con số sốc, chữ sticker ("ủa?", "khoan…"), SFX từ audio-library. Không dùng ảnh meme của người khác, không đùa trên nỗi khổ của người vay thật.
 
-**Vòng lặp (loop):** câu cuối viết để **nối thẳng vào câu đầu**. Người xem xem hết, video tự phát lại, và cảm giác câu chuyện chưa dứt.
+**Vòng lặp (loop) — CHỈ cho short ~1–2 phút** (TikTok/Reels/Shorts tự phát lại; bản dài YouTube thì không, người dùng chốt 22/10/2026). Bản dài kết bình thường: tóm ý gọi lại hình ảnh chính + mời comment. Short: câu cuối viết để **nối thẳng vào câu đầu**. Người xem xem hết, video tự phát lại, và cảm giác câu chuyện chưa dứt.
 - Ví dụ: kết "…Và bạn có biết, vì sao chỉ bốn chữ trong hợp đồng lại khiến tiền trả mỗi tháng tự tăng?" (cắt luôn, không chào) → mở "Lãi suất thả nổi là gì mà…".
 - Câu kết đọc giọng lửng, không hạ giọng chốt (ghi ở `direction`). Hình cuối khớp được với hình đầu.
 - Lời mời comment (mục Câu kết trong SKILL) đặt **ngay trước** câu loop, không đặt sau.
