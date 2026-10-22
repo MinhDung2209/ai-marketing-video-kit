@@ -2,11 +2,12 @@
 
 Dùng: python tts_script.py <kich-ban.json> <thư mục ra> [--voice Kore] [--model gemini-2.5-pro-tts]
 Kịch bản: xem kich-ban-giong-v1.json (profile + direction từng câu + thẻ [short pause]... trong text).
+Câu {"id": "C01", "pause": 3.5, "caption"?: "..."} (không text) = KHOẢNG LẶNG cho tiếng gốc của clip (news_video: video "sound").
 """
 import sys as _sys
 try: _sys.stdout.reconfigure(encoding="utf-8"); _sys.stderr.reconfigure(encoding="utf-8")
 except Exception: pass   # cửa sổ lệnh Windows mặc định không in được tiếng Việt
-import sys, os, json, base64, subprocess, argparse, requests
+import sys, os, re, json, base64, subprocess, argparse, requests
 from gcp import token_and_project, config
 
 ap = argparse.ArgumentParser()
@@ -14,6 +15,14 @@ ap.add_argument("script"); ap.add_argument("out"); ap.add_argument("--voice"); a
 ap.add_argument("--only", help="chỉ đọc lại các câu này (vd V5,V7); câu khác dùng lại mp3 đã có")
 a = ap.parse_args()
 sc = json.load(open(a.script, encoding="utf-8"))
+if sc.get("channel"):   # giọng cố định của kênh (newsroom/channel-voice.json); kịch bản chỉ thêm "mood" cho bài này
+    ch = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "newsroom", "channel-voice.json"), encoding="utf-8"))
+    sc.update(voice=ch["name"], model=ch["model"], profile=(ch["profile"] + " " + sc.get("mood", "")).strip(),
+              profile_fallback=ch["profile_fallback"])
+# Thẻ trong lời: CHỈ tiếng Anh ngắn ([serious], [short pause]). Thẻ tiếng Việt / mô tả dài bị Gemini đọc thành lời → chặn trước khi gọi API
+bad = [f"{ln['id']} [{t}]" for ln in sc["lines"] for t in re.findall(r"\[([^\]]*)\]", ln.get("text", ""))
+       if not re.fullmatch(r"[a-z]+( [a-z]+){0,2}", t)]
+if bad: sys.exit("thẻ không hợp lệ (chỉ 1–3 từ tiếng Anh thường; cảm xúc dài → \"direction\"): " + ", ".join(bad))
 cfg = config()
 model = a.model or sc.get("model") or cfg.get("tts_model", "gemini-3.1-flash-tts-preview")
 voice = a.voice or sc.get("voice") or cfg.get("tts_voice", "Kore")
@@ -27,6 +36,10 @@ def dur(f):
 meta, start = [], 0.3
 only = set(a.only.split(",")) if a.only else None
 for ln in sc["lines"]:
+    if ln.get("pause"):   # lặng giọng — tiếng gốc clip chèn vào lúc dựng
+        meta.append({"id": ln["id"], "file": None, "start": round(start, 2), "dur": float(ln["pause"]), "pause": True, "text": "",
+                     **({"caption": ln["caption"]} if ln.get("caption") else {})})
+        print(f"{ln['id']}  {start:5.2f}s  +{ln['pause']}s  (tiếng gốc)", flush=True); start += float(ln["pause"]) + gap; continue
     f = os.path.join(a.out, f"{ln['id']}.mp3")
     if only is not None and ln["id"] not in only and os.path.exists(f):   # giữ nguyên câu đã duyệt
         d = round(dur(f), 2); meta.append({"id": ln["id"], "file": os.path.basename(f), "start": round(start, 2), "dur": d, "text": ln["text"], **({"caption": ln["caption"]} if ln.get("caption") else {})})
@@ -58,9 +71,10 @@ for ln in sc["lines"]:
 
 total = round(start + 1.0, 2)
 inp, flt = [], []
-for i, m in enumerate(meta):
+for i, m in enumerate([m for m in meta if m["file"]]):
     inp += ["-i", os.path.join(a.out, m["file"])]; ms = int(m["start"] * 1000); flt.append(f"[{i}:a]adelay={ms}|{ms}[a{i}]")
-flt.append("".join(f"[a{i}]" for i in range(len(meta))) + f"amix=inputs={len(meta)}:normalize=0,apad=whole_dur={total}[o]")
+n = sum(1 for m in meta if m["file"])
+flt.append("".join(f"[a{i}]" for i in range(n)) + f"amix=inputs={n}:normalize=0,apad=whole_dur={total}[o]")
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inp, "-filter_complex", ";".join(flt), "-map", "[o]", "-t", str(total),
                 "-ar", "44100", "-b:a", "192k", os.path.join(a.out, "narration.mp3")], check=True)
 json.dump({"model": model, "voice": voice, "total": total, "lines": meta},

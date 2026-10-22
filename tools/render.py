@@ -60,6 +60,8 @@ def main():
     ap.add_argument("project"); ap.add_argument("--fps", type=int, default=30)
     ap.add_argument("--snap", default=""); ap.add_argument("--out", default="out.mp4")
     ap.add_argument("--audio", default="assets/narration.mp3", help="file âm thanh cuối (tương đối với thư mục dự án)")
+    ap.add_argument("--no-audio", action="store_true", help="video không tiếng (GIF / video lặp hướng dẫn)")
+    ap.add_argument("--crf", type=int, default=18, help="chất lượng H.264 (18 = nét, 26–30 = nhẹ cho web)")
     a = ap.parse_args()
     proj = pathlib.Path(a.project).resolve(); html = proj / "index.html"
     src = html.read_text(encoding="utf-8")
@@ -84,11 +86,11 @@ def main():
                 pg.screenshot(path=str(proj / f"_snap_{t:05.1f}.png"))
             b.close(); return
         n = int(DUR * a.fps)
-        ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", str(a.fps), "-i", "-",
-                               "-i", str(proj / a.audio), "-map", "0:v", "-map", "1:a",
-                               "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                               "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(proj / a.out)],
-                              stdin=subprocess.PIPE)
+        cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", str(a.fps), "-i", "-"]
+        if not a.no_audio: cmd += ["-i", str(proj / a.audio), "-map", "0:v", "-map", "1:a"]
+        cmd += ["-c:v", "libx264", "-preset", "medium", "-crf", str(a.crf), "-pix_fmt", "yuv420p"]
+        cmd += ["-an"] if a.no_audio else ["-c:a", "aac", "-b:a", "192k", "-shortest"]
+        ff = subprocess.Popen(cmd + ["-movflags", "+faststart", str(proj / a.out)], stdin=subprocess.PIPE)
         for i in range(n):
             pg.evaluate(SEEK_JS, i / a.fps)
             ff.stdin.write(pg.screenshot(type="jpeg", quality=95))

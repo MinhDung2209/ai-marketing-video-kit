@@ -1,0 +1,1047 @@
+{
+ "title": "15 ngân hàng giảm lãi trong 1 ngày: chuyện gì vừa xảy ra?",
+ "summary": "Chỉ trong ngày 19/10/2026, 15 ngân hàng tư nhân cùng hạ lãi suất tiết kiệm; Vietcombank, BIDV, Agribank công bố giảm lãi cho vay tới 2%/năm. Vì sao lại dồn dập như vậy, Ngân hàng Nhà nước yêu cầu gì, và tiền gửi, khoản vay của bạn thay đổi ra sao?",
+ "facts": [
+  "18/10: NHNN yêu cầu giảm ít nhất 0,5 điểm % lãi tiết kiệm niêm yết kỳ hạn từ 6 tháng; giảm 1,5–2 điểm % lãi cho vay sản xuất, kinh doanh, lĩnh vực ưu tiên (VnExpress)",
+  "Ngân hàng không tuân thủ có thể bị xem xét lại hạn mức tín dụng, giao chỉ tiêu thấp hơn năm sau hoặc áp tỷ lệ an toàn cao hơn (VnExpress)",
+  "Đến 14/10, dư nợ tín dụng tăng 11,44% so với cuối năm trước (NHNN qua Dân trí)",
+  "Lãi cho vay bình quân tháng 8: 10,7% (NHNN qua VnExpress)"
+ ],
+ "tags": "lãi suất,giảm lãi suất,ngân hàng nhà nước,tiết kiệm,vay ngân hàng,tin tức,kinh tế Việt Nam",
+ "privacy": "unlisted",
+ "thumb": {
+  "t": 3.0
+ },
+ "bug": "WHY · Tin nhanh",
+ "bgm": {
+  "id": "bgm.lyria.news-explainer-100bpm",
+  "volume": 0.08
+ },
+ "scenes": [
+  {
+   "at": "V01",
+   "fn": "bigtitle",
+   "args": [
+    "15 ngân hàng *giảm lãi* trong ~1 ngày~",
+    {
+     "kicker": "Tin nóng · 19/10/2026",
+     "photo": "media/vnexpress-5134403/img-01.jpg"
+    }
+   ],
+   "transition": "flash"
+  },
+  {
+   "at": "V01",
+   "phrase": "15 ngân hàng",
+   "fn": "headline",
+   "args": [
+    "media/vnexpress-5134403/shot.png",
+    {
+     "boxes": [
+      [
+       0.072,
+       0.52,
+       0.66,
+       0.15
+      ],
+      [
+       0.072,
+       0.72,
+       0.62,
+       0.08
+      ]
+     ],
+     "crop": [
+      0.27,
+      0.02
+     ],
+     "tag": "VnExpress · 20/10"
+    }
+   ]
+  },
+  {
+   "at": "V02",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 98.4,
+     "end": 100.4,
+     "rate": 0.7,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V02",
+     "phrase": "Vietcombank",
+     "fn": "handwrite",
+     "args": [
+      "Các “ông lớn” vào cuộc",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 110
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V02",
+   "phrase": "giảm lãi cho vay",
+   "fn": "counter",
+   "args": [
+    0,
+    2,
+    {
+     "prefix": "−",
+     "suffix": "%/năm",
+     "kicker": "Lãi cho vay giảm tới",
+     "label": "Vietcombank · BIDV · Agribank",
+     "photo": "media/tuoitre-100261018190813162/img-01.jpg"
+    }
+   ],
+   "transition": "whip"
+  },
+  {
+   "at": "V03",
+   "fn": "video",
+   "args": [
+    "media/clips/street-SBV-354405837.mp4",
+    {
+     "offset": 0.5,
+     "dim": 0.35
+    }
+   ],
+   "over": [
+    {
+     "at": "V03",
+     "fn": "handwrite",
+     "args": [
+      "Chuyện gì\nvừa xảy ra?",
+      {
+       "x": 960,
+       "y": 380,
+       "size": 130
+      }
+     ]
+    },
+    {
+     "at": "V03",
+     "phrase": "Và tiền gửi",
+     "fn": "scribble",
+     "args": [
+      {
+       "type": "underline",
+       "x": 640,
+       "y": 560,
+       "w": 640,
+       "color": "#e63b2e"
+      }
+     ]
+    }
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V04",
+   "fn": "chapter",
+   "args": [
+    "Phần 1",
+    "Lãi đã *cao* đến đâu?"
+   ]
+  },
+  {
+   "at": "V04",
+   "phrase": "Theo ghi nhận",
+   "fn": "counter",
+   "args": [
+    0,
+    9.8,
+    {
+     "decimals": 1,
+     "suffix": "%/năm",
+     "kicker": "Lãi tiết kiệm từng chạm",
+     "label": "mức cao nhất tại một số ngân hàng nhỏ",
+     "sub": "Nguồn: Tuổi Trẻ, 18/10/2026",
+     "photo": "media/tuoitre-100261018082917319/img-02.jpg"
+    }
+   ],
+   "transition": "whip"
+  },
+  {
+   "at": "V05",
+   "fn": "video",
+   "args": [
+    "media/clips/street-SBV-352442965.mp4",
+    {
+     "offset": 0.5
+    }
+   ],
+   "over": [
+    {
+     "at": "V05",
+     "phrase": "vay cá nhân",
+     "fn": "handwrite",
+     "args": [
+      "Vay cá nhân: 17–18%",
+      {
+       "x": 960,
+       "y": 300,
+       "size": 115
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V05",
+   "phrase": "Vay mua ô tô",
+   "fn": "counter",
+   "args": [
+    0,
+    19,
+    {
+     "prefix": "> ",
+     "suffix": "%/năm",
+     "kicker": "Vay mua ô tô",
+     "label": "ở một số ngân hàng",
+     "sub": "Nguồn: Tuổi Trẻ, 18/10/2026",
+     "color": "#e63b2e"
+    }
+   ]
+  },
+  {
+   "at": "V06",
+   "fn": "quote",
+   "args": [
+    "Lãi trên *12–13%* như hiện nay, làm không khéo là ~không đủ trả lãi~ ngân hàng",
+    "Chủ doanh nghiệp rượu vang ở Tây Ninh — Tuổi Trẻ, 18/10/2026"
+   ]
+  },
+  {
+   "at": "V07",
+   "fn": "chapter",
+   "args": [
+    "Phần 2",
+    "*4 ngày* dồn dập"
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V07",
+   "phrase": "Ngày 16/10",
+   "fn": "photo",
+   "args": [
+    "media/baochinhphu-102261016223519865/img-02.jpg",
+    {
+     "dir": "in",
+     "credit": "Ảnh: chinhphu.vn/Đức Tuân · Báo Điện tử Chính phủ"
+    }
+   ],
+   "over": [
+    {
+     "at": "V07",
+     "phrase": "Ngày 16/10",
+     "fn": "handwrite",
+     "args": [
+      "16/10",
+      {
+       "x": 1560,
+       "y": 250,
+       "size": 140
+      }
+     ]
+    },
+    {
+     "at": "V07",
+     "phrase": "Phó thủ tướng",
+     "fn": "lowerThird",
+     "args": [
+      "Phó Thủ tướng Nguyễn Văn Thắng",
+      "Họp về chính sách tiền tệ cuối năm"
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V08",
+   "fn": "photo",
+   "args": [
+    "media/vnexpress-5133686/img-01.jpg",
+    {
+     "dir": "left",
+     "credit": "Ảnh: Cổng TTĐT Quốc hội · VnExpress"
+    }
+   ],
+   "over": [
+    {
+     "at": "V08",
+     "fn": "handwrite",
+     "args": [
+      "17/10",
+      {
+       "x": 1560,
+       "y": 250,
+       "size": 140
+      }
+     ]
+    },
+    {
+     "at": "V08",
+     "phrase": "Chủ tịch Vietcombank",
+     "fn": "lowerThird",
+     "args": [
+      "Ông Nguyễn Thanh Tùng",
+      "Chủ tịch HĐQT Vietcombank, tại Quốc hội"
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V08",
+   "phrase": "từ nay đến cuối năm",
+   "fn": "headline",
+   "args": [
+    "media/vnexpress-5133686/shot.png",
+    {
+     "boxes": [
+      [
+       0.07,
+       0.47,
+       0.79,
+       0.11
+      ],
+      [
+       0.07,
+       0.595,
+       0.5,
+       0.11
+      ]
+     ],
+     "crop": [
+      0.3,
+      0.02
+     ],
+     "tag": "VnExpress · 18/10"
+    }
+   ]
+  },
+  {
+   "at": "V09",
+   "fn": "headline",
+   "args": [
+    "media/vnexpress-5133861/shot.png",
+    {
+     "boxes": [
+      [
+       0.07,
+       0.47,
+       0.83,
+       0.11
+      ],
+      [
+       0.07,
+       0.595,
+       0.47,
+       0.11
+      ]
+     ],
+     "crop": [
+      0.27,
+      0.02
+     ],
+     "tag": "18/10 · Văn bản của NHNN"
+    }
+   ]
+  },
+  {
+   "at": "V09",
+   "phrase": "Và ngày 19",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 50.4,
+     "end": 55.0,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V09",
+     "phrase": "Và ngày 19",
+     "fn": "handwrite",
+     "args": [
+      "19/10",
+      {
+       "x": 1560,
+       "y": 250,
+       "size": 140
+      }
+     ]
+    },
+    {
+     "at": "V09",
+     "phrase": "Thống đốc",
+     "fn": "lowerThird",
+     "args": [
+      "Thống đốc Phạm Đức Ấn",
+      "Họp với lãnh đạo các ngân hàng"
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V10",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 42.7,
+     "end": 50.3,
+     "credit": "Video: VTV1"
+    }
+   ]
+  },
+  {
+   "at": "V10",
+   "phrase": "Lãi tiết kiệm niêm yết",
+   "fn": "counter",
+   "args": [
+    0,
+    0.5,
+    {
+     "prefix": "−",
+     "decimals": 1,
+     "suffix": " điểm %",
+     "kicker": "Lãi tiết kiệm niêm yết · kỳ hạn từ 6 tháng",
+     "label": "giảm ÍT NHẤT",
+     "sub": "Văn bản NHNN 18/10/2026"
+    }
+   ]
+  },
+  {
+   "at": "V10",
+   "phrase": "Lãi cho vay sản xuất",
+   "fn": "counter",
+   "args": [
+    0,
+    2,
+    {
+     "prefix": "−",
+     "suffix": " điểm %",
+     "kicker": "Lãi cho vay sản xuất, kinh doanh, lĩnh vực ưu tiên",
+     "label": "giảm 1,5–2 điểm %/năm",
+     "sub": "Văn bản NHNN 18/10/2026"
+    }
+   ],
+   "transition": "flash"
+  },
+  {
+   "at": "V11",
+   "fn": "photo",
+   "args": [
+    "media/vnexpress-5133861/img-01.jpg",
+    {
+     "dir": "in",
+     "credit": "Ảnh: Giang Huy · VnExpress"
+    }
+   ],
+   "over": [
+    {
+     "at": "V11",
+     "fn": "handwrite",
+     "args": [
+      "Cảnh báo!",
+      {
+       "x": 960,
+       "y": 300,
+       "size": 150,
+       "color": "#e63b2e"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V11",
+   "phrase": "ngân hàng nào không làm",
+   "fn": "bigtitle",
+   "args": [
+    "Không giảm → bị *xem lại hạn mức* cho vay",
+    {
+     "kicker": "Chế tài của NHNN"
+    }
+   ]
+  },
+  {
+   "at": "V11",
+   "phrase": "bị giao chỉ tiêu",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 90.8,
+     "end": 93.0,
+     "rate": 0.6,
+     "dim": 0.45,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V11",
+     "phrase": "bị giao chỉ tiêu",
+     "fn": "handwrite",
+     "args": [
+      "Chỉ tiêu năm sau thấp hơn\n+ tỷ lệ an toàn cao hơn",
+      {
+       "x": 960,
+       "y": 360,
+       "size": 95
+      }
+     ]
+    }
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V12",
+   "fn": "chapter",
+   "args": [
+    "Phần 3",
+    "Vì sao giảm *lãi gửi* trước?"
+   ]
+  },
+  {
+   "at": "V13",
+   "fn": "photo",
+   "args": [
+    "media/dantri-20261019151243862/img-01.jpg",
+    {
+     "dir": "right",
+     "credit": "Ảnh: SBV · Dân trí"
+    }
+   ],
+   "over": [
+    {
+     "at": "V13",
+     "phrase": "chi phí vốn",
+     "fn": "handwrite",
+     "args": [
+      "Lãi trả người gửi = chi phí vốn",
+      {
+       "x": 960,
+       "y": 170,
+       "size": 82
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V13",
+   "phrase": "Thống đốc nói thẳng",
+   "fn": "quote",
+   "args": [
+    "Nếu tiếp tục đẩy *lãi huy động* lên cao, sẽ ~khó có cơ sở~ để giảm lãi cho vay",
+    "Thống đốc Phạm Đức Ấn, họp 19/10 — Dân trí thuật lại",
+    {
+     "photo": "media/vtv-100261019152646083/img-01.jpg",
+     "credit": "Ảnh: Ngân hàng Nhà nước · VTV"
+    }
+   ]
+  },
+  {
+   "at": "V14",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 95.8,
+     "end": 98.2,
+     "rate": 0.6,
+     "dim": 0.3,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V14",
+     "phrase": "chạy đua",
+     "fn": "handwrite",
+     "args": [
+      "“Chạy đua” lãi suất",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 120,
+       "color": "#e63b2e"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V14",
+   "phrase": "Nói cách khác",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 103.8,
+     "end": 105.7,
+     "rate": 0.5,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V14",
+     "phrase": "tranh nhau",
+     "fn": "handwrite",
+     "args": [
+      "Tranh nhau hút tiền gửi",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 110
+      }
+     ]
+    },
+    {
+     "at": "V14",
+     "phrase": "phải dừng",
+     "fn": "scribble",
+     "args": [
+      {
+       "type": "cross",
+       "x": 960,
+       "y": 500,
+       "w": 700,
+       "h": 300
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V15",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 93.2,
+     "end": 95.7,
+     "rate": 0.6,
+     "credit": "Video: VTV1"
+    }
+   ]
+  },
+  {
+   "at": "V15",
+   "phrase": "dư nợ cho vay",
+   "fn": "counter",
+   "args": [
+    0,
+    11.44,
+    {
+     "decimals": 2,
+     "prefix": "+",
+     "suffix": "%",
+     "kicker": "Dư nợ tín dụng đến 14/10 so với cuối năm trước",
+     "label": "lên hơn 20 triệu tỷ đồng",
+     "sub": "Số liệu NHNN — Dân trí, 19/10/2026"
+    }
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V16",
+   "fn": "chapter",
+   "args": [
+    "Phần 4",
+    "Ngân hàng *phản ứng*"
+   ]
+  },
+  {
+   "at": "V16",
+   "phrase": "BIDV công bố",
+   "fn": "counter",
+   "args": [
+    0,
+    100000,
+    {
+     "suffix": " tỷ đồng",
+     "kicker": "Gói tín dụng của BIDV (khoảng)",
+     "label": "lãi vay từ 6–7%/năm",
+     "sub": "Dân trí, 19/10/2026",
+     "photo": "media/dantri-20261019113010443/img-01.jpg"
+    }
+   ],
+   "over": [
+    {
+     "at": "V16",
+     "phrase": "chấp nhận giảm thu nhập",
+     "fn": "handwrite",
+     "args": [
+      "−500 tỷ thu nhập",
+      {
+       "x": 960,
+       "y": 860,
+       "size": 100,
+       "color": "#e63b2e"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V17",
+   "fn": "photo",
+   "args": [
+    "media/thanhnien-18526101914544607/img-01.jpg",
+    {
+     "dir": "up",
+     "credit": "Ảnh: Thanh Niên"
+    }
+   ],
+   "over": [
+    {
+     "at": "V17",
+     "fn": "handwrite",
+     "args": [
+      "40.000 tỷ · giảm 2%",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 115
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V17",
+   "phrase": "Vietcombank nói",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 98.4,
+     "end": 100.4,
+     "rate": 0.6,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V17",
+     "phrase": "giảm tự động",
+     "fn": "handwrite",
+     "args": [
+      "Giảm tự động —\nkhông cần làm đơn",
+      {
+       "x": 960,
+       "y": 300,
+       "size": 110
+      }
+     ]
+    }
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V18",
+   "fn": "chapter",
+   "args": [
+    "Phần 5",
+    "*Tiền của bạn* thay đổi ra sao?"
+   ]
+  },
+  {
+   "at": "V18",
+   "phrase": "Kỳ hạn 12 tháng",
+   "fn": "counter",
+   "args": [
+    0,
+    7,
+    {
+     "prefix": "< ",
+     "suffix": "%/năm",
+     "kicker": "Lãi tiết kiệm 12 tháng (niêm yết)",
+     "label": "ở phần lớn ngân hàng",
+     "sub": "VnExpress, 20/10/2026",
+     "photo": "media/vnexpress-5134403/img-01.jpg"
+    }
+   ],
+   "over": [
+    {
+     "at": "V18",
+     "phrase": "Khoảng 15 ngân hàng",
+     "fn": "handwrite",
+     "args": [
+      "~15 ngân hàng: dưới 6%",
+      {
+       "x": 960,
+       "y": 880,
+       "size": 95
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V19",
+   "fn": "photo",
+   "args": [
+    "media/tuoitre-100261018082917319/img-02.jpg",
+    {
+     "dir": "left",
+     "credit": "Ảnh: Văn Trung · Tuổi Trẻ"
+    }
+   ],
+   "over": [
+    {
+     "at": "V19",
+     "phrase": "cao hơn mức niêm yết",
+     "fn": "handwrite",
+     "args": [
+      "Thực tế: +2–3%",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V19",
+   "phrase": "qua mã ưu đãi",
+   "fn": "video",
+   "args": [
+    "media/clips/phone-SBV-1611711.mp4",
+    {
+     "offset": 0.5
+    }
+   ],
+   "over": [
+    {
+     "at": "V19",
+     "phrase": "qua mã ưu đãi",
+     "fn": "handwrite",
+     "args": [
+      "Mã ưu đãi trên app",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 110
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V19",
+   "phrase": "Lãi suất vẫn có hai giá",
+   "fn": "bigtitle",
+   "args": [
+    "Lãi suất *hai giá*",
+    {
+     "kicker": "Niêm yết ≠ thực tế"
+    }
+   ],
+   "transition": "whip"
+  },
+  {
+   "at": "V20",
+   "fn": "video",
+   "args": [
+    "media/clips/factory-SBV-5910279.mp4",
+    {
+     "offset": 0.5,
+     "dim": 0.3
+    }
+   ],
+   "over": [
+    {
+     "at": "V20",
+     "phrase": "nhắm vào",
+     "fn": "handwrite",
+     "args": [
+      "Ưu tiên: sản xuất, kinh doanh",
+      {
+       "x": 960,
+       "y": 300,
+       "size": 105
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V20",
+   "phrase": "Thống đốc nói không cào bằng",
+   "fn": "headline",
+   "args": [
+    "media/dantri-20261019151243862/shot.png",
+    {
+     "boxes": [
+      [
+       0.07,
+       0.585,
+       0.73,
+       0.12
+      ]
+     ],
+     "crop": [
+      0.3,
+      0.1
+     ],
+     "tag": "Dân trí · 19/10"
+    }
+   ]
+  },
+  {
+   "at": "V21",
+   "fn": "video",
+   "args": [
+    "media/clips/street-SBV-352442965.mp4",
+    {
+     "offset": 6
+    }
+   ],
+   "over": [
+    {
+     "at": "V21",
+     "fn": "handwrite",
+     "args": [
+      "Vay mua nhà, mua xe?",
+      {
+       "x": 960,
+       "y": 300,
+       "size": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V21",
+   "phrase": "Hãy hỏi lại",
+   "fn": "photo",
+   "args": [
+    "media/vnexpress-5134403/img-01.jpg",
+    {
+     "dir": "in",
+     "credit": "Ảnh: Giang Huy · VnExpress"
+    }
+   ],
+   "over": [
+    {
+     "at": "V21",
+     "phrase": "Hãy hỏi lại",
+     "fn": "handwrite",
+     "args": [
+      "Hỏi lại ngân hàng!",
+      {
+       "x": 960,
+       "y": 260,
+       "size": 120
+      }
+     ]
+    }
+   ],
+   "transition": "wipe"
+  },
+  {
+   "at": "V22",
+   "fn": "counter",
+   "args": [
+    0,
+    10.7,
+    {
+     "decimals": 1,
+     "suffix": "%",
+     "kicker": "Lãi cho vay bình quân tháng 8",
+     "label": "theo Ngân hàng Nhà nước",
+     "sub": "VnExpress, 18/10/2026",
+     "photo": "media/dantri-20261019113010443/img-01.jpg"
+    }
+   ]
+  },
+  {
+   "at": "V22",
+   "phrase": "Con số của tháng 10",
+   "fn": "video",
+   "args": [
+    "media/clips/vtv-ngan-hang-dong-thuan.mp4",
+    {
+     "offset": 100.5,
+     "end": 103.6,
+     "rate": 0.6,
+     "dim": 0.35,
+     "credit": "Video: VTV1"
+    }
+   ],
+   "over": [
+    {
+     "at": "V22",
+     "phrase": "Con số của tháng 10",
+     "fn": "handwrite",
+     "args": [
+      "Tháng 10, 11:\ngiảm thật không?",
+      {
+       "x": 960,
+       "y": 360,
+       "size": 120
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "at": "V23",
+   "fn": "video",
+   "args": [
+    "media/clips/bank-SBV-352260326.mp4",
+    {
+     "offset": 0.5,
+     "dim": 0.3
+    }
+   ],
+   "over": [
+    {
+     "at": "V23",
+     "fn": "handwrite",
+     "args": [
+      "Lãi của bạn\nđã đổi chưa?",
+      {
+       "x": 960,
+       "y": 380,
+       "size": 130
+      }
+     ]
+    },
+    {
+     "at": "V23",
+     "phrase": "Kể cho mình",
+     "fn": "scribble",
+     "args": [
+      {
+       "type": "arrow",
+       "x": 1500,
+       "y": 700,
+       "w": 260,
+       "h": 180
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
