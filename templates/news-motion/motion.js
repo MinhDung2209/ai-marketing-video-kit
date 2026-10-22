@@ -107,10 +107,17 @@
     }
 
     /** video tràn khung (render.py tua khung). offset/end: đoạn dùng (giây trong clip), rate: tốc độ */
-    video(t, d, src, { offset = 0, end, rate = 1, credit, push = true, shade = true, fade = .25, dim = 0 } = {}) {
+    video(t, d, src, { offset = 0, end, rate = 1, credit, push = true, shade = true, fade = .25, dim = 0, pos, card = false, y } = {}) {
       const s = this._layer(t, d);
-      const v = el('video', 'm-media', s); v.muted = true; v.preload = 'auto'; v.setAttribute('playsinline', ''); v.src = src;
-      v.dataset.offset = offset; v.dataset.rate = rate; if (end != null) v.dataset.end = end;
+      const mk = (cls, parent) => { const v = el('video', cls, parent); v.muted = true; v.preload = 'auto'; v.setAttribute('playsinline', ''); v.src = src;
+        v.dataset.offset = offset; v.dataset.rate = rate; if (end != null) v.dataset.end = end; return v; };
+      // card: clip ngang trong khung dọc — khung nét giữa (không cắt mất chữ/đồ họa của báo) trên nền chính clip đó phóng to, nhoè
+      if (card) { const bg = mk('m-media', s); bg.style.filter = 'blur(28px) brightness(.55)'; bg.style.transform = 'scale(1.15)'; }
+      const v = card ? mk('m-card', el('div', 'm-cardbox', s)) : mk('m-media', s);
+      if (card) { const box = v.parentNode, w = W - 60; Object.assign(box.style, { width: w + 'px', height: Math.round(w * 9 / 16) + 'px', left: '30px',
+        top: Math.round((y ?? H * .4) - w * 9 / 32) + 'px' });
+        this.tl.fromTo(box, { scale: .9, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: 'power3.out' }, t); }
+      else if (pos) v.style.objectPosition = pos;   // khung dọc cắt clip ngang: '30% 50%' = giữ phần bên trái
       if (push) this.tl.fromTo(v, { scale: 1 }, { scale: 1.06, duration: d, ease: 'none' }, t);
       if (dim) el('div', 'm-scene', s).style.background = `rgba(0,0,0,${dim})`;
       if (shade) el('div', 'm-shade', s);

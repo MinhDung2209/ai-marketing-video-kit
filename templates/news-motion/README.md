@@ -30,7 +30,7 @@ Chữ đánh dấu: `*vàng*`, `~đỏ~` (bigtitle, quote). Số kiểu Việt: 
 | Hàm | Mô tả | Tuỳ chọn |
 |---|---|---|
 | `photo(t,d,src,o)` | Ảnh tràn khung, Ken Burns, viền tối, vân hạt, nhãn nguồn | `dir` in/out/left/right/up/down · `pos` object-position · `credit` · `shade` · `fade` |
-| `video(t,d,src,o)` | Video tràn khung (muted), đẩy chậm 1→1.06 | `offset` `end` (giây trong clip) · `rate` · `credit` · `dim` 0–1 (tối nền để viết chữ lên) |
+| `video(t,d,src,o)` | Video tràn khung (muted), đẩy chậm 1→1.06 | `offset` `end` (giây trong clip) · `rate` · `credit` · `dim` 0–1 (tối nền để viết chữ lên) · `pos` '30% 50%' (khung dọc: giữ phần nào của clip ngang) · `card` true = khung dọc đặt clip ngang thành thẻ nét giữa trên nền chính clip đó nhoè (không mất chữ/đồ họa), `y` tâm thẻ (mặc định 0,4·H) |
 | `headline(t,d,src,o)` | Ảnh chụp bài báo trượt vào nghiêng, zoom chậm, bút dạ quang quét | `boxes` [[x,y,w,h],…] tỉ lệ 0–1 của ảnh GỐC · `crop` [trên,dưới] tỉ lệ cao (cắt dải trắng) · `tag` 'VnExpress · 20/10' · `width` 1500 · `tilt` · `zoom` |
 | `handwrite(t,d,text,o)` | Chữ viết tay hiện theo nét, đầu bút chạy theo, nền tối sau nét | `x,y` (y = chân chữ dòng 1) · `align` · `size` · `color` · `font` Pangolin/PatrickHand/Itim · `write` (giây viết) · `backing` (null = tắt) · `\n` xuống dòng |
 | `scribble(t,d,o)` | Nét vẽ tay | `type` circle/underline/arrow/cross · `x,y,w,h` · `color` · `width` · `draw` (giây vẽ) · `seed` |

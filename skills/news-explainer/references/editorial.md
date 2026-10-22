@@ -35,6 +35,11 @@ Ví dụ 22/10 (chủ đề lãi thả nổi):
 - Câu kết đọc giọng lửng, không hạ giọng chốt (ghi ở `direction`). Hình cuối khớp được với hình đầu.
 - Lời mời comment (mục Câu kết trong SKILL) đặt **ngay trước** câu loop, không đặt sau.
 - Câu đầu vẫn phải đứng được một mình cho người xem lần đầu.
+- Hình khớp vòng lặp: cảnh cuối và cảnh đầu dùng **cùng một clip**, cảnh cuối chạy đoạn ngay trước `offset` của cảnh đầu (vd cuối `offset 0.6` chạy ~3,4 s → đầu `offset 4`); plan đặt `"tail": 0` để câu loop cắt ngay khi dứt lời.
+
+**Video gốc chạy, không chỉ ảnh (người dùng chốt 22/10/2026: "dùng video gốc chạy tí sẽ trông hấp dẫn hơn").** Đề tài toàn ảnh báo vẫn phải có footage chạy: phóng sự truyền hình/báo điện tử về đúng chủ đề (VTC News, VTV, VnExpress video…) tải bằng `social_radar.py clips`, xem lưới khung hình từng giây, cắt đoạn 6–15 s đúng cảnh (người ở quầy, đếm tiền, sao kê, đồ họa số liệu của đài), ghi `media/inventory.json` + `credit` "Video: VTC News", giữ logo đài. Xen kẽ: footage → số/biểu đồ động → ảnh chụp báo → footage. Đồ họa của đài chỉ dùng khi số liệu khớp nguồn mình đã kiểm.
+- Khung dọc: clip có chữ/đồ họa thì dùng `video(..., {card: true})` (khung nét giữa, nền chính clip đó nhoè) để không cắt mất chữ; clip người/cảnh thì để tràn khung, chỉnh `pos` để giữ chủ thể. Chữ viết tay đặt trên (y≈400) hoặc dưới khung card (y≈1190–1230).
+- Font viết tay không có ký tự ①②③ — dùng "1.", "2.".
 
 ## WHY
 
