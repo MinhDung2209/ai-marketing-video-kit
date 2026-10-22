@@ -105,7 +105,9 @@ def description(a):
 
 def upload(a):
     f = pathlib.Path(a.video); size = f.stat().st_size
+    lang = getattr(a, "lang", None) or "vi"   # ngôn ngữ tiêu đề/mô tả + ngôn ngữ âm thanh → YouTube xếp đúng người xem, phụ đề tự động đúng tiếng
     meta = {"snippet": {"title": a.title[:100], "description": description(a), "categoryId": a.category,
+                        "defaultLanguage": lang, "defaultAudioLanguage": lang,
                         "tags": [t.strip() for t in a.tags.split(",") if t.strip()] if a.tags else []},
             "status": {"privacyStatus": a.privacy, "selfDeclaredMadeForKids": False}}
     r = api("POST", "videos", upload=True, params={"uploadType": "resumable", "part": "snippet,status"}, json=meta,
@@ -142,7 +144,7 @@ def update(a):
     if a.desc or a.chapters or a.credits: sn["description"] = description(a)
     if a.tags is not None: sn["tags"] = [t.strip() for t in a.tags.split(",") if t.strip()]
     if a.privacy: st["privacyStatus"] = a.privacy
-    body = {"id": a.id, "snippet": {k: sn[k] for k in ("title", "description", "categoryId", "tags", "defaultLanguage") if k in sn},
+    body = {"id": a.id, "snippet": {k: sn[k] for k in ("title", "description", "categoryId", "tags", "defaultLanguage", "defaultAudioLanguage") if k in sn},
             "status": {k: st[k] for k in ("privacyStatus", "selfDeclaredMadeForKids", "embeddable", "license", "publicStatsViewable") if k in st}}
     api("PUT", "videos", params={"part": "snippet,status"}, json=body)
     print(f"đã sửa ({st['privacyStatus']}): https://youtu.be/{a.id} · {sn['title']}")
@@ -179,6 +181,7 @@ if __name__ == "__main__":
     u = sp.add_parser("upload"); u.add_argument("video"); u.add_argument("--title", required=True); u.add_argument("--desc")
     u.add_argument("--chapters"); u.add_argument("--credits"); u.add_argument("--thumb"); u.add_argument("--tags")
     u.add_argument("--privacy", default="private", choices=("private", "unlisted", "public")); u.add_argument("--category", default="19")   # 19 = Travel & Events
+    u.add_argument("--lang", default="vi", help="ngôn ngữ video (defaultLanguage + defaultAudioLanguage)")
     u.set_defaults(fn=upload)
     e = sp.add_parser("update"); e.add_argument("id"); e.add_argument("--title"); e.add_argument("--desc")
     e.add_argument("--chapters"); e.add_argument("--credits"); e.add_argument("--thumb"); e.add_argument("--tags")

@@ -24,6 +24,9 @@
   - "sfx": [{"at","phrase","shift","name","vol"}] thêm tiếng tuỳ ý; tiếng mặc định theo từng hàm ở AUTO_SFX.
   - video {"sound": 1.0} = phát tiếng gốc của clip (từ offset, tốc độ 1) — đặt cảnh vào câu "pause" của voice.json
     để giọng đọc lặng; nhạc nền tự hạ dưới tiếng gốc như dưới giọng.
+  - Đăng YouTube: "title" (≤ 100 ký tự, từ khoá ở đầu), "summary" (2 dòng đầu mô tả = hook hiện trong kết quả tìm kiếm),
+    "facts", "cta", "hashtags" ["#a", …] (3 cái đầu hiện trên tiêu đề), "tags", "category" (25 Tin tức · 27 Giáo dục),
+    "language" (mặc định "vi"), "privacy", "thumb" {"t", "text"}.
   - "format": "reel" → khung dọc 1080×1920 (Reels/Shorts/TikTok): phụ đề ngắn, đặt cao tránh giao diện nền tảng;
     tọa độ handwrite/scribble theo khung 1080×1920 (chừa ~250px trên, ~450px dưới).
 Nguồn: mọi "credit" trên hình + SOURCES.md (từ media/*/media.json) để dán mô tả.
@@ -226,8 +229,11 @@ def description(proj):
            "Nguồn hình ảnh / video (bản quyền thuộc các tòa soạn, tác giả):",
            *[l for l in (proj / "SOURCES.md").read_text(encoding="utf-8").splitlines() if l.startswith("- ")],
            "", "Nhạc nền: tự tạo bằng Google Lyria. Giọng đọc: AI (Gemini TTS)."]
+    if plan.get("cta"): out[1:1] = ["", plan["cta"]]
+    if plan.get("hashtags"): out += ["", " ".join(plan["hashtags"])]   # 3 hashtag đầu hiện trên tiêu đề video
     if plan.get("facts"): out[1:1] = ["", "Dữ kiện chính:", *[f"- {f}" for f in plan["facts"]]]
-    return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 \2", "\n".join(out))[:4900]
+    txt = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 \2", "\n".join(out))
+    return txt.replace("<", "‹").replace(">", "›")[:4900]   # YouTube từ chối mô tả có < > (invalidDescription)
 
 def cmd_publish(proj):
     """Đăng YouTube (API ở chế độ Testing → khoá private: đổi 'Không công khai' trong Studio) + thumbnail; lưu youtube-upload.json."""
@@ -241,7 +247,8 @@ def cmd_publish(proj):
     if thumb: yt.thumb(types.SimpleNamespace(video=str(proj / "video.mp4"), out=str(thumb), t=th.get("t", 1.5), text=th.get("text", "")))
     vid = yt.upload(types.SimpleNamespace(video=str(proj / "video.mp4"), title=plan["title"], desc=str(proj / "youtube-description.txt"),
                                           chapters=None, credits=None, thumb=thumb and str(thumb), tags=plan.get("tags", ""),
-                                          privacy=plan.get("privacy", "private"), category="25"))
+                                          privacy=plan.get("privacy", "private"), category=str(plan.get("category", "25")),   # 25 Tin tức, 27 Giáo dục
+                                          lang=plan.get("language", "vi")))
     save({"video_id": vid, "url": f"https://youtu.be/{vid}", "studio": f"https://studio.youtube.com/video/{vid}/edit",
           "privacy": plan.get("privacy", "private"),
           "replaced": ([old["video_id"]] + old.get("replaced", [])) if old else []}, rec)
