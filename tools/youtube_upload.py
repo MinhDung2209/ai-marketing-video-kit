@@ -161,13 +161,16 @@ def thumb(a):
                     "-vf", "scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720", str(tmp)], check=True)
     im = Image.open(tmp).convert("RGB"); d = ImageDraw.Draw(im); tmp.unlink()
     if a.text:
-        font = None
-        for name in ("arialbd.ttf", "seguisb.ttf", "DejaVuSans-Bold.ttf"):
-            try: font = ImageFont.truetype(name, 96); break
-            except OSError: pass
-        lines = a.text.split("|"); y = 720 - 70 - 110 * len(lines)
+        lines = a.text.split("|"); size = 96
+        while True:   # chữ dài → thu nhỏ cho vừa ngang 1200px (trước đây tràn khỏi khung)
+            for name in ("arialbd.ttf", "seguisb.ttf", "DejaVuSans-Bold.ttf"):
+                try: font = ImageFont.truetype(name, size); break
+                except OSError: font = None
+            if size <= 48 or max(d.textlength(ln, font=font) for ln in lines) <= 1200: break
+            size -= 4
+        step = int(size * 1.15); y = 720 - 70 - step * len(lines)
         for ln in lines:
-            w = d.textlength(ln, font=font); d.text(((1280 - w) / 2, y), ln, font=font, fill="white", stroke_width=8, stroke_fill="black"); y += 110
+            w = d.textlength(ln, font=font); d.text(((1280 - w) / 2, y), ln, font=font, fill="white", stroke_width=8, stroke_fill="black"); y += step
     q = 92
     while True:
         im.save(a.out, "JPEG", quality=q)
