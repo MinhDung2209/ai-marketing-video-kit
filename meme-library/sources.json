@@ -1,0 +1,399 @@
+{
+ "_huong_dan": "Danh sách nguồn meme/sticker SẠCH GIẤY PHÉP cho video thương mại. Thêm mục rồi chạy: python tools/meme_fetch.py. KHÔNG thêm meme cắt từ phim / ảnh chế có bản quyền (xem docs/11).",
+ "noto": {
+  "name": "Google Noto Animated Emoji",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)",
+  "home": "https://googlefonts.github.io/noto-emoji-animation/",
+  "url": "https://fonts.gstatic.com/s/e/notoemoji/latest/{code}/512.gif",
+  "items": [
+   {
+    "code": "1f914",
+    "id": "thinking",
+    "tags": [
+     "suy nghĩ",
+     "tò mò",
+     "hỏi",
+     "thinking",
+     "hmm"
+    ]
+   },
+   {
+    "code": "1f9d0",
+    "id": "monocle",
+    "tags": [
+     "soi",
+     "xem kỹ",
+     "nghiên cứu",
+     "điều tra"
+    ]
+   },
+   {
+    "code": "1f440",
+    "id": "eyes",
+    "tags": [
+     "nhìn",
+     "để ý",
+     "chú ý",
+     "hóng"
+    ]
+   },
+   {
+    "code": "1f92f",
+    "id": "mind-blown",
+    "tags": [
+     "sốc",
+     "wow",
+     "nổ não",
+     "bất ngờ"
+    ]
+   },
+   {
+    "code": "1f62e",
+    "id": "wow",
+    "tags": [
+     "wow",
+     "ngạc nhiên",
+     "ồ"
+    ]
+   },
+   {
+    "code": "1f631",
+    "id": "scream",
+    "tags": [
+     "hoảng",
+     "sốc",
+     "sợ"
+    ]
+   },
+   {
+    "code": "1f929",
+    "id": "star-struck",
+    "tags": [
+     "mê",
+     "thích",
+     "wow",
+     "lấp lánh"
+    ]
+   },
+   {
+    "code": "1f60e",
+    "id": "cool",
+    "tags": [
+     "ngầu",
+     "tự tin",
+     "chill",
+     "kính râm"
+    ]
+   },
+   {
+    "code": "1f911",
+    "id": "money-face",
+    "tags": [
+     "tiền",
+     "kiếm tiền",
+     "lợi nhuận",
+     "giàu"
+    ]
+   },
+   {
+    "code": "1f4b8",
+    "id": "money-wings",
+    "tags": [
+     "tiền bay",
+     "mất tiền",
+     "chi tiêu"
+    ]
+   },
+   {
+    "code": "1f4c8",
+    "id": "chart-up",
+    "tags": [
+     "tăng",
+     "tăng trưởng",
+     "biểu đồ",
+     "đi lên"
+    ]
+   },
+   {
+    "code": "1f525",
+    "id": "fire",
+    "tags": [
+     "hot",
+     "cháy",
+     "nóng",
+     "xu hướng"
+    ]
+   },
+   {
+    "code": "1f680",
+    "id": "rocket",
+    "tags": [
+     "tăng vọt",
+     "bùng nổ",
+     "tên lửa",
+     "nhanh"
+    ]
+   },
+   {
+    "code": "1f4a5",
+    "id": "boom",
+    "tags": [
+     "bùm",
+     "nổ",
+     "va chạm",
+     "đập"
+    ]
+   },
+   {
+    "code": "26a1",
+    "id": "zap",
+    "tags": [
+     "nhanh",
+     "tia chớp",
+     "tốc độ"
+    ]
+   },
+   {
+    "code": "1f4af",
+    "id": "hundred",
+    "tags": [
+     "100",
+     "chuẩn",
+     "tuyệt đối"
+    ]
+   },
+   {
+    "code": "2705",
+    "id": "check",
+    "tags": [
+     "xong",
+     "đúng",
+     "chốt",
+     "ok"
+    ]
+   },
+   {
+    "code": "1f3af",
+    "id": "target",
+    "tags": [
+     "mục tiêu",
+     "trúng đích",
+     "chính xác"
+    ]
+   },
+   {
+    "code": "1f389",
+    "id": "party-popper",
+    "tags": [
+     "chúc mừng",
+     "ăn mừng",
+     "thành công"
+    ]
+   },
+   {
+    "code": "1f973",
+    "id": "partying",
+    "tags": [
+     "ăn mừng",
+     "vui",
+     "tiệc"
+    ]
+   },
+   {
+    "code": "1f44f",
+    "id": "clap",
+    "tags": [
+     "vỗ tay",
+     "khen",
+     "hay"
+    ]
+   },
+   {
+    "code": "1f64c",
+    "id": "raised-hands",
+    "tags": [
+     "tuyệt",
+     "hoan hô",
+     "yeah"
+    ]
+   },
+   {
+    "code": "1f44c",
+    "id": "ok-hand",
+    "tags": [
+     "ok",
+     "chuẩn",
+     "được"
+    ]
+   },
+   {
+    "code": "1f44d",
+    "id": "thumbs-up",
+    "tags": [
+     "like",
+     "đồng ý",
+     "tốt"
+    ]
+   },
+   {
+    "code": "1f602",
+    "id": "joy",
+    "tags": [
+     "cười",
+     "buồn cười",
+     "haha"
+    ]
+   },
+   {
+    "code": "1f605",
+    "id": "sweat-smile",
+    "tags": [
+     "ngại",
+     "cười trừ",
+     "toát mồ hôi"
+    ]
+   },
+   {
+    "code": "1f62d",
+    "id": "sob",
+    "tags": [
+     "khóc",
+     "khổ",
+     "buồn"
+    ]
+   },
+   {
+    "code": "1f629",
+    "id": "weary",
+    "tags": [
+     "mệt",
+     "chán",
+     "nản",
+     "khổ"
+    ]
+   },
+   {
+    "code": "1f634",
+    "id": "sleeping",
+    "tags": [
+     "ngủ",
+     "chán",
+     "mệt",
+     "nhàm"
+    ]
+   },
+   {
+    "code": "1f644",
+    "id": "eye-roll",
+    "tags": [
+     "chán",
+     "đảo mắt",
+     "thôi đi"
+    ]
+   },
+   {
+    "code": "1fae0",
+    "id": "melting",
+    "tags": [
+     "tan chảy",
+     "bất lực",
+     "nóng"
+    ]
+   },
+   {
+    "code": "2615",
+    "id": "coffee",
+    "tags": [
+     "cà phê",
+     "buổi sáng",
+     "thư giãn"
+    ]
+   },
+   {
+    "code": "1f30f",
+    "id": "globe-asia",
+    "tags": [
+     "thế giới",
+     "toàn cầu",
+     "quốc tế",
+     "châu á"
+    ]
+   },
+   {
+    "code": "1f4a1",
+    "id": "bulb",
+    "tags": [
+     "ý tưởng",
+     "mẹo",
+     "sáng kiến"
+    ]
+   },
+   {
+    "code": "23f0",
+    "id": "alarm",
+    "tags": [
+     "báo thức",
+     "thời gian",
+     "buổi sáng",
+     "gấp"
+    ]
+   },
+   {
+    "code": "1f91d",
+    "id": "handshake",
+    "tags": [
+     "bắt tay",
+     "hợp tác",
+     "chốt deal",
+     "đối tác"
+    ]
+   },
+   {
+    "code": "1f3c6",
+    "id": "trophy",
+    "tags": [
+     "chiến thắng",
+     "số 1",
+     "cúp"
+    ]
+   },
+   {
+    "code": "2728",
+    "id": "sparkles",
+    "tags": [
+     "lấp lánh",
+     "mới",
+     "đặc biệt",
+     "phép màu"
+    ]
+   },
+   {
+    "code": "1f447",
+    "id": "point-down",
+    "tags": [
+     "xuống dưới",
+     "bình luận",
+     "chỉ xuống"
+    ]
+   },
+   {
+    "code": "1f449",
+    "id": "point-right",
+    "tags": [
+     "chỉ",
+     "bên phải",
+     "tiếp theo"
+    ]
+   }
+  ],
+  "_khong_co_ban_dong": [
+   "money-bag",
+   "email",
+   "phone",
+   "magnifier",
+   "ship"
+  ]
+ }
+}

@@ -56,7 +56,8 @@ for k, s in enumerate(c.get("sfx", [])):
     fp = find(s["file"]); args += ["-i", fp]; si = idx; idx += 1
     ms = int(float(s["t"]) * 1000)
     gain = 10 ** ((PEAK_TARGET - peak_db(fp)) / 20) * float(s.get("volume", 0.7))   # chuẩn hoá đỉnh rồi mới nhân volume
-    flt.append(f"[{si}:a]volume={gain:.4f},adelay={ms}|{ms}[s{k}]"); mix.append(f"[s{k}]")
+    cut = f"atrim=0:{float(s['dur']):.3f},afade=t=out:st={max(0, float(s['dur']) - 0.25):.3f}:d=0.25," if s.get("dur") else ""   # dur = cắt (tiếng meme dài)
+    flt.append(f"[{si}:a]{cut}volume={gain:.4f},adelay={ms}|{ms}[s{k}]"); mix.append(f"[s{k}]")
 if not mix: raise SystemExit("cues.json không có voice / bgm / sfx")
 flt.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,atrim=0:{D},alimiter=limit=0.95[out]")
 cmd = ["ffmpeg", "-y", "-loglevel", "error", *args, "-filter_complex", ";".join(flt), "-map", "[out]",

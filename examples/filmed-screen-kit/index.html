@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Filmed screen · chọn, xuất, xem lại</title>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1280px; height: 720px; }
+body { background: #0b1019; color: #f4f7fc; font-family: Arial, sans-serif; }
+#root { position: relative; width: 1280px; height: 720px; overflow: hidden; background: radial-gradient(ellipse at 65% 35%, #24374a, #0b1019 78%); }
+#scene-screen { position: absolute; inset: 0; }
+#eyebrow { position: absolute; left: 128px; top: 58px; color: #92dcc8; font-size: 16px; letter-spacing: 3px; }
+#title { position: absolute; left: 128px; top: 84px; margin: 0; font-size: 38px; line-height: 1.2; }
+#shot-label { position: absolute; right: 128px; top: 108px; font-size: 15px; color: #b6c7d9; }
+#monitor { position: absolute; left: 104px; top: 172px; width: 1072px; height: 456px; padding: 8px; background: #354354; border-radius: 20px; box-shadow: 0 28px 54px #0009; transform: perspective(1800px) rotateX(2deg) rotateY(-3deg); }
+#viewport { position: relative; width: 1056px; height: 440px; overflow: hidden; border-radius: 13px; background: #142033; }
+#camera { position: absolute; width: 1056px; height: 440px; transform-origin: 0 0; }
+#screen-placeholder, #screen-asset { position: absolute; inset: 0; width: 1056px; height: 440px; }
+#screen-asset { object-fit: fill; }
+[hidden] { display: none !important; }
+#cursor { position: absolute; width: 30px; height: 38px; transform-origin: 0 0; filter: drop-shadow(0 2px 3px #0009); }
+#click-ring { position: absolute; width: 56px; height: 56px; border: 3px solid #a7ffe1; border-radius: 50%; transform-origin: center; opacity: 0; }
+#glass { position: absolute; inset: 0; pointer-events: none; border-radius: 13px; background: linear-gradient(145deg, #ffffff0b, transparent 45%), repeating-linear-gradient(0deg, #00000004 0 1px, transparent 1px 4px); box-shadow: inset 0 0 32px #0004; }
+#caption { position: absolute; left: 128px; top: 645px; width: 1024px; min-height: 39px; text-align: center; font-size: 25px; line-height: 1.3; font-weight: 700; }
+#caption-text { display: inline-block; max-width: 100%; padding: 3px 16px; border-radius: 9px; background: #090f19ee; }
+#asset-status { position: absolute; left: 128px; top: 143px; font-size: 13px; color: #b6c7d9; }
+</style>
+</head>
+<body>
+<main id="root" data-composition-id="main" data-width="1280" data-height="720" data-duration="8" data-start="0">
+  <section id="scene-screen" data-start="0" data-duration="8" data-track-index="0" aria-label="Minh họa màn hình với con trỏ">
+    <div id="eyebrow">MỘT LUỒNG · HAI THAO TÁC</div>
+    <h1 id="title">Từ bản nháp đến bản xem lại</h1>
+    <div id="shot-label">01 / CHỌN → XUẤT</div>
+    <div id="asset-status" role="status">Màn hình minh họa · thay bằng ảnh sản phẩm của bạn</div>
+    <div id="monitor">
+      <div id="viewport">
+        <div id="camera">
+          <!-- Original local fixture. Replace via CONFIG.screenAsset below; keep IDs. -->
+          <svg id="screen-placeholder" viewBox="0 0 1056 440" role="img" aria-label="Giao diện minh họa: chọn bản nháp rồi xuất bản xem lại">
+            <rect width="1056" height="440" fill="#142033"/>
+            <rect width="1056" height="56" fill="#1e2d42"/>
+            <circle cx="25" cy="28" r="6" fill="#ff968f"/><circle cx="45" cy="28" r="6" fill="#f5cf79"/><circle cx="65" cy="28" r="6" fill="#92dcc8"/>
+            <g font-family="Arial, sans-serif" fill="#f4f7fc">
+              <text x="98" y="35" font-size="19" font-weight="700">Xưởng nội dung / Bản nháp</text>
+              <text x="36" y="112" font-size="18" fill="#92dcc8">DỰ ÁN</text>
+              <text x="36" y="154" font-size="21">Tổng quan</text>
+              <text x="36" y="196" font-size="21">Bản nháp</text>
+              <text x="36" y="238" font-size="21">Bản xem lại</text>
+              <path d="M230 80V412" stroke="#34435a"/>
+              <text x="270" y="112" font-size="25" font-weight="700">Chọn một bản nháp</text>
+              <rect id="selection-card" x="270" y="142" width="350" height="176" rx="16" fill="#253950" stroke="#526a83" stroke-width="3"/>
+              <rect x="290" y="163" width="75" height="73" rx="10" fill="#416b75"/>
+              <path d="M313 179L344 199L313 220Z" fill="#b9ffdf"/>
+              <text x="387" y="190" font-size="24" font-weight="700">Demo sản phẩm</text>
+              <text x="387" y="223" font-size="19" fill="#c6d5e6">08 giây · 16:9</text>
+              <text id="selection-status" x="291" y="285" font-size="21" fill="#b9ffdf">Sẵn sàng chọn</text>
+              <rect x="650" y="142" width="366" height="176" rx="16" fill="#1b2b40"/>
+              <text x="674" y="181" font-size="21">Danh sách kiểm tra</text>
+              <text x="674" y="224" font-size="19" fill="#c6d5e6">01  Nội dung đã rõ</text>
+              <text x="674" y="263" font-size="19" fill="#c6d5e6">02  Phụ đề dễ đọc</text>
+              <text id="export-status" x="270" y="375" font-size="21" fill="#c6d5e6">Chưa có bản xem lại</text>
+              <rect x="812" y="338" width="204" height="60" rx="12" fill="#a8f3d5"/>
+              <text x="914" y="376" text-anchor="middle" font-size="22" font-weight="700" fill="#142033">Xuất bản xem lại</text>
+            </g>
+          </svg>
+          <img id="screen-asset" hidden alt="Ảnh màn hình sản phẩm thay thế">
+          <div id="click-ring" aria-hidden="true"></div>
+          <svg id="cursor" viewBox="0 0 30 38" aria-hidden="true"><path d="M2 2L3 29L10 23L16 35L22 32L16 20L27 19Z" fill="#fff" stroke="#142033" stroke-width="2"/></svg>
+        </div>
+        <div id="glass" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div id="caption" aria-live="off"><span id="caption-text"></span></div>
+  </section>
+</main>
+<script>
+'use strict';
+// Local paths relative to this HTML only. The default fixture needs no files or network.
+const CONFIG = {
+  screenAsset: '', // e.g. 'assets/product-screen.png' (1056 × 440, same UI in every beat)
+  cues: [
+    {start: 0, end: 3.4, text: 'Chọn bản nháp bạn muốn giới thiệu.'},
+    {start: 3.4, end: 6.4, text: 'Xuất một bản xem lại để kiểm tra.'},
+    {start: 6.4, end: 8, text: 'Xem lại nội dung trước khi chia sẻ.'}
+  ],
+  // x/y in the unscaled 1056 × 440 screenshot. Times are absolute seconds.
+  stops: [
+    {at: 0,   x: 150, y: 90,  zoom: 1},
+    {at: 1,   x: 150, y: 90,  zoom: 1},
+    {at: 2,   x: 500, y: 260, zoom: 1.35},
+    {at: 3.4, x: 500, y: 260, zoom: 1.35},
+    {at: 4.8, x: 914, y: 368, zoom: 1.35},
+    {at: 6.2, x: 914, y: 368, zoom: 1.35},
+    {at: 7,   x: 914, y: 368, zoom: 1},
+    {at: 8,   x: 914, y: 368, zoom: 1}
+  ],
+  clicks: [2, 4.8]
+};
+const el = id => document.getElementById(id);
+const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
+const smooth = n => n * n * (3 - 2 * n);
+function poseAt(t) {
+  const stops = CONFIG.stops;
+  let i = 0;
+  while (i < stops.length - 2 && t >= stops[i + 1].at) i++;
+  const a = stops[i], b = stops[i + 1];
+  const u = smooth(clamp((t - a.at) / (b.at - a.at), 0, 1));
+  return {x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u,
+    zoom: a.zoom + (b.zoom - a.zoom) * u};
+}
+// A pure absolute-time sampler: every animated property is assigned on every seek.
+// This small seek adapter implements the existing tools/render.py contract, without GSAP.
+function seek(seconds) {
+  const n = Number(seconds);
+  const t = clamp(Number.isFinite(n) ? n : 0, 0, 8);
+  const p = poseAt(t), s = p.zoom;
+  const tx = clamp(528 - p.x * s, 1056 * (1 - s), 0);
+  const ty = clamp(220 - p.y * s, 440 * (1 - s), 0);
+  el('camera').style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+  el('cursor').style.transform = `translate(${p.x}px, ${p.y}px) scale(${1 / s})`;
+  const hit = CONFIG.clicks.find(at => t >= at && t < at + 0.4);
+  const age = hit === undefined ? 0 : (t - hit) / 0.4;
+  const point = poseAt(hit === undefined ? t : hit);
+  el('click-ring').style.left = `${point.x - 28}px`;
+  el('click-ring').style.top = `${point.y - 28}px`;
+  el('click-ring').style.transform = `scale(${(0.35 + age * 1.25) / s})`;
+  el('click-ring').style.opacity = hit === undefined ? '0' : String(1 - age);
+  el('selection-card').setAttribute('stroke', t >= 2 ? '#a8f3d5' : '#526a83');
+  el('selection-status').textContent = t >= 2 ? 'Đã chọn · Demo sản phẩm' : 'Sẵn sàng chọn';
+  el('export-status').textContent = t >= 4.8 ? 'Bản xem lại đã sẵn sàng' : 'Chưa có bản xem lại';
+  const cue = CONFIG.cues.find(c => t >= c.start && t < c.end) || CONFIG.cues[CONFIG.cues.length - 1];
+  el('caption-text').textContent = cue.text;
+  return t;
+}
+window.__timelines = window.__timelines || {};
+window.__timelines.main = {seek, duration: () => 8};
+// Explicit status for a missing/rejected replacement; never hide a failed load.
+window.filmedScreen = {seek, config: CONFIG, asset: {status: 'fixture', reason: 'Using inline original illustration'}};
+if (CONFIG.screenAsset) {
+  const path = CONFIG.screenAsset;
+  const reportUnavailable = reason => {
+    window.filmedScreen.asset = {status: 'unavailable', reason};
+    el('screen-asset').hidden = true;
+    el('screen-placeholder').removeAttribute('hidden');
+    el('asset-status').textContent = `Ảnh thay thế không khả dụng · ${reason}`;
+  };
+  if (path !== path.trim() || /^(?:[a-z][a-z0-9+.-]*:|[\\/])|(?:^|[\\/])\.\.(?:[\\/]|$)/i.test(path)) {
+    reportUnavailable('Use a relative local asset path');
+  } else {
+    const image = el('screen-asset');
+    window.filmedScreen.asset = {status: 'loading', path};
+    image.onload = () => {
+      image.hidden = false;
+      el('screen-placeholder').setAttribute('hidden', '');
+      el('asset-status').textContent = 'Ảnh sản phẩm cục bộ · con trỏ minh họa';
+      window.filmedScreen.asset = {status: 'ready', path};
+    };
+    image.onerror = () => reportUnavailable('Local image could not be loaded');
+    image.src = path;
+  }
+}
+// Paused preview, including file:// use. No wall-clock animation, timers or autoplay.
+let previewTime = seek(new URLSearchParams(location.search).get('t') || 0);
+document.addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+  event.preventDefault();
+  previewTime = seek(previewTime + (event.key === 'ArrowRight' ? 0.1 : -0.1));
+});
+</script>
+</body>
+</html>

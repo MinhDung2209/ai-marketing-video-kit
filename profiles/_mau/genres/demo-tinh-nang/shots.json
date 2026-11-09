@@ -1,0 +1,25 @@
+{
+ "_ghi_chu": "MẪU kịch bản thao tác. Mỗi cảnh: mở trang → start → thao tác như người → đặt MỐC (mark/focus/ink) đúng chỗ lời đọc sẽ nhắc. Chữ để focus/ink phải copy NGUYÊN VĂN từ trang (xem bằng screendemo/status.py hoặc probe.py). ink (khoanh đỏ) ~1 lần / 10–15 s.",
+ "profile": "_mau",
+ "viewport": [720, 1080],
+ "shots": {
+  "h2": {"note": "Nghiên cứu trên Google → mở 1 bài báo → phóng + khoanh số chính", "steps": [
+   {"do": "goto", "url": "https://www.google.com.vn/?hl=vi", "settle": false},
+   {"do": "start"}, {"do": "wait", "sec": 0.6},
+   {"do": "google", "query": "${Q_RESEARCH}"}, {"do": "mark", "name": "kq"},
+   {"do": "open_result", "href": "${ART_HREF}", "name": "bai"},
+   {"do": "focus", "text": "${ART_FOCUS}", "name": "bai-focus", "hold": 1.4},
+   {"do": "ink", "text": "${ART_INK}", "name": "bai-ink", "hold": 1.6},
+   {"do": "snap", "name": "bai-bao"}
+  ]},
+  "h3": {"note": "Tính năng 1 trên web của bạn", "steps": [
+   {"do": "goto", "url": "${BASE}/"}, {"do": "wait", "sec": 0.8},
+   {"do": "start"}, {"do": "wait", "sec": 0.8}, {"do": "mark", "name": "mo-app"},
+   {"do": "click", "target": {"role": "button", "name": "Tên nút"}, "wait": 1.0}, {"do": "mark", "name": "bam-nut"},
+   {"do": "click", "target": "input[placeholder^=\"Tìm\"]"}, {"do": "type", "text": "${KEYWORD}", "enter": true}, {"do": "wait", "sec": 1.5},
+   {"do": "ink", "text": "${RESULT_NUMBER}", "name": "so-chinh", "hold": 1.4},
+   {"do": "focus", "text": "${RESULT_DETAIL}", "name": "chi-tiet", "hold": 1.2},
+   {"do": "mark", "name": "het"}
+  ]}
+ }
+}

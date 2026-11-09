@@ -30,3 +30,9 @@ tmp_*_check.png
 
 # Số đo radar mạng xã hội hằng ngày (dữ liệu, không phải mã)
 newsroom/signals/
+
+.venv/
+
+# Giữ ở máy (không công khai)
+profiles/stradevn/
+orchestration/

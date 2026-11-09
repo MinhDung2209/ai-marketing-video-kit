@@ -1,0 +1,37 @@
+{
+ "slug": "01-ten-clip",
+ "title": "Tên clip",
+ "profile": "_mau",
+ "genre": "demo-tinh-nang",
+ "variants": {"full": "full"},
+ "vars": {
+  "BASE": "https://app.tenmien.com",
+  "Q_RESEARCH": "từ khoá tìm Google",
+  "ART_HREF": "tenbao.vn/duong-dan-bai",
+  "ART_FOCUS": "câu nguyên văn trong bài",
+  "ART_INK": "con số nguyên văn trong bài",
+  "KEYWORD": "từ khoá gõ trong app",
+  "RESULT_NUMBER": "số nguyên văn trên màn hình",
+  "RESULT_DETAIL": "chữ nguyên văn trên màn hình"
+ },
+ "story": {
+  "hook": {"line": "V1", "value": 3.45, "decimals": 2, "kicker": "CHỈ TRONG 9 THÁNG", "unit": "tỷ USD", "chip": "Câu chốt 1 dòng",
+           "source": "Nguồn: …", "bg": "assets/screen/h2/bai-bao.png"},
+  "question": {"line": "V2", "q1": "Câu hỏi <span class=\"hl\">xoáy</span>?", "q2": "…và sao chưa phải là <span class=\"hl big2\">BẠN</span>?"},
+  "clock": {"line": "V3", "text": "8:00 SÁNG · THỨ HAI", "title": "Một buổi sáng<br><span class=\"hl\">làm việc X</span>", "sub": "thao tác thật · số liệu thật"},
+  "scenes": [
+   {"rec": "h2", "from": ["start", 0.4], "to": "end", "badge": "BƯỚC 1 · NGHIÊN CỨU", "lines": [
+     {"line": "V4", "i": 0, "j": 1, "at": ["start", 0.8]},
+     {"line": "V4", "i": 1, "j": 2, "at": ["bai-focus", -0.2], "hint": 2.0},
+     {"line": "V4", "i": 2, "j": 3, "at": ["bai-ink", 0.0], "meme": "check"}]},
+   {"rec": "h3", "from": ["start", 0.3], "to": "het", "badge": "BƯỚC 2 · TÍNH NĂNG 1", "lines": [
+     {"line": "V5", "i": 0, "j": 1, "at": ["mo-app", 0.3]},
+     {"line": "V5", "i": 1, "j": 2, "at": ["bam-nut", -0.3], "hint": 1.6},
+     {"line": "V5", "i": 2, "j": 3, "at": ["so-chinh", 0.0], "meme": "mind-blown"},
+     {"line": "V5", "i": 3, "j": 4, "at": ["chi-tiet", 0.0]}]}
+  ],
+  "recap": {"lines": [{"line": "V6", "i": 0, "j": 3}, {"line": "V6", "i": 3, "j": 5}],
+            "rows": ["Ý 1 <i>số</i>", "Ý 2", "Ý 3"], "ask": "Câu hỏi<br>kêu gọi bình luận?"},
+  "logo": {"line": "V7"}
+ }
+}

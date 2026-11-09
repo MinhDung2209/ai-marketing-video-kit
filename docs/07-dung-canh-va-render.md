@@ -49,3 +49,11 @@ bắt lỗi bố cục/độ tương phản. `render.py` là cách tự chủ, k
 
 ## 5. Xuất nhiều tỉ lệ
 Đổi `width/height` (1080×1080, 1920×1080) → chỉnh vị trí chữ trong template → build → render. (Chưa làm tự động.)
+
+## Luật thẩm mỹ cảnh dựng bằng code
+- Trước khi dựng: chốt hook → điểm nhấn → nhịp theo giây → màu/chữ → chuyển động/âm thanh.
+- Lấy bảng màu thương hiệu từ `profiles/<dn>/profile.json → brand`; ghi rõ mã màu, không tự thay bảng màu.
+- Mỗi khung hình dùng tối đa 2 cỡ chữ; ưu tiên phân cấp rõ, đủ dấu tiếng Việt và khoảng thở.
+- Easing dứt khoát: `power3.out` hoặc `back.out(1.4)` vừa phải; tween bắt đầu muộn dùng `immediateRender:false`.
+- Không dùng gradient tím-xanh mặc định, hạt bay trang trí hoặc nảy lò xo liên tục không phục vụ thông điệp.
+- Mọi chuyển động bám timeline GSAP dừng sẵn, không dùng đồng hồ thực; xem snapshot trước khi xuất.

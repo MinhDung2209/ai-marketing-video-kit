@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Collage seam · Từ ý tưởng đến câu chuyện</title>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1280px; height: 720px; background: #152b32; }
+body { color: #f6eddc; font-family: Arial, sans-serif; }
+#root { position: relative; width: 1280px; height: 720px; overflow: hidden; background: #152b32; }
+.scene { position: absolute; inset: 0; overflow: hidden; background: #152b32; will-change: transform, opacity; }
+#el-idea { z-index: 0; }
+#el-story { z-index: 1; opacity: 0; visibility: hidden; background: #233b40; }
+.eyebrow { position: absolute; left: 100px; top: 64px; font-size: 18px; letter-spacing: 4px; color: #e8b76c; }
+h1, h2 { position: absolute; left: 100px; top: 112px; margin: 0; width: 530px; font-size: 62px; line-height: 1.08; }
+.note { position: absolute; left: 104px; top: 303px; width: 435px; padding: 28px; color: #233b40; background: #e8d8ba; font-size: 27px; line-height: 1.4; transform: rotate(-3deg); box-shadow: 10px 12px 0 #0a1b2166; }
+.note strong { display: block; font-size: 18px; margin-bottom: 14px; letter-spacing: 2px; }
+.art { position: absolute; left: 650px; top: 141px; width: 510px; height: 410px; }
+#caption { position: absolute; z-index: 2; left: 100px; right: 100px; bottom: 51px; text-align: center; font-size: 27px; line-height: 1.35; font-weight: 700; }
+#caption-text { display: inline-block; padding: 10px 22px; background: #0c1b22; border: 1px solid #69858b; border-radius: 8px; }
+</style>
+</head>
+<body>
+<main id="root" data-composition-id="main" data-width="1280" data-height="720" data-start="0" data-duration="6">
+  <!-- Outgoing clip holds its final pose from 2.8 until its extended end, 3.2. -->
+  <section id="el-idea" class="scene" data-start="0" data-duration="3.2" data-track-index="0" aria-label="Một ý tưởng">
+    <div id="idea-label" class="eyebrow">01 / GOM Ý TƯỞNG</div>
+    <h1 id="idea-title">Bắt đầu từ<br>một mảnh nhỏ.</h1>
+    <div id="idea-note" class="note"><strong>GHI CHÚ ĐẦU TIÊN</strong>Một ý rõ ràng.<br>Một hình ảnh dễ nhớ.</div>
+    <!-- Original inline artwork, authored for this fixture. No downloaded assets. -->
+    <svg id="idea-art" class="art" viewBox="0 0 510 410" role="img" aria-label="Các mảnh giấy và một bóng đèn minh họa ý tưởng">
+      <path d="M42 59L405 26L454 340L76 379Z" fill="#d8c3a1"/>
+      <path d="M94 21L458 68L418 374L51 330Z" fill="#e8b76c"/>
+      <path d="M143 34L241 27L246 67L145 72Z" fill="#f4ecd3" opacity=".8"/>
+      <circle cx="258" cy="173" r="83" fill="#233b40"/>
+      <path d="M228 220V196C184 157 214 108 258 108C302 108 332 157 288 196V220Z" fill="#f7e9c6"/>
+      <path d="M230 235H286M236 250H280" stroke="#233b40" stroke-width="12"/>
+      <path d="M130 290H376M130 315H322" stroke="#233b40" stroke-width="9"/>
+    </svg>
+  </section>
+  <!-- Incoming clip starts 0.2s before cut=3; the 0.4s overlap is on a different track. -->
+  <section id="el-story" class="scene" data-start="2.8" data-duration="3.2" data-track-index="1" aria-label="Một câu chuyện">
+    <div id="story-label" class="eyebrow">02 / NỐI THÀNH CHUYỆN</div>
+    <h2 id="story-title">Ghép lại thành<br>một câu chuyện.</h2>
+    <div id="story-note" class="note"><strong>THỨ TỰ KỂ CHUYỆN</strong>Ý tưởng → minh họa<br>→ điều cần nhớ.</div>
+    <svg id="story-art" class="art" viewBox="0 0 510 410" role="img" aria-label="Ba thẻ giấy nối với nhau thành câu chuyện">
+      <path d="M43 42L458 58L440 372L30 351Z" fill="#d8c3a1"/>
+      <path d="M122 21L220 26L216 64L119 59Z" fill="#f4ecd3" opacity=".8"/>
+      <path d="M91 126L245 204L400 282" fill="none" stroke="#233b40" stroke-width="10" stroke-dasharray="12 10"/>
+      <g fill="#e8b76c" stroke="#233b40" stroke-width="5">
+        <path d="M55 85L185 73L195 167L65 179Z"/>
+        <path d="M188 160L318 170L308 264L178 254Z"/>
+        <path d="M323 240L453 228L463 322L333 334Z"/>
+      </g>
+      <g font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#233b40" text-anchor="middle">
+        <text x="126" y="141">01</text><text x="248" y="229">02</text><text x="393" y="299">03</text>
+      </g>
+    </svg>
+  </section>
+  <!-- Captions belong to the master, outside both fading scene wrappers. -->
+  <div id="caption" data-start="0" data-duration="6" data-track-index="2" aria-live="off"><span id="caption-text">Bắt đầu từ một ý tưởng rõ ràng.</span></div>
+</main>
+<script>
+'use strict';
+const DURATION = 6;
+const SEAM = Object.freeze({start: 2.8, cut: 3, end: 3.2});
+const CUES = Object.freeze([
+  {start: 0, end: 2.6, text: 'Bắt đầu từ một ý tưởng rõ ràng.'},
+  {start: 2.6, end: 3.4, text: 'Nối các mảnh nhỏ thành một câu chuyện.'},
+  {start: 3.4, end: 6, text: 'Giữ lại điều bạn muốn người xem nhớ.'}
+]);
+const el = id => document.getElementById(id);
+const clamp = (value, lo, hi) => Math.min(hi, Math.max(lo, value));
+// One absolute master clock. Assign every changing property on every seek;
+// no wall clock, random values, CSS animation or incremental tween state.
+function seek(seconds) {
+  const n = Number(seconds);
+  const t = clamp(Number.isFinite(n) ? n : 0, 0, DURATION);
+  const mix = clamp((t - SEAM.start) / (SEAM.end - SEAM.start), 0, 1);
+  const old = el('el-idea'), incoming = el('el-story');
+  old.style.visibility = t < SEAM.end ? 'visible' : 'hidden';
+  old.style.opacity = '1'; // Opaque coverage underneath the entire incoming fade.
+  incoming.style.visibility = t >= SEAM.start ? 'visible' : 'hidden';
+  incoming.style.opacity = String(mix);
+  incoming.style.transform = `translateX(${(1 - mix) * 48}px)`;
+  // Freeze the outgoing artwork during overlap; incoming artwork starts settled.
+  el('idea-art').style.transform = `rotate(${Math.min(t, SEAM.start) / SEAM.start * 3 - 3}deg)`;
+  const cue = CUES.find(c => t >= c.start && t < c.end) || CUES[CUES.length - 1];
+  el('caption').style.visibility = 'visible';
+  el('caption-text').textContent = cue.text;
+  return t;
+}
+// Existing tools/render.py only needs seek(t, false) and duration().
+window.__timelines = window.__timelines || {};
+window.__timelines.main = {seek, duration: () => DURATION};
+window.collageSeam = Object.freeze({seek, seam: SEAM, cues: CUES, fps: 30});
+seek(new URLSearchParams(location.search).get('t') || 0);
+</script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+{
+ "_huong_dan": [
+  "Meme từ web: CHỈ LƯU URL, không tải sẵn. Lúc dựng (story.py → st.finish) engine gọi tools/meme_web.py: ffmpeg đọc thẳng url, cắt đoạn ss/t, tách nền xanh → <clip>/assets/meme/<id>.webm (alpha) + <id>.mp3 (tiếng meme).",
+  "kind: green = nền xanh, tách nền thành sticker | full = khung hình đầy đủ (chèn dạng ô/khung hoặc chuyển cảnh).",
+  "crop = w:h:x:y trên khung gốc (bỏ phần thừa trước khi tách nền). key = mã màu nền (bỏ trống = tự lấy ở góc trái trên). sim = độ nhạy tách nền (0.13).",
+  "Thêm meme: python tools/meme_web.py add <link trang> --id ten --kind green --tags 'chờ, sốt ruột' (chỉ đọc trang lấy link mp4, không tải video).",
+  "Tìm: python tools/meme_web.py chờ    ·   Xem thử 1 meme (tải tạm vào scratch): python tools/meme_web.py --preview id",
+  "Bản quyền: clip gốc thuộc chủ sở hữu (điều khoản greenscreenmemes.com: người dùng tự chịu trách nhiệm khi dùng thương mại). Người phụ trách đã quyết định dùng cho video (06/11/2026)."
+ ],
+ "items": [
+  {
+   "id": "few-moments-later",
+   "kind": "full",
+   "title": "A few moments later (SpongeBob)",
+   "tags": [
+    "vài phút sau",
+    "chờ",
+    "tua nhanh",
+    "chuyển cảnh",
+    "timeskip"
+   ],
+   "use": "thay thẻ 'vài phút sau' khi chờ truy xuất",
+   "page": "https://greenscreenmemes.com/a-few-moments-later-spongebob/",
+   "url": "https://media.greenscreenmemes.com/2023/11/a-few-moments-later-spongebob.mp4",
+   "dur": 2.18,
+   "sound": true
+  },
+  {
+   "id": "mr-bean-waiting",
+   "kind": "green",
+   "title": "Mr Bean waiting",
+   "tags": [
+    "chờ",
+    "sốt ruột",
+    "xem đồng hồ",
+    "lâu quá"
+   ],
+   "use": "lúc chờ, nhìn đồng hồ",
+   "page": "https://greenscreenmemes.com/mr-bean-waiting-meme-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2023/11/Mr20Bean20Waiting20Meme20green20screen.mp4",
+   "dur": 11.36,
+   "sound": true
+  },
+  {
+   "id": "sweaty-speedrunner",
+   "kind": "green",
+   "title": "Sweaty speedrunner",
+   "tags": [
+    "toát mồ hôi",
+    "căng thẳng",
+    "gấp",
+    "đua giờ",
+    "áp lực"
+   ],
+   "use": "đua với đồng hồ",
+   "page": "https://greenscreenmemes.com/sweaty-speedrunner-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2023/01/Sweaty-Speedrunner-Green-Screen-greenscreenmemes.com_.mp4",
+   "dur": 13.18,
+   "sound": true
+  },
+  {
+   "id": "cat-shocked",
+   "kind": "green",
+   "title": "Black cat shocked",
+   "tags": [
+    "sốc",
+    "bất ngờ",
+    "wow",
+    "há hốc"
+   ],
+   "use": "lộ con số lớn",
+   "page": "https://greenscreenmemes.com/cat-shocked-meme-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2025/07/Cat-shocked-meme-Green-Screen-.mp4",
+   "dur": 11.53,
+   "sound": true
+  },
+  {
+   "id": "huh-cat",
+   "kind": "green",
+   "title": "Huh cat",
+   "tags": [
+    "hả",
+    "ngơ ngác",
+    "khó hiểu",
+    "tò mò"
+   ],
+   "use": "câu hỏi tu từ, 'không nhớ mã HS?'",
+   "page": "https://greenscreenmemes.com/huh-cat-green-screen-meme/",
+   "url": "https://media.greenscreenmemes.com/2023/10/huh-cat-meme.mp4",
+   "dur": 7.22,
+   "sound": true
+  },
+  {
+   "id": "cat-money",
+   "kind": "green",
+   "title": "Cat counts money",
+   "tags": [
+    "tiền",
+    "đếm tiền",
+    "giàu",
+    "lợi nhuận",
+    "chốt đơn"
+   ],
+   "use": "nói tới kim ngạch / đơn hàng",
+   "page": "https://greenscreenmemes.com/cat-counts-money-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2026/09/Cat-counts-money-Green-Screen.mp4",
+   "dur": 11.0,
+   "sound": true
+  },
+  {
+   "id": "gta-mission-passed",
+   "kind": "green",
+   "title": "GTA mission passed",
+   "tags": [
+    "thành công",
+    "xong",
+    "thắng",
+    "hoàn thành nhiệm vụ"
+   ],
+   "use": "chốt: tìm ra khách / thắng cược",
+   "page": "https://greenscreenmemes.com/gta-mission-passed-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2022/10/GTA-Mission-Passed-Green-Screen.mp4",
+   "dur": 8.01,
+   "sound": true
+  },
+  {
+   "id": "coffin-dance",
+   "kind": "green",
+   "title": "Coffin dance",
+   "tags": [
+    "toang",
+    "thua",
+    "xong đời",
+    "chết"
+   ],
+   "use": "cách làm cũ / đối thủ thua",
+   "page": "https://greenscreenmemes.com/coffin-dance-meme-green-screen/",
+   "url": "https://media.greenscreenmemes.com/2022/11/Coffin-Dance-Meme-Green-Screen.mp4",
+   "dur": 7.16,
+   "sound": true
+  },
+  {
+   "id": "explosion",
+   "kind": "full",
+   "title": "Explosion",
+   "tags": [
+    "bùm",
+    "nổ",
+    "bùng nổ",
+    "wow"
+   ],
+   "use": "chớp 1–1,5 s lúc lộ số",
+   "page": "https://greenscreenmemes.com/explosion-meme-video/",
+   "url": "https://media.greenscreenmemes.com/2022/11/Explosion-Meme-Video.mp4",
+   "dur": 1.65,
+   "sound": true
+  },
+  {
+   "id": "laughing-mutahar",
+   "kind": "full",
+   "title": "Mutahar laughing",
+   "tags": [
+    "cười",
+    "haha",
+    "buồn cười",
+    "cười khoái chí"
+   ],
+   "use": "chốt câu đùa",
+   "page": "https://greenscreenmemes.com/mutahar-laughing-meme/",
+   "url": "https://media.greenscreenmemes.com/2022/10/Mutahar-laughing-Meme.mp4",
+   "dur": 3.86,
+   "sound": true
+  },
+  {
+   "id": "omg-wow",
+   "kind": "full",
+   "title": "Oh my god wow",
+   "tags": [
+    "wow",
+    "trời ơi",
+    "phấn khích"
+   ],
+   "use": "wow",
+   "page": "https://greenscreenmemes.com/oh-my-god-wow/",
+   "url": "https://media.greenscreenmemes.com/2025/06/Oh-my-god-Wow-Meme.mp4",
+   "dur": 4.13,
+   "sound": true
+  },
+  {
+   "id": "vn-10-diem",
+   "kind": "sound",
+   "title": "10 điểm (meme)",
+   "tags": [
+    "10 điểm",
+    "chuẩn",
+    "xuất sắc",
+    "đỉnh"
+   ],
+   "use": "chốt kết quả đẹp",
+   "page": "https://tiengdong.com/?s=10+%C4%91i%E1%BB%83m",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-meme-10-diem-www_tiengdong_com.mp3",
+   "dur": 4.25,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-10-diem-khong-co-nhung",
+   "kind": "sound",
+   "title": "10 điểm không có nhưng (Bác Hữu)",
+   "tags": [
+    "10 điểm",
+    "hoàn hảo",
+    "không có nhưng"
+   ],
+   "use": "khen tính năng / kết quả",
+   "page": "https://tiengdong.com/?s=10+%C4%91i%E1%BB%83m",
+   "url": "https://tiengdong.com/wp-content/uploads/10-diem-khong-co-nhung-bac-huu-da-ban-goc-www_tiengdong_com.mp3",
+   "dur": 3.43,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-mixi-10-diem-chot",
+   "kind": "sound",
+   "title": "Wow amazing đẹp này 10 điểm chốt luôn (Độ Mixi)",
+   "tags": [
+    "wow",
+    "đẹp",
+    "10 điểm",
+    "chốt"
+   ],
+   "use": "lộ bảng kết quả",
+   "page": "https://tiengdong.com/?s=10+%C4%91i%E1%BB%83m",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-wow-amazing-dep-nay-10-diem-chot-luon-nay-do-mixi-www_tiengdong_com.mp3",
+   "dur": 7.44,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-bat-ngo-chua",
+   "kind": "sound",
+   "title": "Bất ngờ chưa bà già",
+   "tags": [
+    "bất ngờ",
+    "sốc",
+    "ngạc nhiên chưa"
+   ],
+   "use": "lật mặt / lộ số",
+   "page": "https://tiengdong.com/?s=b%E1%BA%A5t+ng%E1%BB%9D",
+   "url": "https://tiengdong.com/wp-content/uploads/cau-noi-trend-bat-ngo-chua-ba-gia-ban-goc-www_tiengdong_com.mp3",
+   "dur": 11.8,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-oi-doi-oi",
+   "kind": "sound",
+   "title": "Ối dồi ôi (Huấn Hoa Hồng)",
+   "tags": [
+    "ối dồi ôi",
+    "trời ơi",
+    "cách cũ"
+   ],
+   "use": "cách làm cũ mệt mỏi",
+   "page": "https://tiengdong.com/?s=%E1%BB%91i+d%E1%BB%93i+%C3%B4i",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-oi-doi-oi-www_tiengdong_com.mp3",
+   "dur": 1.77,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-oi-doi-oi-cai-gi-day",
+   "kind": "sound",
+   "title": "Ối dồi ôi cái gì đây",
+   "tags": [
+    "cái gì đây",
+    "ủa",
+    "khó hiểu"
+   ],
+   "use": "câu hỏi tu từ",
+   "page": "https://tiengdong.com/?s=%E1%BB%91i+d%E1%BB%93i+%C3%B4i",
+   "url": "https://tiengdong.com/wp-content/uploads/oi-doi-oi-cai-gi-day-meme-pham-vinh-www_tiengdong_com.mp3",
+   "dur": 3.82,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-co-lam-moi-co-an",
+   "kind": "sound",
+   "title": "Có làm mới có ăn (Huấn Hoa Hồng)",
+   "tags": [
+    "có làm mới có ăn",
+    "chăm chỉ",
+    "kêu gọi"
+   ],
+   "use": "CTA / tự đi tìm khách",
+   "page": "https://tiengdong.com/?s=hu%E1%BA%A5n+hoa+h%E1%BB%93ng",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-co-lam-moi-co-an-huan-hoa-hong-www_tiengdong_com.mp3",
+   "dur": 7.15,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-que-vl",
+   "kind": "sound",
+   "title": "Quê vl (Độ Mixi)",
+   "tags": [
+    "quê",
+    "thua",
+    "sai"
+   ],
+   "use": "cách cũ sai",
+   "page": "https://tiengdong.com/?s=%C4%91%E1%BB%99+mixi",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-que-vl-do-mixi-www_tiengdong_com.mp3",
+   "dur": 8.36,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-dung-hop-ly",
+   "kind": "sound",
+   "title": "Đúng này, tất cả đều đúng, hợp lý (Độ Mixi)",
+   "tags": [
+    "đúng",
+    "hợp lý",
+    "chuẩn",
+    "khớp"
+   ],
+   "use": "đối chiếu tờ khai khớp",
+   "page": "https://tiengdong.com/?s=%C4%91%E1%BB%99+mixi",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-dung-nay-tat-ca-deu-dung-hop-ly-www_tiengdong_com.mp3",
+   "dur": 4.87,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-ao-that-day-kha-banh",
+   "kind": "sound",
+   "title": "Ảo thật đấy (Khá Bảnh)",
+   "tags": [
+    "ảo",
+    "wow",
+    "không tin nổi"
+   ],
+   "use": "con số lớn",
+   "page": "https://tiengdong.com/?s=kh%C3%A1+b%E1%BA%A3nh",
+   "url": "https://tiengdong.com/wp-content/uploads/Cau-noi-ao-that-day-kha-banh-www_tiengdong_com.mp3",
+   "dur": 3.88,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-thoi-toang",
+   "kind": "sound",
+   "title": "Thôi toang",
+   "tags": [
+    "toang",
+    "thua",
+    "hỏng"
+   ],
+   "use": "cách cũ / đối thủ",
+   "page": "https://tiengdong.com/?s=toang",
+   "url": "https://tiengdong.com/wp-content/uploads/thoi-toang-mimosa-chu-sound-effect-www_tiengdong_com.mp3",
+   "dur": 2.35,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-et-o-et",
+   "kind": "sound",
+   "title": "Ét o ét (SOS)",
+   "tags": [
+    "cứu",
+    "sos",
+    "khó",
+    "bế tắc"
+   ],
+   "use": "nỗi đau ban đầu",
+   "page": "https://tiengdong.com/?s=%C3%A9t+o+%C3%A9t",
+   "url": "https://tiengdong.com/wp-content/uploads/am-thanh-et-o-et-sos-www_tiengdong_com.mp3",
+   "dur": 2.98,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-wow-em-chua-18",
+   "kind": "sound",
+   "title": "Wow em chưa 18",
+   "tags": [
+    "wow",
+    "bất ngờ"
+   ],
+   "use": "wow vui",
+   "page": "https://tiengdong.com/?s=ng%E1%BA%A1c+nhi%C3%AAn+ch%C6%B0a",
+   "url": "https://tiengdong.com/wp-content/uploads/wow-em-chua-18-meme-sound-effect-www_tiengdong_com.mp3",
+   "dur": 6.22,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-vo-tay",
+   "kind": "sound",
+   "title": "Khán giả reo hò vỗ tay",
+   "tags": [
+    "vỗ tay",
+    "chúc mừng",
+    "thành công"
+   ],
+   "use": "chốt điệp vụ",
+   "page": "https://tiengdong.com/?s=v%E1%BB%97+tay",
+   "url": "https://tiengdong.com/wp-content/uploads/Tieng-khan-gia-reo-ho-cuoi-sang-khoai-vo-tay-www_tiengdong_com.mp3",
+   "dur": 5.71,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vn-sos-video",
+   "kind": "full",
+   "title": "Video Ét o ét gốc",
+   "tags": [
+    "cứu",
+    "sos",
+    "bế tắc"
+   ],
+   "use": "chớp 1–2 s ở nỗi đau",
+   "page": "https://tiengdong.com/?s=%C3%A9t+o+%C3%A9t",
+   "url": "https://tiengdong.com/wp-content/uploads/video-sos-et-o-et-video-goc-www_tiengdong_com.mp4",
+   "dur": 5.2,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "gwenchana-green",
+   "kind": "green",
+   "title": "Gwenchana (không sao)",
+   "tags": [
+    "không sao",
+    "ổn",
+    "bình tĩnh"
+   ],
+   "use": "an ủi: không nhớ mã HS cũng không sao",
+   "page": "https://tiengdong.com/?s=green+screen",
+   "url": "https://tiengdong.com/wp-content/uploads/video-gwenchana-green-screen-www_tiengdong_com.mp4",
+   "dur": 29.65,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "black-guy-crying-green",
+   "kind": "green",
+   "title": "Black guy crying",
+   "tags": [
+    "khóc",
+    "buồn",
+    "thất vọng"
+   ],
+   "use": "cách cũ mất thời gian",
+   "page": "https://tiengdong.com/?s=ph%C3%B4ng+xanh",
+   "url": "https://tiengdong.com/wp-content/uploads/Video-black-guy-crying-meme-green-screen-www_tiengdong_com.mp4",
+   "dur": 8.59,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "directed-by-robert-weide",
+   "kind": "full",
+   "title": "Directed by Robert B. Weide",
+   "tags": [
+    "kết",
+    "fail",
+    "hài"
+   ],
+   "use": "kết đoạn hài",
+   "page": "https://tiengdong.com/?s=meme",
+   "url": "https://tiengdong.com/wp-content/uploads/video-directed-by-robert-b-weide-meme-portrait-www_tiengdong_com.mp4",
+   "dur": 10.19,
+   "sound": true,
+   "site": "tiengdong"
+  },
+  {
+   "id": "vine-boom",
+   "kind": "sound",
+   "title": "Vine boom",
+   "tags": [
+    "boom",
+    "nhấn",
+    "lộ số",
+    "bùm"
+   ],
+   "use": "nhấn con số",
+   "page": "https://www.myinstants.com/en/search/?name=vine+boom",
+   "url": "https://www.myinstants.com/media/sounds/vine-boom.mp3",
+   "dur": 1.25,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "bruh",
+   "kind": "sound",
+   "title": "Bruh",
+   "tags": [
+    "bruh",
+    "chán",
+    "cạn lời"
+   ],
+   "use": "cách cũ",
+   "page": "https://www.myinstants.com/en/search/?name=bruh",
+   "url": "https://www.myinstants.com/media/sounds/bruh-sound-effect_WstdzdM.mp3",
+   "dur": 0.82,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "emotional-damage",
+   "kind": "sound",
+   "title": "Emotional damage (Steven He)",
+   "tags": [
+    "đau",
+    "tổn thương",
+    "đối thủ"
+   ],
+   "use": "đối thủ bị lộ khách",
+   "page": "https://www.myinstants.com/en/search/?name=emotional+damage",
+   "url": "https://www.myinstants.com/media/sounds/emotional-damage-meme.mp3",
+   "dur": 3.32,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "sheesh",
+   "kind": "sound",
+   "title": "Sheesh",
+   "tags": [
+    "đỉnh",
+    "wow",
+    "sheesh"
+   ],
+   "use": "kết quả đẹp",
+   "page": "https://www.myinstants.com/en/search/?name=sheesh",
+   "url": "https://www.myinstants.com/media/sounds/original-sheesh.mp3",
+   "dur": 11.89,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "cha-ching",
+   "kind": "sound",
+   "title": "Cha-ching",
+   "tags": [
+    "tiền",
+    "chốt đơn",
+    "kiếm tiền"
+   ],
+   "use": "giá trị đơn hàng",
+   "page": "https://www.myinstants.com/en/search/?name=cha+ching",
+   "url": "https://www.myinstants.com/media/sounds/cha-chingg-se.mp3",
+   "dur": 1.68,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "anime-wow",
+   "kind": "sound",
+   "title": "Anime wow",
+   "tags": [
+    "wow",
+    "dễ thương",
+    "bất ngờ"
+   ],
+   "use": "wow nhẹ",
+   "page": "https://www.myinstants.com/en/search/?name=anime+wow",
+   "url": "https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3",
+   "dur": 4.18,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "oh-no-no-no",
+   "kind": "sound",
+   "title": "Oh no no no (TikTok)",
+   "tags": [
+    "oh no",
+    "toang",
+    "sai"
+   ],
+   "use": "cách cũ / sai lầm",
+   "page": "https://www.myinstants.com/en/search/?name=oh+no",
+   "url": "https://www.myinstants.com/media/sounds/oh-no-no-no-tik-tok-song-sound-effect.mp3",
+   "dur": 18.26,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "fbi-open-up",
+   "kind": "sound",
+   "title": "FBI open up",
+   "tags": [
+    "điều tra",
+    "soi",
+    "điệp vụ",
+    "tờ khai"
+   ],
+   "use": "mở tờ khai / soi đối thủ",
+   "page": "https://www.myinstants.com/en/search/?name=fbi+open+up",
+   "url": "https://www.myinstants.com/media/sounds/fbi-open-up-sfx.mp3",
+   "dur": 2.01,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "suspense-riser",
+   "kind": "sound",
+   "title": "Cinematic suspense riser",
+   "tags": [
+    "hồi hộp",
+    "căng thẳng",
+    "chờ"
+   ],
+   "use": "trước khi lộ kết quả",
+   "page": "https://www.myinstants.com/en/search/?name=suspense",
+   "url": "https://www.myinstants.com/media/sounds/cinematic-suspense-riser.mp3",
+   "dur": 10.08,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "mlg-airhorn",
+   "kind": "sound",
+   "title": "MLG air horn",
+   "tags": [
+    "ăn mừng",
+    "đỉnh",
+    "chiến thắng"
+   ],
+   "use": "chốt",
+   "page": "https://www.myinstants.com/en/search/?name=airhorn",
+   "url": "https://www.myinstants.com/media/sounds/mlg-horns-sound-effect.mp3",
+   "dur": 3.13,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "let-him-cook",
+   "kind": "sound",
+   "title": "Let him cook",
+   "tags": [
+    "để nó làm",
+    "đang chạy",
+    "tự động"
+   ],
+   "use": "hệ thống đang chạy",
+   "page": "https://www.myinstants.com/en/search/?name=let+him+cook",
+   "url": "https://www.myinstants.com/media/sounds/let-him-cook-now.mp3",
+   "dur": 8.57,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "nani",
+   "kind": "sound",
+   "title": "Nani?!",
+   "tags": [
+    "hả",
+    "cái gì",
+    "sốc"
+   ],
+   "use": "câu hỏi sốc",
+   "page": "https://www.myinstants.com/en/search/?name=nani",
+   "url": "https://www.myinstants.com/media/sounds/nani-nani.mp3",
+   "dur": 1.05,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "taco-bell-bong",
+   "kind": "sound",
+   "title": "Taco Bell bong",
+   "tags": [
+    "bong",
+    "nhấn",
+    "chuyển"
+   ],
+   "use": "nhấn nhịp",
+   "page": "https://www.myinstants.com/en/search/?name=taco+bell",
+   "url": "https://www.myinstants.com/media/sounds/taco-bell-bong-sfx.mp3",
+   "dur": 1.91,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "windows-xp-error",
+   "kind": "sound",
+   "title": "Windows XP error",
+   "tags": [
+    "lỗi",
+    "sai",
+    "fail"
+   ],
+   "use": "cách cũ lỗi",
+   "page": "https://www.myinstants.com/en/search/?name=windows+error",
+   "url": "https://www.myinstants.com/media/sounds/windows-xp-critical-error-full-version.mp3",
+   "dur": 0.9,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "hehe-boy",
+   "kind": "sound",
+   "title": "Hehe boy",
+   "tags": [
+    "hehe",
+    "đắc ý",
+    "thắng"
+   ],
+   "use": "đắc ý khi tìm ra",
+   "page": "https://www.myinstants.com/en/search/?name=hehe+boy",
+   "url": "https://www.myinstants.com/media/sounds/hehe-boy-sound-effect.mp3",
+   "dur": 1.92,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "rizz",
+   "kind": "sound",
+   "title": "Rizz",
+   "tags": [
+    "rizz",
+    "quyến rũ",
+    "email"
+   ],
+   "use": "thư chào hàng",
+   "page": "https://www.myinstants.com/en/search/?name=rizz",
+   "url": "https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3",
+   "dur": 1.93,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "sad-violin",
+   "kind": "sound",
+   "title": "Sad violin",
+   "tags": [
+    "buồn",
+    "thảm",
+    "cách cũ"
+   ],
+   "use": "nỗi đau",
+   "page": "https://www.myinstants.com/en/search/?name=sad+violin",
+   "url": "https://www.myinstants.com/media/sounds/meme-violin-sad-violin.mp3",
+   "dur": 4.55,
+   "sound": true,
+   "site": "myinstants"
+  },
+  {
+   "id": "huh-sound",
+   "kind": "sound",
+   "title": "Huh (cat)",
+   "tags": [
+    "hả",
+    "huh",
+    "ngơ"
+   ],
+   "use": "câu hỏi",
+   "page": "https://www.myinstants.com/en/search/?name=huh",
+   "url": "https://www.myinstants.com/media/sounds/huh-cat.mp3",
+   "dur": 7.29,
+   "sound": true,
+   "site": "myinstants"
+  }
+ ]
+}

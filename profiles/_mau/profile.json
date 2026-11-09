@@ -1,0 +1,30 @@
+{
+ "_ghi_chu": "MẪU hồ sơ doanh nghiệp mới. Chép cả thư mục profiles/_mau → profiles/<ten-doanh-nghiep> rồi điền. Xem KIT/docs/12 mục 'Doanh nghiệp mới'.",
+ "name": "Tên doanh nghiệp / sản phẩm",
+ "brand": {
+  "name": "TenThuongHieu",
+  "tagline": "Câu định vị 1 dòng",
+  "url": "tenmien.com",
+  "logo": "logo.png",
+  "hl": "#FBBF24",
+  "accent": "#4F46E5"
+ },
+ "voice": {
+  "pronounce": {"TenThuongHieu": "cách đọc đúng (vd đánh vần tiếng Anh)"},
+  "voice": "Kore",
+  "style": "ai đang nói, với ai, giọng vùng miền, nhịp"
+ },
+ "web": {
+  "base": "https://app.tenmien.com",
+  "login": "Người dùng TỰ đăng nhập trong Chrome quay video. Agent không tạo token / mật khẩu.",
+  "viewport": [720, 1080]
+ },
+ "safety": {
+  "never_click": ["Xoá", "Xóa", "Thanh toán", "Gửi ngay"],
+  "needs_var": {"Tạo": "CREATE"},
+  "rules": ["Việc thật nào (tạo, gửi, thanh toán, xoá) cũng phải có người dùng duyệt.", "Dữ liệu cá nhân thật: hỏi người dùng có cần che không."]
+ },
+ "story_rules": ["Chuyện = một ngày làm việc thật của người dùng sản phẩm.", "Không lộ agent / công cụ AI trong video."],
+ "variants": {"full": {"suffix": "full", "desc": "đầy đủ"}},
+ "vars": {"BASE": "https://app.tenmien.com", "CREATE": "0"}
+}

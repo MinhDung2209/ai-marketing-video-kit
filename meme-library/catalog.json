@@ -1,0 +1,744 @@
+{
+ "_ghi_chu": "Sinh bởi tools/meme_fetch.py — không sửa tay. Tìm: python tools/meme_search.py <từ khoá>",
+ "items": [
+  {
+   "id": "noto/alarm",
+   "file": "noto/alarm.webm",
+   "poster": "noto/alarm.png",
+   "type": "animated-emoji",
+   "duration": 0.51,
+   "loop": true,
+   "tags": [
+    "báo thức",
+    "thời gian",
+    "buổi sáng",
+    "gấp"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/23f0/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/boom",
+   "file": "noto/boom.webm",
+   "poster": "noto/boom.png",
+   "type": "animated-emoji",
+   "duration": 1.14,
+   "loop": true,
+   "tags": [
+    "bùm",
+    "nổ",
+    "va chạm",
+    "đập"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a5/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/bulb",
+   "file": "noto/bulb.webm",
+   "poster": "noto/bulb.png",
+   "type": "animated-emoji",
+   "duration": 0.48,
+   "loop": true,
+   "tags": [
+    "ý tưởng",
+    "mẹo",
+    "sáng kiến"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4a1/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/chart-up",
+   "file": "noto/chart-up.webm",
+   "poster": "noto/chart-up.png",
+   "type": "animated-emoji",
+   "duration": 0.69,
+   "loop": true,
+   "tags": [
+    "tăng",
+    "tăng trưởng",
+    "biểu đồ",
+    "đi lên"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c8/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/check",
+   "file": "noto/check.webm",
+   "poster": "noto/check.png",
+   "type": "animated-emoji",
+   "duration": 0.78,
+   "loop": true,
+   "tags": [
+    "xong",
+    "đúng",
+    "chốt",
+    "ok"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/2705/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/clap",
+   "file": "noto/clap.webm",
+   "poster": "noto/clap.png",
+   "type": "animated-emoji",
+   "duration": 0.66,
+   "loop": true,
+   "tags": [
+    "vỗ tay",
+    "khen",
+    "hay"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44f/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/coffee",
+   "file": "noto/coffee.webm",
+   "poster": "noto/coffee.png",
+   "type": "animated-emoji",
+   "duration": 1.83,
+   "loop": true,
+   "tags": [
+    "cà phê",
+    "buổi sáng",
+    "thư giãn"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/2615/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/cool",
+   "file": "noto/cool.webm",
+   "poster": "noto/cool.png",
+   "type": "animated-emoji",
+   "duration": 1.89,
+   "loop": true,
+   "tags": [
+    "ngầu",
+    "tự tin",
+    "chill",
+    "kính râm"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/eye-roll",
+   "file": "noto/eye-roll.webm",
+   "poster": "noto/eye-roll.png",
+   "type": "animated-emoji",
+   "duration": 2.46,
+   "loop": true,
+   "tags": [
+    "chán",
+    "đảo mắt",
+    "thôi đi"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f644/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/eyes",
+   "file": "noto/eyes.webm",
+   "poster": "noto/eyes.png",
+   "type": "animated-emoji",
+   "duration": 1.14,
+   "loop": true,
+   "tags": [
+    "nhìn",
+    "để ý",
+    "chú ý",
+    "hóng"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f440/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/fire",
+   "file": "noto/fire.webm",
+   "poster": "noto/fire.png",
+   "type": "animated-emoji",
+   "duration": 0.99,
+   "loop": true,
+   "tags": [
+    "hot",
+    "cháy",
+    "nóng",
+    "xu hướng"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/globe-asia",
+   "file": "noto/globe-asia.webm",
+   "poster": "noto/globe-asia.png",
+   "type": "animated-emoji",
+   "duration": 2.43,
+   "loop": true,
+   "tags": [
+    "thế giới",
+    "toàn cầu",
+    "quốc tế",
+    "châu á"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f30f/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/handshake",
+   "file": "noto/handshake.webm",
+   "poster": "noto/handshake.png",
+   "type": "animated-emoji",
+   "duration": 1.08,
+   "loop": true,
+   "tags": [
+    "bắt tay",
+    "hợp tác",
+    "chốt deal",
+    "đối tác"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f91d/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/hundred",
+   "file": "noto/hundred.webm",
+   "poster": "noto/hundred.png",
+   "type": "animated-emoji",
+   "duration": 1.35,
+   "loop": true,
+   "tags": [
+    "100",
+    "chuẩn",
+    "tuyệt đối"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4af/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/joy",
+   "file": "noto/joy.webm",
+   "poster": "noto/joy.png",
+   "type": "animated-emoji",
+   "duration": 1.77,
+   "loop": true,
+   "tags": [
+    "cười",
+    "buồn cười",
+    "haha"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f602/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/melting",
+   "file": "noto/melting.webm",
+   "poster": "noto/melting.png",
+   "type": "animated-emoji",
+   "duration": 3.36,
+   "loop": true,
+   "tags": [
+    "tan chảy",
+    "bất lực",
+    "nóng"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1fae0/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/mind-blown",
+   "file": "noto/mind-blown.webm",
+   "poster": "noto/mind-blown.png",
+   "type": "animated-emoji",
+   "duration": 2.49,
+   "loop": true,
+   "tags": [
+    "sốc",
+    "wow",
+    "nổ não",
+    "bất ngờ"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f92f/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/money-face",
+   "file": "noto/money-face.webm",
+   "poster": "noto/money-face.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "tiền",
+    "kiếm tiền",
+    "lợi nhuận",
+    "giàu"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f911/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/money-wings",
+   "file": "noto/money-wings.webm",
+   "poster": "noto/money-wings.png",
+   "type": "animated-emoji",
+   "duration": 0.72,
+   "loop": true,
+   "tags": [
+    "tiền bay",
+    "mất tiền",
+    "chi tiêu"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4b8/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/monocle",
+   "file": "noto/monocle.webm",
+   "poster": "noto/monocle.png",
+   "type": "animated-emoji",
+   "duration": 2.97,
+   "loop": true,
+   "tags": [
+    "soi",
+    "xem kỹ",
+    "nghiên cứu",
+    "điều tra"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f9d0/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/ok-hand",
+   "file": "noto/ok-hand.webm",
+   "poster": "noto/ok-hand.png",
+   "type": "animated-emoji",
+   "duration": 0.81,
+   "loop": true,
+   "tags": [
+    "ok",
+    "chuẩn",
+    "được"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44c/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/party-popper",
+   "file": "noto/party-popper.webm",
+   "poster": "noto/party-popper.png",
+   "type": "animated-emoji",
+   "duration": 1.26,
+   "loop": true,
+   "tags": [
+    "chúc mừng",
+    "ăn mừng",
+    "thành công"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/partying",
+   "file": "noto/partying.webm",
+   "poster": "noto/partying.png",
+   "type": "animated-emoji",
+   "duration": 1.62,
+   "loop": true,
+   "tags": [
+    "ăn mừng",
+    "vui",
+    "tiệc"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/point-down",
+   "file": "noto/point-down.webm",
+   "poster": "noto/point-down.png",
+   "type": "animated-emoji",
+   "duration": 1.59,
+   "loop": true,
+   "tags": [
+    "xuống dưới",
+    "bình luận",
+    "chỉ xuống"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f447/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/point-right",
+   "file": "noto/point-right.webm",
+   "poster": "noto/point-right.png",
+   "type": "animated-emoji",
+   "duration": 1.59,
+   "loop": true,
+   "tags": [
+    "chỉ",
+    "bên phải",
+    "tiếp theo"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f449/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/raised-hands",
+   "file": "noto/raised-hands.webm",
+   "poster": "noto/raised-hands.png",
+   "type": "animated-emoji",
+   "duration": 1.23,
+   "loop": true,
+   "tags": [
+    "tuyệt",
+    "hoan hô",
+    "yeah"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/rocket",
+   "file": "noto/rocket.webm",
+   "poster": "noto/rocket.png",
+   "type": "animated-emoji",
+   "duration": 0.6,
+   "loop": true,
+   "tags": [
+    "tăng vọt",
+    "bùng nổ",
+    "tên lửa",
+    "nhanh"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/scream",
+   "file": "noto/scream.webm",
+   "poster": "noto/scream.png",
+   "type": "animated-emoji",
+   "duration": 1.47,
+   "loop": true,
+   "tags": [
+    "hoảng",
+    "sốc",
+    "sợ"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f631/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/sleeping",
+   "file": "noto/sleeping.webm",
+   "poster": "noto/sleeping.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "ngủ",
+    "chán",
+    "mệt",
+    "nhàm"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f634/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/sob",
+   "file": "noto/sob.webm",
+   "poster": "noto/sob.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "khóc",
+    "khổ",
+    "buồn"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62d/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/sparkles",
+   "file": "noto/sparkles.webm",
+   "poster": "noto/sparkles.png",
+   "type": "animated-emoji",
+   "duration": 1.83,
+   "loop": true,
+   "tags": [
+    "lấp lánh",
+    "mới",
+    "đặc biệt",
+    "phép màu"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/star-struck",
+   "file": "noto/star-struck.webm",
+   "poster": "noto/star-struck.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "mê",
+    "thích",
+    "wow",
+    "lấp lánh"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f929/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/sweat-smile",
+   "file": "noto/sweat-smile.webm",
+   "poster": "noto/sweat-smile.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "ngại",
+    "cười trừ",
+    "toát mồ hôi"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f605/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/target",
+   "file": "noto/target.webm",
+   "poster": "noto/target.png",
+   "type": "animated-emoji",
+   "duration": 1.56,
+   "loop": true,
+   "tags": [
+    "mục tiêu",
+    "trúng đích",
+    "chính xác"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f3af/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/thinking",
+   "file": "noto/thinking.webm",
+   "poster": "noto/thinking.png",
+   "type": "animated-emoji",
+   "duration": 1.8,
+   "loop": true,
+   "tags": [
+    "suy nghĩ",
+    "tò mò",
+    "hỏi",
+    "thinking",
+    "hmm"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f914/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/thumbs-up",
+   "file": "noto/thumbs-up.webm",
+   "poster": "noto/thumbs-up.png",
+   "type": "animated-emoji",
+   "duration": 0.72,
+   "loop": true,
+   "tags": [
+    "like",
+    "đồng ý",
+    "tốt"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/trophy",
+   "file": "noto/trophy.webm",
+   "poster": "noto/trophy.png",
+   "type": "animated-emoji",
+   "duration": 2.04,
+   "loop": true,
+   "tags": [
+    "chiến thắng",
+    "số 1",
+    "cúp"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f3c6/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/weary",
+   "file": "noto/weary.webm",
+   "poster": "noto/weary.png",
+   "type": "animated-emoji",
+   "duration": 1.44,
+   "loop": true,
+   "tags": [
+    "mệt",
+    "chán",
+    "nản",
+    "khổ"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f629/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/wow",
+   "file": "noto/wow.webm",
+   "poster": "noto/wow.png",
+   "type": "animated-emoji",
+   "duration": 2.28,
+   "loop": true,
+   "tags": [
+    "wow",
+    "ngạc nhiên",
+    "ồ"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62e/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  },
+  {
+   "id": "noto/zap",
+   "file": "noto/zap.webm",
+   "poster": "noto/zap.png",
+   "type": "animated-emoji",
+   "duration": 1.26,
+   "loop": true,
+   "tags": [
+    "nhanh",
+    "tia chớp",
+    "tốc độ"
+   ],
+   "source": "Google Noto Animated Emoji",
+   "source_url": "https://fonts.gstatic.com/s/e/notoemoji/latest/26a1/512.gif",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<title>Khối cảnh · bản xem thử</title>
+<script src="assets/gsap.min.js"></script>
+<style>
+html,body{width:1080px;height:1920px}
+@font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:800;src:url('assets/BeVietnamPro-800-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:800;src:url('assets/BeVietnamPro-800-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:800;src:url('assets/BeVietnamPro-800-vietnamese.woff2') format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}
+body{margin:0;background:#0B1020;color:#fff;font-family:'Be Vietnam Pro',sans-serif}
+#root{position:relative;width:100%;height:100%;overflow:hidden;background:#0B1020}
+.clip{position:absolute;inset:0;overflow:hidden}
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.h{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;letter-spacing:-1px;line-height:1.08;margin:0}
+.headline{position:absolute;left:70px;right:70px}
+.hl{color:#FBBF24}
+.shade-top{position:absolute;left:0;right:0;top:0;height:1000px;background:linear-gradient(180deg,rgba(6,9,20,.92) 0%,rgba(6,9,20,.5) 55%,rgba(6,9,20,0) 100%)}
+.chips{position:absolute;left:80px;right:80px;top:520px;display:flex;flex-direction:column;gap:26px}
+.chip{position:relative;align-self:flex-start;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:58px;padding:14px 34px;border-radius:20px;background:rgba(15,18,32,.85);border:2px solid rgba(255,255,255,.2);opacity:0}
+.strike{position:absolute;left:18px;right:18px;top:50%;height:10px;border-radius:6px;background:#EF4444;transform-origin:left center;transform:scaleX(0)}
+.shot{position:absolute;border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.shot img{display:block;width:100%;height:auto}
+.tag{position:absolute;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:26px;letter-spacing:2px;padding:10px 20px;border-radius:999px;background:#4F46E5;color:#fff}
+.brand{display:flex;align-items:center;justify-content:center;gap:30px}
+.brand img{width:170px;height:170px;border-radius:36px;object-fit:cover}
+.brand .name{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:120px;letter-spacing:-2px}
+.sub{position:absolute;left:60px;right:60px;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:48px;color:#A5B4FC}
+.cta{position:absolute;left:90px;right:90px;display:flex;align-items:center;justify-content:center;height:140px;border-radius:32px;background:#4F46E5;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:52px;color:#fff}
+.cap{position:absolute;inset:auto;left:60px;right:60px;top:1440px;display:flex;justify-content:center;align-items:flex-start}
+.cap span{display:block;text-align:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:48px;line-height:1.3;padding:16px 32px;border-radius:24px;background:rgba(8,11,24,.8);color:#fff}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="11.55">
+<section id="scene0" data-track-index="0" class="clip " data-start="0.000" data-duration="5.700"><style>#flow0{--hl:#FBBF24;--accent:#4F46E5;--bg:#0B1020;--fg:#FFFFFF;--muted:#CBD5E1;position:absolute;inset:0;background:var(--bg);color:var(--fg);font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:44px;line-height:1.35}#flow0 *{box-sizing:border-box}#flow0 .copy{white-space:pre-line;overflow-wrap:anywhere}
+#flow0 .heading{position:absolute;left:100px;top:265px;width:780px;color:var(--muted);opacity:0}
+#flow0 .node{position:absolute;left:100px;width:780px;height:230px;padding:24px 34px;
+border:2px solid var(--accent);border-left:8px solid var(--hl);border-radius:24px;background:var(--bg);
+display:flex;flex-direction:column;justify-content:center;gap:8px;opacity:0}
+#flow0 .label{font-size:68px;line-height:1.3;letter-spacing:-1px}
+#flow0 .detail{font-size:44px;color:var(--muted)}
+#flow0 .wires{position:absolute;inset:0;width:1080px;height:1920px;overflow:visible}
+#flow0 .wire{stroke:var(--hl);stroke-width:6;fill:none;stroke-linecap:round;
+stroke-dasharray:100;stroke-dashoffset:100;filter:drop-shadow(0 0 8px var(--hl))}
+</style><div id="flow0"><svg class="wires" viewBox="0 0 1080 1920" aria-hidden="true"><path id="flow0-wire0" class="wire" pathLength="100" d="M490 630 V730"/><path id="flow0-wire1" class="wire" pathLength="100" d="M490 960 V1060"/></svg><div class="heading copy" id="flow0-title">TỪ DỮ LIỆU ĐẾN HÀNH ĐỘNG</div><div class="node" id="flow0-node0" style="top:400px"><div class="label copy">Dữ liệu</div><div class="detail copy">Chọn đúng đầu vào</div></div><div class="node" id="flow0-node1" style="top:730px"><div class="label copy">Bộ lọc</div><div class="detail copy">Giữ điều cần thiết</div></div><div class="node" id="flow0-node2" style="top:1060px"><div class="label copy">Kết quả</div><div class="detail copy">Sẵn sàng bước tiếp</div></div></div></section>
+<section id="scene1" data-track-index="0" class="clip " data-start="5.700" data-duration="5.850"><style>#rehook1{--hl:#FBBF24;--accent:#4F46E5;--bg:#0B1020;--fg:#FFFFFF;--muted:#CBD5E1;position:absolute;inset:0;background:var(--bg);color:var(--fg);font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:44px;line-height:1.35}#rehook1 *{box-sizing:border-box}#rehook1 .copy{white-space:pre-line;overflow-wrap:anywhere}
+#rehook1 .kicker{position:absolute;left:100px;top:320px;width:780px;color:var(--muted);opacity:0}
+#rehook1 .rule{position:absolute;left:100px;top:430px;width:780px;height:8px;background:var(--accent);transform:scaleX(0);transform-origin:left}
+#rehook1 .metric{position:absolute;left:100px;top:470px;width:780px;opacity:0}
+#rehook1 .value{font-size:148px;line-height:1.35;color:var(--hl);letter-spacing:-4px}
+#rehook1 .unit{font-size:44px;color:var(--muted)}
+#rehook1 .stack{position:absolute;left:100px;top:820px;width:780px}
+#rehook1 .layer{font-size:148px;line-height:1.35;letter-spacing:-4px;opacity:0;padding:12px 0}
+#rehook1 .echo{position:absolute;inset:0;color:transparent;-webkit-text-stroke:2px var(--accent)}
+#rehook1 .front{position:relative;color:var(--fg)}
+</style><div id="rehook1"><div class="kicker copy" id="rehook1-kicker">NHÌN LẠI LUỒNG VỪA RỒI</div><div class="rule" id="rehook1-rule"></div><div class="metric" id="rehook1-metric"><div class="value copy">3</div><div class="unit copy">bước rõ ràng</div></div><div class="stack"><div class="layer echo copy" id="rehook1-echo" aria-hidden="true">ĐÚNG
+HƯỚNG</div><div class="layer front copy" id="rehook1-front">ĐÚNG
+HƯỚNG</div></div></div></section>
+
+</div>
+<script>
+const standalonePreview = !window.__timelines;
+const tl = gsap.timeline({ paused: true }); const E = "power3.out";
+tl.fromTo('#flow0-title',{y:18,opacity:0},{y:0,opacity:1,duration:0.3,ease:'power3.out',immediateRender:false},0.050);
+tl.fromTo('#flow0-node0',{y:28,opacity:0},{y:0,opacity:1,duration:0.38,ease:'power3.out',immediateRender:false},0.300);
+tl.fromTo('#flow0-node1',{y:28,opacity:0},{y:0,opacity:1,duration:0.38,ease:'power3.out',immediateRender:false},2.100);
+tl.fromTo('#flow0-wire0',{strokeDashoffset:100},{strokeDashoffset:0,duration:0.38,ease:'power3.out',immediateRender:false},1.820);
+tl.fromTo('#flow0-node2',{y:28,opacity:0},{y:0,opacity:1,duration:0.38,ease:'power3.out',immediateRender:false},3.900);
+tl.fromTo('#flow0-wire1',{strokeDashoffset:100},{strokeDashoffset:0,duration:0.38,ease:'power3.out',immediateRender:false},3.620);
+tl.fromTo('#rehook1-kicker',{y:24,opacity:0},{y:0,opacity:1,duration:0.32,ease:'power3.out',immediateRender:false},6.000);
+tl.fromTo('#rehook1-rule',{scaleX:0},{scaleX:1,duration:0.4,ease:'power3.out',immediateRender:false},6.000);
+tl.fromTo('#rehook1-metric',{clipPath:'inset(0 100% 0 0)',x:-32,opacity:0},{clipPath:'inset(0 0% 0 0)',x:0,opacity:1,duration:0.42,ease:'power3.out',immediateRender:false},7.800);
+tl.fromTo('#rehook1-echo',{x:-30,y:24,opacity:0},{x:16,y:16,opacity:.65,duration:0.3,ease:'power3.out',immediateRender:false},9.600);
+tl.fromTo('#rehook1-front',{clipPath:'inset(0 100% 0 0)',x:-32,opacity:0},{clipPath:'inset(0 0% 0 0)',x:0,opacity:1,duration:0.42,ease:'power3.out',immediateRender:false},9.660);
+tl.fromTo('#rehook1-echo',{x:16,y:16,opacity:.65},{x:8,y:8,opacity:.25,duration:0.3,ease:'power3.out',immediateRender:false},9.920);
+document.querySelectorAll(".cap").forEach(c => tl.fromTo(c.querySelector("span"),{y:24,opacity:0},{y:0,opacity:1,duration:0.22,ease:E},parseFloat(c.dataset.start)));
+window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+
+function previewAt(t) {
+  tl.seek(t, false);
+  document.querySelectorAll('section[data-start]').forEach(el => {
+    const s = +el.dataset.start, d = +el.dataset.duration;
+    el.style.visibility = t >= s && t < s + d ? 'visible' : 'hidden';
+  });
+}
+if (standalonePreview) {
+  let position = Number(new URLSearchParams(location.search).get('t') || 4.8);
+  document.fonts.ready.then(() => previewAt(position));
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    position = Math.max(0, Math.min(+document.getElementById('root').dataset.duration - .01,
+      position + (e.key === 'ArrowRight' ? .1 : -.1)));
+    previewAt(position);
+  });
+}
+</script>
+</body>
+</html>

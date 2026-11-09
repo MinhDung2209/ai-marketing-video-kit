@@ -38,20 +38,38 @@ SEEK_JS = """async (t) => {
     el.style.visibility = (t >= s && t < s + d) ? 'visible' : 'hidden';
   });
   // Video trong cảnh: tua tới đúng khung. data-rate = tốc độ phát (0.75 = chậm); data-offset / data-end = đoạn được dùng;
-  // hết clip thì giữ khung cuối.
+  // hết clip thì giữ khung cuối (trừ khi data-loop).
   const waits = [];
   document.querySelectorAll('video').forEach(v => {
     const host = v.closest('[data-start]'); if (!host) return;
     const s = parseFloat(host.dataset.start), rate = parseFloat(v.dataset.rate || '1');
     const off = parseFloat(v.dataset.offset || '0');                                        // data-offset: bắt đầu từ giây này của clip
     const end = Math.min((v.duration || 0) - 0.05, parseFloat(v.dataset.end || '1e9'));   // data-end: bỏ đoạn lỗi cuối clip
-    const local = Math.max(off, Math.min(end, off + (t - s) * rate));
+    const span = Math.max(0.05, end - off);
+    // data-loop="1": phát lặp (sticker / emoji động); mặc định hết clip thì giữ khung cuối
+    const local = v.dataset.loop ? off + (((t - s) * rate) % span + span) % span : Math.max(off, Math.min(end, off + (t - s) * rate));
     if (Math.abs(v.currentTime - local) > 0.001) {
       waits.push(new Promise(r => { v.addEventListener('seeked', r, { once: true }); setTimeout(r, 3000); }));
       v.currentTime = local;
     }
   });
   await Promise.all(waits);
+  // 'seeked' chưa chắc đã có KHUNG HÌNH (readyState 1 = mới có metadata → chụp ra khung trắng, clip 02 06/11/2026):
+  // video đang hiện mà chưa có dữ liệu khung thì chờ thêm (tối đa 4 s)
+  const vis = v => { for (let e = v; e; e = e.parentElement) if (e.style && e.style.visibility === 'hidden') return false; return true; };
+  await Promise.all([...document.querySelectorAll('video')].filter(v => vis(v) && v.readyState < 2).map(v => new Promise(r => {
+    const done = () => r(); v.addEventListener('loadeddata', done, { once: true }); v.addEventListener('canplay', done, { once: true });
+    v.addEventListener('seeked', done, { once: true }); setTimeout(done, 4000);
+    if (v.preload !== 'auto') v.preload = 'auto';
+  })));
+  // vẫn chưa có khung (Chrome tạm ngủ đông bớt video khi trang có nhiều <video>) → nạp lại rồi tua lại
+  await Promise.all([...document.querySelectorAll('video')].filter(v => vis(v) && v.readyState < 2).map(async v => {
+    const want = v.currentTime, t0 = performance.now();
+    while (v.readyState < 2 && performance.now() - t0 < 6000) {
+      await new Promise(r => setTimeout(r, 80));
+      if (performance.now() - t0 > 700 && v.readyState < 2) v.currentTime = want + ((performance.now() | 0) % 7 + 1) * 1e-4;   // nhích để Chrome giải mã lại
+    }
+  }));
   return 'ok';
 }"""
 

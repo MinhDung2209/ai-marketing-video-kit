@@ -38,6 +38,7 @@ Clone tất cả về `_repos/` đúng commit đã đọc (để tra cứu, họ
 | `bgm/lyria/` | Tự tạo bằng Google Lyria | Thuộc người tạo (điều khoản Google Cloud) | ✅ có |
 | `sfx/pixabay/` | hyperframes → Pixabay | Pixabay Content License: dùng trong video thương mại OK, **cấm phân phối lại file rời** | ✅ có (dùng nội bộ; xem lại khi thương mại hoá) |
 | `sfx/mixkit/`, `bgm/mixkit/` | video-shotcraft → Mixkit | Mixkit Free License: như trên | ✅ có (dùng nội bộ; xem lại khi thương mại hoá) |
+| `meme-library/noto/` | [Google Noto Animated Emoji](https://googlefonts.github.io/noto-emoji-animation/) | **CC BY 4.0** — dùng thương mại OK, phải ghi nguồn: *"Animated emoji: Google Noto Emoji (CC BY 4.0)"* | ✅ có (ghi nguồn ở mô tả bài đăng) |
 
 Nguồn + giấy phép **từng file**: `audio-library/catalog.json`.
 

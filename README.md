@@ -53,6 +53,8 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 | Người làm hình & tiếng | [04 Giọng đọc](docs/04-giong-doc.md) · [05 Ảnh & clip AI](docs/05-anh-va-clip-ai.md) · [06 Âm thanh](docs/06-am-thanh.md) |
 | Người dựng | [07 Dựng cảnh & render](docs/07-dung-canh-va-render.md) · [08 Kiểm tra trước khi đăng](docs/08-kiem-tra-va-xuat-ban.md) |
 | Gặp lỗi / tính tiền | [09 Lỗi thường gặp](docs/09-loi-thuong-gap.md) · [10 Chi phí](docs/10-chi-phi.md) |
+| Thêm meme / sticker | [11 Meme & sticker](docs/11-meme-va-sticker.md) |
+| Video demo sản phẩm (quay màn hình thật) | [12 Video demo sản phẩm](docs/12-video-demo-san-pham.md) — clip mới = sửa `clip.json` + lời, không viết code |
 
 ## Trong repo có gì
 
@@ -62,11 +64,14 @@ Từng bước riêng lẻ (giọng, dựng, trộn, render): [docs/02](docs/02-
 | `templates/video-project/` | Khung dự án mới, dựng tự động từ `scenes.json` (4 kiểu cảnh: media · screenshot · logo · cta) |
 | `examples/stradevn-ad-v2/` | Video thật đã làm, đủ nguồn để dựng và render lại |
 | `audio-library/` | 1.103 hiệu ứng + nhạc nền (uisfx, Pixabay, Mixkit) + nhạc Lyria — có sẵn trong repo. Nguồn + giấy phép từng file: `catalog.json` |
+| `meme-library/` | 40 sticker / emoji động nền trong suốt (Google Noto, CC BY 4.0) + `catalog.json` nguồn, giấy phép từng file. Tìm: `tools/meme_search.py` · luật dùng: [docs/11](docs/11-meme-va-sticker.md) |
 | `library/hooks/` | 40+ kiểu hook tiếng Việt |
-| `skills/marketing-video/` | Skill cho Claude Code |
+| `screendemo/` | Video demo sản phẩm: quay web thật theo kịch bản dữ liệu (`shoot.py` + `shots.json`, chặn nút cấm), dựng khớp lời ↔ mốc ↔ camera (`engine.py`), hậu kỳ 1 lệnh nhiều bản (`produce.py`), tạo clip từ mẫu (`new_clip.py`) |
+| `profiles/` | Hồ sơ doanh nghiệp cho video demo: thương hiệu, luật an toàn, thao tác riêng, mẫu thể loại. `stradevn/` (thể loại `ma-hs`) · `_mau/` để chép cho doanh nghiệp mới |
+| `skills/` | Skill cho Claude Code: `marketing-video`, `product-demo-video` (cài: `tools/install_skill.py`) |
 | `scripts/clone_repos.sh` | Clone 12 repo mã nguồn mở đã nghiên cứu (HyperFrames, Hypit, OpenMontage, shotcraft, hook…) vào `_repos/` |
 | `integrations/hypit/` | (Tuỳ chọn) cài nhanh [Hypit](https://github.com/hypit-ai/hypit): nhân bản video mẫu, mốc từng chữ — kèm kết quả đã đo |
-| `docs/` | 11 tài liệu (00–10) |
+| `docs/` | 13 tài liệu (00–12) |
 
 ## Dịch vụ cần tài khoản riêng
 

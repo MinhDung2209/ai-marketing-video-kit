@@ -4,5 +4,10 @@
   "tts_model": "gemini-3.1-flash-tts-preview",
   "tts_voice": "Kore",
   "tts_language": "vi-VN",
-  "plenxai_credit_limit": 700
+  "plenxai_credit_limit": 700,
+  "screendemo": {
+    "cdp": "http://127.0.0.1:9333",
+    "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "ffmpeg": "ffmpeg"
+  }
 }

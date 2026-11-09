@@ -1,0 +1,21 @@
+{
+ "_huong_dan": [
+  "Mỗi câu được cắt thành CỤM theo dấu , . : ? ! — số cụm phải khớp i/j trong clip.json → story (đếm: python KIT/screendemo/chunks.py <clip> sau khi đọc giọng).",
+  "Số đọc bằng chữ ('ba phẩy bốn lăm tỷ đô'); phụ đề hiện số thì thêm 'caption' có CÙNG số dấu câu.",
+  "Đọc: python KIT/tools/tts_script.py voice.json audio  ·  đọc lại 1 câu: --only V3  ·  người dùng phải nghe duyệt."
+ ],
+ "model": "gemini-3.1-flash-tts-preview",
+ "voice": "Kore",
+ "language": "vi-VN",
+ "gap_seconds": 0.3,
+ "profile": "Ai đang nói, với ai, giọng vùng miền, không khí, tốc độ. CHỈ đọc đúng nguyên văn lời thoại. Tên thương hiệu đọc là: …",
+ "lines": [
+  {"id": "V1", "text": "Chỉ trong chín tháng: ba phẩy bốn lăm tỷ đô. Đó là …", "caption": "Chỉ trong 9 tháng: 3,45 tỷ USD. Đó là …", "direction": "Mở màn chắc, như tiết lộ bí mật."},
+  {"id": "V2", "text": "Câu hỏi là: … đang ở đâu… và sao chưa phải là bạn?", "direction": "Khiêu khích nhẹ."},
+  {"id": "V3", "text": "Để mình cho bạn xem, một buổi sáng mình làm việc này như thế nào.", "direction": "Thân mật, mời gọi."},
+  {"id": "V4", "text": "Đầu tiên, lên mạng tìm hiểu. Bài này nói rõ: … . Chốt luôn!", "direction": "Kể như đang tự tìm."},
+  {"id": "V5", "text": "Mở app. Bấm … . Ra ngay … . Chi tiết đến từng …", "direction": "Hào hứng khoe tính năng."},
+  {"id": "V6", "text": "Ý một, ý hai, ý ba. Câu hỏi cho người xem? Bình luận nhé.", "direction": "Ấm, rủ rê."},
+  {"id": "V7", "text": "TenThuongHieu, câu định vị.", "direction": "Mỉm cười, nhấn tên thương hiệu."}
+ ]
+}

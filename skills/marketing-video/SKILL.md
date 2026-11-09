@@ -42,3 +42,19 @@ KIT = <ĐƯỜNG DẪN TỚI THƯ MỤC kit>   ← cài bằng `python tools/ins
 ## Khi người dùng góp ý
 Sửa đúng chỗ, chạy lại từ bước bị ảnh hưởng (bảng ở KIT/docs/02 bước 8). Ghi góp ý + ngày vào đầu BRIEF.md.
 Lỗi đã gặp và cách xử lý: KIT/docs/09.
+
+## Meme / sticker động (thêm 04/11/2026)
+- Thư viện `KIT/meme-library/` (Google Noto, CC BY 4.0). Tìm: `python KIT/tools/meme_search.py <từ khoá>`; chép vào dự án:
+  `python KIT/tools/meme_search.py --copy noto/<id> ... <dự án>`. Đặt bằng `<video ... data-loop="1">` (WebM alpha). Luật: `KIT/docs/11`.
+- **Không lạm dụng** (≤ 1 sticker / 10–15s, không ở cảnh mở đầu), không che số liệu/phụ đề, không meme phim/ảnh chế có bản quyền.
+- Không dán tem kiểu "+25%" lên ảnh chụp bài báo; nhấn số bằng cách khoanh + tô đúng con số trên trang thật lúc quay, rồi phóng sát.
+- Bài báo dùng làm bằng chứng phải **cùng chiều thông điệp** (không dùng bài tiêu đề tiêu cực như "sụt giảm" cho hook tăng trưởng).
+
+
+## Luật thẩm mỹ cảnh dựng bằng code
+- Trước khi dựng: chốt hook → điểm nhấn → nhịp theo giây → màu/chữ → chuyển động/âm thanh.
+- Lấy bảng màu thương hiệu từ `profiles/<dn>/profile.json → brand`; ghi rõ mã màu, không tự thay bảng màu.
+- Mỗi khung hình dùng tối đa 2 cỡ chữ; ưu tiên phân cấp rõ, đủ dấu tiếng Việt và khoảng thở.
+- Easing dứt khoát: `power3.out` hoặc `back.out(1.4)` vừa phải; tween bắt đầu muộn dùng `immediateRender:false`.
+- Không dùng gradient tím-xanh mặc định, hạt bay trang trí hoặc nảy lò xo liên tục không phục vụ thông điệp.
+- Mọi chuyển động bám timeline GSAP dừng sẵn, không dùng đồng hồ thực; xem snapshot trước khi xuất.

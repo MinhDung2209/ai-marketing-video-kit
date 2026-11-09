@@ -1,0 +1,47 @@
+{
+ "_huong_dan": [
+  "Các kho meme lớn trên web. tools/meme_web.py dùng bảng này để TÌM trực tiếp (search) và lấy LINK TẢI THẲNG (mp4/mp3), ghi vào web.json. Không tải sẵn: lúc dựng clip ffmpeg mới đọc link.",
+  "search: link trang tìm kiếm ({q} = từ khoá). item: regex link trang chi tiết trong trang tìm. media: regex link tải thẳng trong trang chi tiết (hoặc ngay trong trang tìm nếu direct=true).",
+  "Bản quyền: clip/âm thanh thuộc chủ sở hữu; các trang này không cấp giấy phép thương mại. Người phụ trách quyết định dùng (06/11/2026)."
+ ],
+ "sites": {
+  "greenscreenmemes": {
+   "home": "https://greenscreenmemes.com/", "size": "5.000+ clip nền xanh, mới mỗi ngày", "type": "video",
+   "search": "https://greenscreenmemes.com/?s={q}",
+   "item": "https://greenscreenmemes\\.com/(?!category|tag|page|contact|privacy|terms|dmca|top-|wp-|video-library|videoboards)[a-z0-9-]+/",
+   "media": "https://media\\.greenscreenmemes\\.com/\\d{4}/\\d{2}/[^\"' ]+?\\.mp4"
+  },
+  "memescreens": {
+   "home": "https://memescreens.com/", "size": "5.000+ clip nền xanh (funny, animals, dance…)", "type": "video",
+   "search": "https://memescreens.com/?s={q}",
+   "item": "/clips/[a-z0-9-]+",
+   "base": "https://memescreens.com",
+   "media": "https://media\\.memescreens\\.com/[^\"' ]+?\\.mp4"
+  },
+  "memes-download": {
+   "home": "https://www.memes-download.com/", "size": "2.400+ meme video, hook, chuyển cảnh", "type": "video",
+   "search": "https://www.memes-download.com/?s={q}",
+   "item": "/meme/[a-z0-9-]+",
+   "base": "https://www.memes-download.com",
+   "media": "https://api\\.memes-download\\.com/memes/videos/[^\"' ]+?\\.mp4",
+   "first_media_only": true
+  },
+  "tiengdong": {
+   "home": "https://tiengdong.com/", "size": "kho âm thanh + clip meme TIẾNG VIỆT (câu nói viral, hiệu ứng)", "type": "audio",
+   "search": "https://tiengdong.com/?s={q}",
+   "direct": true,
+   "media": "https://tiengdong\\.com/wp-content/uploads/[^\"' ]+?\\.(?:mp3|mp4)"
+  },
+  "myinstants": {
+   "home": "https://www.myinstants.com/", "size": "hàng triệu nút âm thanh meme (bruh, vine boom, fail…)", "type": "audio",
+   "search": "https://www.myinstants.com/en/search/?name={q}",
+   "direct": true,
+   "base": "https://www.myinstants.com",
+   "media": "/media/sounds/[^\"' ]+?\\.mp3"
+  },
+  "imgflip": {
+   "home": "https://imgflip.com/memetemplates", "size": "100 mẫu meme ảnh phổ biến nhất (API, không cần khoá)", "type": "image",
+   "api": "https://api.imgflip.com/get_memes"
+  }
+ }
+}

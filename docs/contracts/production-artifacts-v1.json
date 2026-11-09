@@ -1,0 +1,1021 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-marketing-video-kit:production-artifacts:v1",
+  "title": "Production artifact manifest v1",
+  "description": "Per-stage tool/artifact receipt only. KWF product-demo and workflow.json retain workflow, gate and scheduling authority. x-kwf-stage-mapping is a checked projection, never a replacement definition.",
+  "x-authoritative-workflow": {
+    "path": "D:/Projects/kit-studio/docs/workflows/product-demo.json",
+    "id": "product-demo",
+    "version": 1,
+    "sha256": "3536d3f46d00bb83cd0f51bab54f2e46f916cb193f2d4efcdf8cc9b05543c64c",
+    "approval_implementation": "D:/Projects/kit-studio/backend/workflow/check.mjs#approvalDigest"
+  },
+  "x-kwf-stage-mapping": [
+    {
+      "stage_id": "brief",
+      "role": "producer",
+      "kwf_required_files": [
+        "brief.md"
+      ],
+      "kwf_evidence_file": "workflow-evidence/brief.json",
+      "kwf_checklist": [
+        "scope_confirmed"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "Human / existing Studio brief surface"
+      ],
+      "kit_outputs": [
+        "brief.md"
+      ],
+      "receipt_owner_notes": "Existing Studio owner records scope; no kit generator is implied."
+    },
+    {
+      "stage_id": "research",
+      "role": "researcher",
+      "kwf_required_files": [
+        "research.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/research.json",
+      "kwf_checklist": [
+        "read_only",
+        "verified_numbers",
+        "topic_sources_approved"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "Human / existing read-only research flow"
+      ],
+      "kit_outputs": [
+        "research.json",
+        "research screenshots"
+      ],
+      "receipt_owner_notes": "Backend/agent writes the research receipt; no new browser or credential flow."
+    },
+    {
+      "stage_id": "script",
+      "role": "scriptwriter",
+      "kwf_required_files": [
+        "script.md",
+        "voice.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/script.json",
+      "kwf_checklist": [
+        "hook_then_tool",
+        "numbers_traceable",
+        "pronunciation",
+        "no_banned_phrases"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "Human / existing scriptwriter"
+      ],
+      "kit_outputs": [
+        "script.md",
+        "voice.json"
+      ],
+      "receipt_owner_notes": "Preserve voice.lines[].caption overrides; no corpus import."
+    },
+    {
+      "stage_id": "script-approval",
+      "role": "owner",
+      "kwf_required_files": [],
+      "kwf_evidence_file": null,
+      "kwf_checklist": [],
+      "kwf_approval": true,
+      "kit_producers_or_existing_owners": [
+        "KWF trusted owner approve action"
+      ],
+      "kit_outputs": [
+        "workflow.json approval"
+      ],
+      "receipt_owner_notes": "Kit only reads the approval reference; it cannot grant approval."
+    },
+    {
+      "stage_id": "record",
+      "role": "recorder",
+      "kwf_required_files": [
+        "recording.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/record.json",
+      "kwf_checklist": [
+        "sheets_viewed",
+        "safe_actions_only",
+        "numbers_match"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "screendemo/shoot.py <work> --list",
+        "screendemo/shoot.py <work> <approved-shot-ids>"
+      ],
+      "kit_outputs": [
+        "assets/screen/<shot-id>/ recording and sheet.jpg"
+      ],
+      "receipt_owner_notes": "Studio backend/record owner writes recording.json linking actual recordings and reviewed sheets; shoot.py does not emit that receipt."
+    },
+    {
+      "stage_id": "voice",
+      "role": "voice-editor",
+      "kwf_required_files": [
+        "voice.json",
+        "voice-review.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/voice.json",
+      "kwf_checklist": [
+        "owner_listened",
+        "pronunciation",
+        "phrase_timing"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "tools/tts_script.py <voice.json> <audio-out> (only after service/owner authorization)",
+        "screendemo/chunks.py (existing timing inspection)"
+      ],
+      "kit_outputs": [
+        "<audio-out>/<line-id>.mp3",
+        "<audio-out>/narration.mp3",
+        "<audio-out>/timing.json"
+      ],
+      "receipt_owner_notes": "Existing tts_script.py emits timing.json, not voice-review.json. Voice owner keeps voice.json and records owner listen evidence in voice-review.json. Google is paused: report unavailable; optional VieNeu must be explicitly selected/authorized, never silently substituted."
+    },
+    {
+      "stage_id": "build",
+      "role": "editor",
+      "kwf_required_files": [
+        "build-manifest.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/build.json",
+      "kwf_checklist": [
+        "snapshots_viewed",
+        "timing_checked"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "screendemo/produce.py <work> --build --only full",
+        "screendemo/produce.py <work> --snap 3,40,80 --only full",
+        "screendemo/produce.py <work> --qa --qa-source build --only full"
+      ],
+      "kit_outputs": [
+        "index.html",
+        "cues.json",
+        "qa/contact-sheet.jpg",
+        "qa/checklist.md"
+      ],
+      "receipt_owner_notes": "Initial build only in the external work root. Backend/build owner writes build-manifest.json including build directory and hashes; produce.py does not emit that KWF receipt. --snap also runs story.py; it must not target the edited Studio master."
+    },
+    {
+      "stage_id": "to-studio",
+      "role": "studio-agent",
+      "kwf_required_files": [
+        "index.html",
+        "studio.json",
+        "voice.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/to-studio.json",
+      "kwf_checklist": [
+        "assets_resolve",
+        "rules_preserved"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "tools/to_studio.py <build> <clip>"
+      ],
+      "kit_outputs": [
+        "index.html",
+        "studio.json",
+        "voice.json",
+        "assets/"
+      ],
+      "receipt_owner_notes": "Initial transfer only; copy workflow-evidence sidecars independently without replacing them. Kit does not protect existing master edits automatically; caller must enforce owner permission. After transfer clip/index.html is master."
+    },
+    {
+      "stage_id": "studio-qa",
+      "role": "qa-agent",
+      "kwf_required_files": [
+        "index.html",
+        "voice.json",
+        "studio.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/studio-qa.json",
+      "kwf_checklist": [
+        "lint_reviewed",
+        "snapshots_viewed",
+        "numbers_verified",
+        "no_provider_names",
+        "no_agent_exposure",
+        "mark_inventory_verified",
+        "voice_caption_match",
+        "hook_then_tool",
+        "gsap_timing_checked"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "Existing Studio QA",
+        "npx hyperframes lint",
+        "npx hyperframes snapshot . --at <review-times>"
+      ],
+      "kit_outputs": [
+        "QA snapshots",
+        "workflow-evidence/studio-qa.json"
+      ],
+      "receipt_owner_notes": "Use edited clip/index.html. Existing QA owner writes all exact KWF checklist keys, firstSceneEnd, inkTimes, stickerTimes and human review evidence. Optional QA adapters supplement this receipt."
+    },
+    {
+      "stage_id": "owner-review",
+      "role": "owner",
+      "kwf_required_files": [],
+      "kwf_evidence_file": null,
+      "kwf_checklist": [],
+      "kwf_approval": true,
+      "kit_producers_or_existing_owners": [
+        "KWF trusted owner approve action"
+      ],
+      "kit_outputs": [
+        "workflow.json approval"
+      ],
+      "receipt_owner_notes": "Owner watches/listens to current Studio master. Reference actual KWF approval, never synthesize owner approval from a tool success."
+    },
+    {
+      "stage_id": "render",
+      "role": "render-agent",
+      "kwf_required_files": [
+        "renders/final.mp4",
+        "render-review.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/render.json",
+      "kwf_checklist": [
+        "mp4_frames_viewed",
+        "duration_checked",
+        "audio_checked",
+        "master_matches"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "KWF command: npx hyperframes render -o renders/final.mp4 -q delivery",
+        "tools/render.py (existing kit build renderer; distinct output path)"
+      ],
+      "kit_outputs": [
+        "renders/final.mp4",
+        "render-review.json"
+      ],
+      "receipt_owner_notes": "Studio backend/render owner invokes configured renderer for approved master and writes render-review.json with master hash, actual MP4 frame/audio/probe evidence. Do not treat pre-transfer final/<slug>-<variant>.mp4 as this approved Studio render. Optional render_hyperframes.py is picture-only until audio parity is verified."
+    },
+    {
+      "stage_id": "publish-package",
+      "role": "publisher",
+      "kwf_required_files": [
+        "publish-package.json"
+      ],
+      "kwf_evidence_file": "workflow-evidence/publish-package.json",
+      "kwf_checklist": [
+        "package_complete",
+        "no_upload"
+      ],
+      "kwf_approval": false,
+      "kit_producers_or_existing_owners": [
+        "Existing Studio/backend local packaging owner"
+      ],
+      "kit_outputs": [
+        "publish-package.json",
+        "local MP4/title/description/CTA/thumbnail/credits"
+      ],
+      "receipt_owner_notes": "Packaging owner writes publish-package.json with file hashes and attribution. tools/make_package.py packages the kit distribution, not this clip delivery. No upload/post action is implied."
+    }
+  ],
+  "x-status-semantics": {
+    "succeeded": "Invocation completed and promised artifacts were verified; this does not mark the KWF stage done or constitute human approval.",
+    "failed": "Invocation ran but failed, including malformed output or missing required artifacts.",
+    "unavailable": "Selected optional executable/module/model/platform or paused service is absent/unusable; no invocation, no output artifacts and no automatic provider fallback.",
+    "cancelled": "Caller/system cancelled; retain diagnostic partial files outside the accepted artifacts, release owned resources, and require scheduler/owner decision before retry.",
+    "timed_out": "Configured deadline elapsed; terminate only processes owned by this invocation, release resources, and retain diagnostics."
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "manifest_id",
+    "clip_id",
+    "stage_id",
+    "workflow",
+    "roots",
+    "attempt",
+    "input_hashes",
+    "artifacts",
+    "tool_results",
+    "review_evidence",
+    "approval_refs"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "production-artifacts-v1"
+    },
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "clip_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage_id": {
+      "enum": [
+        "brief",
+        "research",
+        "script",
+        "script-approval",
+        "record",
+        "voice",
+        "build",
+        "to-studio",
+        "studio-qa",
+        "owner-review",
+        "render",
+        "publish-package"
+      ]
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "definition_sha256",
+        "state_revision"
+      ],
+      "properties": {
+        "id": {
+          "const": "product-demo"
+        },
+        "version": {
+          "const": 1
+        },
+        "definition_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "state_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "roots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clip",
+        "work"
+      ],
+      "properties": {
+        "clip": {
+          "type": "string",
+          "minLength": 1
+        },
+        "work": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "number",
+        "owner",
+        "started_at",
+        "finished_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "input_hashes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      },
+      "minItems": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      },
+      "minItems": 0
+    },
+    "tool_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tool_result"
+      },
+      "minItems": 1
+    },
+    "review_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/review"
+      },
+      "minItems": 0
+    },
+    "approval_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/approval"
+      },
+      "minItems": 0
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root",
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "root": {
+          "enum": [
+            "clip",
+            "work"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*\\\\)(?!.*:)(?!.*(?:^|/)\\.\\.?(?:/|$))[^\\r\\n]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "tool_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tool",
+        "version_or_pin",
+        "status",
+        "exit_code",
+        "message",
+        "artifact_paths",
+        "error"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version_or_pin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "unavailable",
+            "cancelled",
+            "timed_out"
+          ]
+        },
+        "exit_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "code",
+                "message",
+                "remediation"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "remediation": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "exit_code": {
+                "const": 0
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "exit_code": {
+                "type": "null"
+              },
+              "artifact_paths": {
+                "maxItems": 0
+              },
+              "error": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "failed",
+                  "cancelled",
+                  "timed_out"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "exit_code": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "integer",
+                    "not": {
+                      "const": 0
+                    }
+                  }
+                ]
+              },
+              "artifact_paths": {
+                "maxItems": 0
+              },
+              "error": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reviewer",
+        "at",
+        "decision",
+        "summary",
+        "evidence",
+        "subject_hashes",
+        "checklist"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "automated",
+            "human"
+          ]
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "decision": {
+          "enum": [
+            "passed",
+            "changes_requested",
+            "unavailable"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          },
+          "minItems": 1
+        },
+        "subject_hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          },
+          "minItems": 1
+        },
+        "checklist": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_id",
+        "state_file",
+        "state_revision",
+        "who",
+        "when",
+        "approval_digest",
+        "input_hashes"
+      ],
+      "properties": {
+        "stage_id": {
+          "enum": [
+            "script-approval",
+            "owner-review"
+          ]
+        },
+        "state_file": {
+          "const": "workflow.json"
+        },
+        "state_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "who": {
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "approval_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          },
+          "minItems": 1
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "contract_version": "production-artifacts-v1",
+      "manifest_id": "example-render-attempt-2",
+      "clip_id": "example-product-demo",
+      "stage_id": "render",
+      "workflow": {
+        "id": "product-demo",
+        "version": 1,
+        "definition_sha256": "3536d3f46d00bb83cd0f51bab54f2e46f916cb193f2d4efcdf8cc9b05543c64c",
+        "state_revision": 20
+      },
+      "roots": {
+        "clip": "D:/agent-cache/K-DAILY-CONTRACT/example-clip",
+        "work": "D:/agent-cache/K-DAILY-CONTRACT/example-work"
+      },
+      "attempt": {
+        "id": "example-render-2",
+        "number": 2,
+        "owner": "example-render-agent",
+        "started_at": "2026-11-09T10:21:00Z",
+        "finished_at": "2026-11-09T10:22:00Z"
+      },
+      "input_hashes": [
+        {
+          "root": "clip",
+          "path": "index.html",
+          "sha256": "b35c01b7a18532e61dc316ead1b2512cb68c4893cf0fcbbae2ee944a5f068efa",
+          "bytes": 45
+        },
+        {
+          "root": "clip",
+          "path": "voice.json",
+          "sha256": "dbcbdcd74a15a57f3fadf0c84d6a1232cc92b39e6f2b03b1be8c71f5e53812a1",
+          "bytes": 28
+        },
+        {
+          "root": "clip",
+          "path": "studio.json",
+          "sha256": "6ca9ba5cf206b9f058533959b81102754b96fc42629283071fc8fa9e96eb1e9a",
+          "bytes": 31
+        },
+        {
+          "root": "clip",
+          "path": "workflow-evidence/studio-qa.json",
+          "sha256": "5ec9ce935066ec6a94ed5add979df62d59bafa8967b0467980842c0affa1438a",
+          "bytes": 50
+        }
+      ],
+      "artifacts": [
+        {
+          "root": "clip",
+          "path": "renders/final.mp4",
+          "sha256": "4dac900a7aaa7c4026983ae9c9ca6b4c80153f4bd8679605478147e31564a13e",
+          "bytes": 33
+        },
+        {
+          "root": "clip",
+          "path": "render-review.json",
+          "sha256": "5a27371d4b2cfd3ece7481d3023ed1d5a1d5dc1ad0aced565be896008fbda2ed",
+          "bytes": 53
+        },
+        {
+          "root": "clip",
+          "path": "qa/render-frame.jpg",
+          "sha256": "19c840d69dceaeb1aa970195085cc617a952d2ae923fe66796517ea8e8f55bff",
+          "bytes": 34
+        },
+        {
+          "root": "clip",
+          "path": "qa/render-probe.json",
+          "sha256": "6ca9ba5cf206b9f058533959b81102754b96fc42629283071fc8fa9e96eb1e9a",
+          "bytes": 31
+        },
+        {
+          "root": "clip",
+          "path": "qa/render-audio.json",
+          "sha256": "1dba30af7d01dbf3db0b48bed11bc6da7cd6039214b79bc410ffef2daf1721d6",
+          "bytes": 39
+        },
+        {
+          "root": "clip",
+          "path": "workflow-evidence/render.json",
+          "sha256": "b4df72beef518bf56f94de890b3e6c62e78390a594ac4b7fddfc1f99ab559504",
+          "bytes": 296
+        }
+      ],
+      "tool_results": [
+        {
+          "id": "example-render",
+          "tool": "configured Studio renderer",
+          "version_or_pin": "example-fixture-only",
+          "status": "succeeded",
+          "exit_code": 0,
+          "message": "Illustrative receipt, not a real render. Required files and raw evidence are represented below.",
+          "artifact_paths": [
+            "clip:renders/final.mp4",
+            "clip:render-review.json",
+            "clip:qa/render-frame.jpg",
+            "clip:qa/render-probe.json",
+            "clip:qa/render-audio.json",
+            "clip:workflow-evidence/render.json"
+          ],
+          "error": null
+        }
+      ],
+      "review_evidence": [
+        {
+          "kind": "automated",
+          "reviewer": "example-probe",
+          "at": "2026-11-09T10:21:30Z",
+          "decision": "passed",
+          "summary": "Synthetic probe/audio evidence; no measurements were performed.",
+          "evidence": [
+            {
+              "root": "clip",
+              "path": "qa/render-probe.json",
+              "sha256": "6ca9ba5cf206b9f058533959b81102754b96fc42629283071fc8fa9e96eb1e9a",
+              "bytes": 31
+            },
+            {
+              "root": "clip",
+              "path": "qa/render-audio.json",
+              "sha256": "1dba30af7d01dbf3db0b48bed11bc6da7cd6039214b79bc410ffef2daf1721d6",
+              "bytes": 39
+            }
+          ],
+          "subject_hashes": [
+            {
+              "root": "clip",
+              "path": "renders/final.mp4",
+              "sha256": "4dac900a7aaa7c4026983ae9c9ca6b4c80153f4bd8679605478147e31564a13e",
+              "bytes": 33
+            }
+          ],
+          "checklist": {
+            "duration_checked": true
+          }
+        },
+        {
+          "kind": "human",
+          "reviewer": "example-reviewer",
+          "at": "2026-11-09T10:22:00Z",
+          "decision": "passed",
+          "summary": "Illustrative watch/listen attestation only; not an actual human review or gate grant.",
+          "evidence": [
+            {
+              "root": "clip",
+              "path": "qa/render-frame.jpg",
+              "sha256": "19c840d69dceaeb1aa970195085cc617a952d2ae923fe66796517ea8e8f55bff",
+              "bytes": 34
+            },
+            {
+              "root": "clip",
+              "path": "render-review.json",
+              "sha256": "5a27371d4b2cfd3ece7481d3023ed1d5a1d5dc1ad0aced565be896008fbda2ed",
+              "bytes": 53
+            },
+            {
+              "root": "clip",
+              "path": "workflow-evidence/render.json",
+              "sha256": "b4df72beef518bf56f94de890b3e6c62e78390a594ac4b7fddfc1f99ab559504",
+              "bytes": 296
+            }
+          ],
+          "subject_hashes": [
+            {
+              "root": "clip",
+              "path": "index.html",
+              "sha256": "b35c01b7a18532e61dc316ead1b2512cb68c4893cf0fcbbae2ee944a5f068efa",
+              "bytes": 45
+            },
+            {
+              "root": "clip",
+              "path": "renders/final.mp4",
+              "sha256": "4dac900a7aaa7c4026983ae9c9ca6b4c80153f4bd8679605478147e31564a13e",
+              "bytes": 33
+            }
+          ],
+          "checklist": {
+            "mp4_frames_viewed": true,
+            "duration_checked": true,
+            "audio_checked": true,
+            "master_matches": true
+          }
+        }
+      ],
+      "approval_refs": [
+        {
+          "stage_id": "script-approval",
+          "state_file": "workflow.json",
+          "state_revision": 12,
+          "who": "example-owner",
+          "when": "2026-11-09T10:10:00Z",
+          "approval_digest": "62f7fc0b3fb6b26783ce9aa06c79a3a9a6882eb71a7b1f25de285e7650c8b99c",
+          "input_hashes": [
+            {
+              "root": "clip",
+              "path": "script.md",
+              "sha256": "eb8f77e41f6003f580cbe02fcf98928cd544529f8887c56e2ebb93f67573d234",
+              "bytes": 46
+            },
+            {
+              "root": "clip",
+              "path": "voice.json",
+              "sha256": "dbcbdcd74a15a57f3fadf0c84d6a1232cc92b39e6f2b03b1be8c71f5e53812a1",
+              "bytes": 28
+            },
+            {
+              "root": "clip",
+              "path": "research.json",
+              "sha256": "ec7dc746c3271e571e42478db2be46b56577bd7b57a2ceeb4735c10d96f6a689",
+              "bytes": 29
+            }
+          ]
+        },
+        {
+          "stage_id": "owner-review",
+          "state_file": "workflow.json",
+          "state_revision": 20,
+          "who": "example-owner",
+          "when": "2026-11-09T10:20:00Z",
+          "approval_digest": "112bd05462b3ede0f7e9c080c69c7061be23473b7f93e4d7cdd16d27d7648990",
+          "input_hashes": [
+            {
+              "root": "clip",
+              "path": "index.html",
+              "sha256": "b35c01b7a18532e61dc316ead1b2512cb68c4893cf0fcbbae2ee944a5f068efa",
+              "bytes": 45
+            },
+            {
+              "root": "clip",
+              "path": "voice.json",
+              "sha256": "dbcbdcd74a15a57f3fadf0c84d6a1232cc92b39e6f2b03b1be8c71f5e53812a1",
+              "bytes": 28
+            },
+            {
+              "root": "clip",
+              "path": "studio.json",
+              "sha256": "6ca9ba5cf206b9f058533959b81102754b96fc42629283071fc8fa9e96eb1e9a",
+              "bytes": 31
+            },
+            {
+              "root": "clip",
+              "path": "workflow-evidence/studio-qa.json",
+              "sha256": "5ec9ce935066ec6a94ed5add979df62d59bafa8967b0467980842c0affa1438a",
+              "bytes": 50
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "x-example-file-contents-utf8": {
+    "script.md": "# Example script\nOwner-approved example only.\n",
+    "research.json": "{\"example\":true,\"claims\":[]}\n",
+    "voice.json": "{\"example\":true,\"lines\":[]}\n",
+    "index.html": "<!doctype html><title>Example master</title>\n",
+    "studio.json": "{\"example\":true,\"duration\":60}\n",
+    "workflow-evidence/studio-qa.json": "{\"example\":true,\"summary\":\"Synthetic QA receipt\"}\n",
+    "renders/final.mp4": "EXAMPLE ONLY: no MP4 media bytes\n",
+    "qa/render-frame.jpg": "EXAMPLE ONLY: no JPEG media bytes\n",
+    "qa/render-probe.json": "{\"example\":true,\"duration\":60}\n",
+    "qa/render-audio.json": "{\"example\":true,\"integrated_lufs\":-14}\n",
+    "render-review.json": "{\"example\":true,\"summary\":\"Synthetic render review\"}\n",
+    "workflow-evidence/render.json": "{\"example\":true,\"summary\":\"Synthetic render review; not owner approval.\",\"files\":[\"renders/final.mp4\",\"render-review.json\",\"qa/render-frame.jpg\",\"qa/render-probe.json\",\"qa/render-audio.json\"],\"checks\":{\"mp4_frames_viewed\":true,\"duration_checked\":true,\"audio_checked\":true,\"master_matches\":true}}\n"
+  }
+}

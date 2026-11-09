@@ -28,7 +28,7 @@ def check(ln, audio):
     spoken_tags = [t for t in re.findall(r"\[([^\]]+)\]", ln["text"])]
     plain = re.sub(r"\[[^\]]*\]", " ", ln["text"])
     d = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(f)]))
-    heard = " ".join(s["text"] for s in transcribe(str(f)) if s.get("kind", "nói") in ("nói", "speech", "") or True)
+    heard = " ".join(s["text"] for s in transcribe(pathlib.Path(f)) if s.get("kind", "nói") in ("nói", "speech", "") or True)
     a, b = words(plain), words(heard)
     diffs = []
     for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
