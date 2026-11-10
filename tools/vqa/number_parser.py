@@ -174,7 +174,11 @@ def extract_numbers_from_voice_text(text: str) -> List[Dict[str, Any]]:
             seq = []
             while j < n:
                 w = tokens[j].rstrip(",.")
-                if w in ALL_NUM_WORDS or w in ("đô", "đô la", "usd", "tấn"):
+                if w in ("đô", "đô la", "usd", "tấn"):
+                    seq.append(w)
+                    j += 1
+                    break
+                elif w in ALL_NUM_WORDS:
                     seq.append(w)
                     j += 1
                 else:

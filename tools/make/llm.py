@@ -38,11 +38,16 @@ def find_executable(name: str) -> Optional[str]:
 
 
 def extract_json_from_text(text: str) -> Optional[Any]:
-    """Trích xuất khối JSON từ văn bản (code block hoặc raw JSON)."""
-    # Thử parse toàn bộ văn bản
+    """Trích xuất khối JSON từ văn bản (code block hoặc raw JSON hoặc response wrapper)."""
     text = text.strip()
+    # Thử parse toàn bộ văn bản
     try:
-        return json.loads(text)
+        obj = json.loads(text)
+        if isinstance(obj, dict) and "response" in obj and ("conversation_id" in obj or "status" in obj):
+            inner = extract_json_from_text(obj["response"])
+            if inner is not None:
+                return inner
+        return obj
     except Exception:
         pass
 
@@ -61,7 +66,12 @@ def extract_json_from_text(text: str) -> Optional[Any]:
         if first != -1 and last != -1 and last > first:
             candidate = text[first : last + 1]
             try:
-                return json.loads(candidate)
+                obj = json.loads(candidate)
+                if isinstance(obj, dict) and "response" in obj and ("conversation_id" in obj or "status" in obj):
+                    inner = extract_json_from_text(obj["response"])
+                    if inner is not None:
+                        return inner
+                return obj
             except Exception:
                 pass
     return None
@@ -80,7 +90,7 @@ def run_llm_process(
 
     if engine == "agy":
         exe = find_executable("agy") or "agy"
-        cmd = [exe, "-p", prompt, "--output-format", "stream-json", "--dangerously-skip-permissions"]
+        cmd = [exe, "-p", prompt, "--output-format", "json", "--dangerously-skip-permissions"]
         if sub_model:
             cmd += ["--model", sub_model]
         proc = subprocess.run(
@@ -192,8 +202,9 @@ def generate_json(
             f"=== CÁC FILE NGỮ CẢNH DỰ ÁN ===\n"
             f"{''.join(ctx_text)}\n\n"
             f"=== YÊU CẦU ĐẦU RA ===\n"
-            f"Ghi nội dung JSON hợp lệ trực tiếp vào file: {target_file.as_posix()}\n"
-            f"CHỈ TRẢ VỀ DUY NHẤT MÃ JSON HỢP LỆ THEO SCHEMA TRÊN, KHÔNG KÈM GIẢI THÍCH NGOÀI LỀ.\n"
+            f"QUAN TRỌNG: KHÔNG sử dụng công cụ (tool), KHÔNG chạy lệnh terminal.\n"
+            f"Hãy TRẢ VỀ TRỰC TIẾP nội dung JSON hợp lệ cho '{target_file.name}' trong khối ```json ... ```.\n"
+            f"CHỈ TRẢ VỀ DUY NHẤT MÃ JSON HỢP LỆ THEO SCHEMA TRÊN, KHÔNG KÈM BẤT KỲ GIẢI THÍCH NGOÀI LỀ.\n"
         )
         if current_feedback:
             full_prompt += f"\n=== PHẢN HỒI LỖI TỪ LẦN CHẠY TRƯỚC (CẦN SỬA) ===\n{current_feedback}\n"
