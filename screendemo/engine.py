@@ -534,7 +534,7 @@ class Story:
             ms = int(round(p["t"] * 1000)); d = p["b"] - p["a"]
             flt.append(f"[{n}:a]atrim={p['a']:.3f}:{p['b']:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.02,"
                        f"afade=t=out:st={max(0, d - 0.04):.3f}:d=0.04,adelay={ms}|{ms}[p{n}]")
-        flt.append("".join(f"[p{n}]" for n in range(len(self.pieces))) + f"amix=inputs={len(self.pieces)}:normalize=0,apad,atrim=0:{DUR}[o]")
+        flt.append("".join(f"[p{n}]" for n in range(len(self.pieces))) + f"amix=inputs={len(self.pieces)}:normalize=0,apad=whole_dur={DUR}[o]")
         fc = A / f"_narration_{self.variant}.filter"; fc.write_text(";".join(flt), encoding="utf-8")
         wav = A / f"narration_{self.variant}.wav"
         subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error", *args, "-/filter_complex", str(fc), "-map", "[o]", "-ar", "44100", str(wav)], check=True)
