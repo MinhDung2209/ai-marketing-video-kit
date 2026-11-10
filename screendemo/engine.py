@@ -81,6 +81,7 @@ class Story:
         self.CH = all_chunks(self.proj)
         self.REC = {}
         self.pieces, self.caps, self.stickers, self.sfx, self.html, self.js = [], [], [], [], [], []
+        self.inserts, self.insert_events, self.scene_spans = [], [], []
         self.state = dict(now=0.0, last=0.0)
         self.screens = []           # [(rec, clips)] — để dựng lớp phủ theo thời gian THẬT của bản quay (vd đồng hồ bấm giờ)
 
@@ -172,6 +173,63 @@ class Story:
     def add_meme_sound(self, mid, t, volume=0.7, dur=None):
         """Meme chỉ có tiếng (vd vn-10-diem, vine-boom): không hiện hình, chỉ phát tiếng ở giây t."""
         self.add_sfx(t, f"meme:{mid}", volume, dur)
+
+    def insert(self, kind, t=None, dur=1.6, hold=True, sfx=None, mode="overlay", **data):
+        """Chèn đồ hoạ động (motion insert: counter, card_stack, route, compare).
+        Mặc định đặt sau khi câu lời vừa đặt nói xong (+delay giây), giữ timeline (hold=True).
+        Báo lỗi nếu vượt quá thời lượng cảnh (overrun scene).
+        Số liệu hiển thị phải là số thật trong clip (truyền qua data), không bịa."""
+        import inserts as INS
+        delay = data.get("delay", 0.08)
+        if "after_time" in data:
+            delay = data["after_time"]
+        elif "after" in data and isinstance(data["after"], (int, float)):
+            delay = data["after"]
+
+        if t is None:
+            t = round(self.state["last"] + delay, 2)
+        else:
+            t = float(t)
+
+        # Kiểm tra tràn cảnh (overrun): insert không được kéo dài vượt quá cảnh hiện tại
+        if self.scene_spans:
+            s_start, s_end, s_type = self.scene_spans[-1]
+            if t + dur > s_end + 1e-3:
+                over = t + dur - s_end
+                raise ValueError(
+                    f"Insert '{kind}' (t={t:.2f}s, dur={dur:.2f}s -> {t+dur:.2f}s) vượt quá cảnh kết thúc tại {s_end:.2f}s "
+                    f"(lố {over:.2f}s). Hãy tăng 'tail' của cảnh lên ít nhất {over:.2f}s trong story.py."
+                )
+            if t < s_start - 1e-3:
+                raise ValueError(f"Insert '{kind}' (t={t:.2f}s) bắt đầu trước khi cảnh bắt đầu ({s_start:.2f}s).")
+        else:
+            self.scene_spans.append((t, t + dur, "insert"))
+            self.state["now"] = max(self.state["now"], t + dur)
+
+        iid = f"ins{len(self.inserts)}_{kind}"
+        html_code, js_code, reveal_time = INS.render_insert(kind, iid, t, dur=dur, mode=mode, brand=self.brand, **data)
+
+        self.inserts.append(dict(id=iid, kind=kind, t=t, dur=dur, mode=mode, html=html_code))
+        self.js.append(js_code)
+
+        # Ghi nhận event cho sound_plan / cues
+        ev = dict(time=round(t, 3), kind=kind, reveal_time=round(reveal_time, 3), dur=round(dur, 3), sfx=sfx)
+        for k, v in data.items():
+            if isinstance(v, (str, int, float, bool)):
+                ev[k] = v
+        self.insert_events.append(ev)
+
+        # Gắn SFX nếu có yêu cầu
+        if sfx:
+            sfx_file = SFX.get(sfx, sfx)
+            if sfx_file:
+                self.add_sfx(reveal_time, sfx_file, volume=0.45)
+
+        if hold:
+            self.state["last"] = max(self.state["last"], t + dur)
+
+        print(f"  insert {kind:10s} @ {t:6.2f}–{t+dur:6.2f}s · reveal @ {reveal_time:.2f}s" + (f" · sfx: {sfx}" if sfx else ""))
+        return t + dur
 
     @property
     def now(self): return self.state["now"]
@@ -303,6 +361,7 @@ class Story:
                 self.js.append(f"tl.to('#{sid}m',{{x:0,y:0,scale:1,duration:.5,ease:'power2.inOut'}},{max(c_start, t - 0.25):.3f});"); zoomed = False
                 if SFX.get("zoom_out") and t < c_end - 0.7: self.sfx.append(dict(t=max(c_start, t - 0.25), file=SFX["zoom_out"], volume=AUTO_VOL["zoom_out"]))
         self.state["now"] = c_end; self.screens.append((rec, clips))
+        self.scene_spans.append((c_start, c_end, "screen"))
         print(f"  {rec:4s} {c_start:6.2f}–{c_end:6.2f}  " + " ".join(f"{cl['rate']:.2f}" for cl in clips))
         return sid
 
@@ -319,6 +378,7 @@ class Story:
         if anim: self.js.extend(anim(starts, c0))
         self.sfx.append(dict(t=c0, file=SFX["whoosh"], volume=0.35))
         self.state["now"] = c1
+        self.scene_spans.append((c0, c1, "card"))
         print(f"  card {c0:6.2f}–{c1:6.2f}")
         return starts
 
@@ -376,7 +436,9 @@ class Story:
                             f'<video src="assets/meme/{s["id"]}.webm" muted playsinline preload="auto" data-loop="1"></video></div></div>')
             self.js.append(f"tl.fromTo('#sk{n}',{{scale:0,rotation:-25}},{{scale:1,rotation:0,duration:.45,ease:'back.out(2.2)'}},{s['t']:.3f});")
             self.js.append(f"tl.to('#sk{n}',{{scale:0,duration:.25,ease:'power2.in'}},{s['t'] + s['dur'] - 0.28:.3f});")
-        css = "\n" + (HERE / "templates/style.css").read_text(encoding="utf-8").strip("\n") + "\n" + css_extra
+        inserts_html = [ins["html"] for ins in self.inserts]
+        import inserts as INS
+        css = "\n" + (HERE / "templates/style.css").read_text(encoding="utf-8").strip("\n") + "\n" + INS.get_inserts_css() + "\n" + css_extra
         hl, acc = self.brand.get("hl", "#FBBF24"), self.brand.get("accent", "#4F46E5")
         bg = self.brand.get("bg", "#0B1020")
         font_title = self.brand.get("font_title", "'Be Vietnam Pro', sans-serif")
@@ -411,15 +473,26 @@ class Story:
 
         if self.layout == "fullbleed":
             bands_html = f'<div class="band-top"><img id="logo-goc" src="{logo_path}" alt="logo"></div><div class="band-bottom"></div>'
-            all_sections = [bands_html] + self.html + stk_html
+            all_sections = [bands_html] + self.html + stk_html + inserts_html
             captop = "auto"
         else:
-            all_sections = self.html + stk_html
+            all_sections = self.html + stk_html + inserts_html
             captop = "1748px"
+
+        fmt_js = (
+            "function formatViNumber(n, d) {\n"
+            "  if (isNaN(n)) return String(n);\n"
+            "  const dec = (d !== undefined && d !== null) ? d : 0;\n"
+            "  const parts = Number(n).toFixed(dec).split('.');\n"
+            "  parts[0] = parts[0].replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.');\n"
+            "  return parts.join(',');\n"
+            "}\n"
+        )
+        full_js = fmt_js + "\n" + "\n".join(self.js)
 
         out = (tpl.replace("/*FONTS*/", vars_css + fonts + css).replace("__W__", str(self.W)).replace("__H__", str(self.H)).replace("__D__", str(DUR))
                .replace("__HL__", hl).replace("__ACCENT__", acc).replace("__CAPTOP__", captop).replace("__LAYOUT__", self.layout).replace("Video marketing", title)
-               .replace("__SECTIONS__", "\n".join(all_sections)).replace("__CAPTIONS__", "\n".join(cap_html)).replace("__JS__", "\n".join(self.js)))
+               .replace("__SECTIONS__", "\n".join(all_sections)).replace("__CAPTIONS__", "\n".join(cap_html)).replace("__JS__", full_js))
         if self.out != self.proj: out = out.replace("<head>", '<head><base href="../">', 1)
         self.out.mkdir(exist_ok=True); (self.out / "index.html").write_text(out, encoding="utf-8")
         # giọng đọc: ghép các cụm vào đúng chỗ
@@ -443,7 +516,8 @@ class Story:
                 "pieces": [dict(line=p["line"], file=str(A / f"{p['line']}.mp3"), a=round(p["a"], 3), b=round(p["b"], 3),
                                 t=round(p["t"], 3)) for p in sorted(self.pieces, key=lambda p: p["t"])],
                 "bgm": {"file": bgm, "volume": bgm_volume, "start": 0, "fade_in": 0.5, "fade_out": 2.5, "duck": True},
-                "sfx": sorted(({**s, "t": round(s["t"], 3)} for s in self.sfx), key=lambda s: s["t"])}
+                "sfx": sorted(({**s, "t": round(s["t"], 3)} for s in self.sfx), key=lambda s: s["t"]),
+                "insert_events": self.insert_events}
         (self.out / "cues.json").write_text(json.dumps(cues, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"xong: index.html · {DUR}s · {len(self.pieces)} cụm lời · {len(groups)} phụ đề · {len(self.stickers)} sticker · {len(self.sfx)} SFX")
+        print(f"xong: index.html · {DUR}s · {len(self.pieces)} cụm lời · {len(groups)} phụ đề · {len(self.stickers)} sticker · {len(self.inserts)} insert · {len(self.sfx)} SFX")
         return DUR

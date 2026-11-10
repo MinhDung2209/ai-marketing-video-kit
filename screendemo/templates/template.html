@@ -39,6 +39,7 @@ __CAPTIONS__
 const tl = gsap.timeline({ paused: true }); const E = "power3.out";
 __JS__
 document.querySelectorAll(".cap").forEach(c => tl.fromTo(c.querySelector("span"),{y:24,opacity:0},{y:0,opacity:1,duration:0.22,ease:E},parseFloat(c.dataset.start)));
+window.__timelines = window.__timelines || {};
 window.__timelines["main"] = tl;
 </script>
 </body>

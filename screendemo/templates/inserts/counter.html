@@ -1,0 +1,33 @@
+<!-- counter.html: Motion Insert — Animated Big Number Counter -->
+<div class="insert-clip" id="{{id}}" data-start="{{t}}" data-duration="{{dur}}">
+  <div class="insert-panel {{panel_class}}">
+    {{kicker_html}}
+    <div class="ins-counter">
+      <div class="ins-counter-num-wrap">
+        <span class="ins-counter-val" id="{{id}}_val">{{from_val_fmt}}</span>
+        <span class="ins-counter-unit">{{unit}}</span>
+      </div>
+      <div class="ins-counter-label">{{label}}</div>
+      {{sub_html}}
+    </div>
+  </div>
+</div>
+<script>
+tl.fromTo('#{{id}} .insert-panel', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out', immediateRender: false }, {{t}});
+{
+  const obj = { val: {{from_val}} };
+  tl.fromTo(obj, { val: {{from_val}} }, {
+    val: {{to_val}},
+    duration: {{count_dur}},
+    ease: 'power2.out',
+    immediateRender: false,
+    onUpdate: function() {
+      const el = document.getElementById('{{id}}_val');
+      if (el) el.textContent = formatViNumber(obj.val, {{decimals}});
+    }
+  }, {{t}} + 0.12);
+}
+tl.fromTo('#{{id}} .ins-counter-label', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', immediateRender: false }, {{t}} + 0.25);
+{{sub_anim}}
+tl.to('#{{id}} .insert-panel', { opacity: 0, scale: 0.96, duration: 0.22, ease: 'power2.in', immediateRender: false }, {{t}} + {{dur}} - 0.22);
+</script>

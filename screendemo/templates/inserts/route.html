@@ -1,0 +1,100 @@
+<!-- route.html: Motion Insert — Logistics / Shipping Route Arc -->
+<div class="insert-clip" id="{{id}}" data-start="{{t}}" data-duration="{{dur}}">
+  <div class="insert-panel {{panel_class}}">
+    <div class="ins-route">
+      {{kicker_html}}
+      <div class="ins-title">{{title}}</div>
+      <div class="ins-sub">{{subtitle}}</div>
+      <div class="ins-route-map">
+        <svg class="ins-route-svg" viewBox="0 0 880 480" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="{{id}}_glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Grid lines -->
+          <g stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4">
+            <line x1="0" y1="120" x2="880" y2="120" />
+            <line x1="0" y1="240" x2="880" y2="240" />
+            <line x1="0" y1="360" x2="880" y2="360" />
+            <line x1="220" y1="0" x2="220" y2="480" />
+            <line x1="440" y1="0" x2="440" y2="480" />
+            <line x1="660" y1="0" x2="660" y2="480" />
+          </g>
+          <!-- Stylized Simplified Continents Outline -->
+          <g fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linejoin="round">
+            <!-- North America (US, Chicago region ~ 240, 140) -->
+            <path d="M 80 80 Q 140 40 230 60 Q 300 80 290 140 Q 260 190 200 200 Q 170 240 180 270 Q 140 240 120 180 Q 90 140 80 80 Z" />
+            <!-- South America -->
+            <path d="M 190 270 Q 260 290 250 370 Q 220 440 200 400 Q 170 330 180 280 Z" />
+            <!-- Europe -->
+            <path d="M 400 80 Q 480 70 500 115 Q 470 150 400 140 Z" />
+            <!-- Africa -->
+            <path d="M 400 160 Q 500 160 490 270 Q 460 370 420 340 Q 370 260 390 180 Z" />
+            <!-- Asia (Vietnam region ~ 675, 265) -->
+            <path d="M 510 80 Q 640 60 780 80 Q 820 160 740 215 Q 685 240 680 275 Q 660 275 640 220 Q 580 210 520 140 Z" />
+            <!-- Australia -->
+            <path d="M 720 310 Q 810 300 820 360 Q 780 420 710 380 Z" />
+          </g>
+
+          <!-- Arc Path: Origin Vietnam (675, 265) -> Destination Chicago, USA (240, 140) -->
+          <path id="{{id}}_arc" d="M 675 265 Q 450 40 240 140" fill="none" stroke="var(--hl, #FBBF24)" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 8" opacity="0.9" />
+
+          <!-- Moving Glowing Dot: travels origin -> destination -->
+          <circle id="{{id}}_dot" cx="675" cy="265" r="9" fill="var(--hl, #FBBF24)" filter="url(#{{id}}_glow)" />
+
+          <!-- Origin Node: Vietnam (Vũng Tàu) -->
+          <g id="{{id}}_pin_orig" transform="translate(675, 265)">
+            <circle r="16" fill="var(--hl, #FBBF24)" opacity="0.28" />
+            <circle r="6" fill="var(--hl, #FBBF24)" />
+            <rect x="-70" y="14" width="140" height="32" rx="8" fill="rgba(11,16,32,0.92)" stroke="var(--hl, #FBBF24)" stroke-width="1.8" />
+            <text x="0" y="35" fill="#FFF" font-family="'Be Vietnam Pro', sans-serif" font-weight="700" font-size="14" text-anchor="middle">{{from_label}}</text>
+          </g>
+
+          <!-- Destination Node: USA (Chicago) -->
+          <g id="{{id}}_pin_dest" transform="translate(240, 140)">
+            <circle id="{{id}}_dest_ring" r="18" fill="#38BDF8" opacity="0.3" />
+            <circle r="6" fill="#38BDF8" />
+            <rect x="-65" y="-42" width="130" height="32" rx="8" fill="rgba(11,16,32,0.92)" stroke="#38BDF8" stroke-width="1.8" />
+            <text x="0" y="-21" fill="#FFF" font-family="'Be Vietnam Pro', sans-serif" font-weight="700" font-size="14" text-anchor="middle">{{to_label}}</text>
+          </g>
+        </svg>
+      </div>
+      <div class="ins-route-badge-box" id="{{id}}_stat_box">
+        <div class="ins-route-stat">{{weight}}</div>
+        <div class="ins-route-desc">{{stat}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+tl.fromTo('#{{id}} .insert-panel', { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: 'power3.out', immediateRender: false }, {{t}});
+tl.fromTo('#{{id}} .ins-route-map', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.32, ease: 'power3.out', immediateRender: false }, {{t}} + 0.08);
+tl.fromTo(['#{{id}}_pin_orig', '#{{id}}_pin_dest'], { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: 'back.out(1.5)', immediateRender: false }, {{t}} + 0.10);
+tl.fromTo('#{{id}}_stat_box', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: 'power3.out', immediateRender: false }, {{t}} + 0.25);
+{
+  const path = document.getElementById('{{id}}_arc');
+  const dot = document.getElementById('{{id}}_dot');
+  const obj = { p: 0 };
+  tl.fromTo(obj, { p: 0 }, {
+    p: 1,
+    duration: 0.65,
+    ease: 'power2.inOut',
+    immediateRender: false,
+    onUpdate: function() {
+      if (path && dot && path.getTotalLength) {
+        const l = path.getTotalLength();
+        const pt = path.getPointAtLength(obj.p * l);
+        dot.setAttribute('cx', pt.x.toFixed(1));
+        dot.setAttribute('cy', pt.y.toFixed(1));
+      }
+    }
+  }, {{t}} + 0.15);
+}
+tl.fromTo('#{{id}}_dest_ring', { scale: 1, opacity: 0.4 }, { scale: 2.2, opacity: 0, duration: 0.45, ease: 'power2.out', immediateRender: false }, {{t}} + 0.78);
+tl.to('#{{id}} .insert-panel', { opacity: 0, scale: 0.96, duration: 0.22, ease: 'power2.in', immediateRender: false }, {{t}} + {{dur}} - 0.22);
+</script>
