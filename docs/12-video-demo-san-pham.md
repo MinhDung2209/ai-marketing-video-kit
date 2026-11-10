@@ -62,10 +62,16 @@ Mỗi bước là 1 dict `{"do": …}`. Biến `${TEN}` lấy từ `clip.json �
    (`story_rules`, `safety`) để clip sau không lặp lại.
 
 ## 5. Bộ dựng (`engine.py`) — điều cần biết khi sửa `story.py`
+- **Bố cục tràn viền (FULL BLEED — quyết định 10/11/2026)**: Mặc định qua khóa `layout: 'fullbleed'` trong hồ sơ doanh nghiệp (`profile.json` hoặc `clip.json`), bản cũ `'card'` vẫn chọn được khi cần.
+  - Không viền/card bo quanh app; bản quay chiếm trọn bề ngang 1080px tại vị trí `(0, 150)` kích thước `1080×1350`.
+  - Các biến CSS ở đầu `index.html`: `--hl`, `--accent`, `--bg`, `--font-title`, `--font-sub`, `--safe-top: 150px`, `--safe-bottom: 420px`, `--safe-right: 140px`; mọi bố cục đều dẫn xuất từ các biến này.
+  - `--bg` chỉ tô dải trên 150px và dải dưới 420px với mép chuyển màu mềm ~40px loang vào app (`.band-top`, `.band-bottom`). Dải phải 140px không tô màu nhưng phụ đề / tiêu đề / mực khoanh / camera zoom phải tránh vùng này.
+  - Logo thương hiệu (`#logo-goc`) đặt trong dải trên cùng bên phải (`assets/logo.jpg`), tự ẩn khi sang cảnh kết `logo_end`.
+  - Phụ đề `.cap` phủ đáy app ngay trên dải dưới cùng với đổ bóng mềm (soft shadow), căn lề tránh hoàn toàn vùng chết 140px bên phải.
 - `st.screen(rec, from, to, items, badge)` — `items` = `P(câu, i, j, at=(mốc, ±giây), hint, meme)` và `Kf(cụm, at)`.
   Lời bắt đầu nói đúng lúc mốc hiện; đoạn thao tác dài hơn lời → **tua nhanh** (nhãn "⏩ tua nhanh ×N" khi ≥1.8×);
   `hint` > 1 cho phép tua nhanh tới mốc. Lời dài hơn thao tác → đứng hình (0.8×).
-- Camera tự phóng vào khung ở mỗi mốc có `focus`/`ink`, lùi ra ở mốc chuyển trang hoặc sau 4,5 s không có mốc mới.
+- Camera tự phóng vào khung ở mỗi mốc có `focus`/`ink`, tính toán mốc zoom trong khung mới tránh lọt vào vùng chết 140px bên phải và tránh bị phụ đề che; lùi ra ở mốc chuyển trang hoặc sau 4,5 s không có mốc mới.
 - Cảnh thẻ chữ dựng sẵn (`blocks.py`): `hook_number` (số đếm lên, không sticker), `question`, `clock`, `timeskip`, `recap`, `logo_end`.
 - Biến thể: `VARIANT=demo` → `<clip>/demo/` dùng chung assets. Trong story: `if DEMO:` cắt cảnh/đổi `hint`.
 - Lỗi "mốc cắt không nằm ở khoảng lặng" → gộp cụm (vd `P("V5", 4, 6)` thay vì 2 cụm) hoặc đọc lại câu đó có ngắt rõ hơn.

@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BriefSchema",
+  "description": "Marketing screen-demo video brief with hook selection, scene breakdown, and fact tracking",
+  "type": "object",
+  "required": ["profile", "goal", "chosen_hook", "scenes", "facts_used"],
+  "properties": {
+    "profile": {
+      "type": "string",
+      "default": "stradevn"
+    },
+    "goal": {
+      "type": "string"
+    },
+    "target_audience": {
+      "type": "string"
+    },
+    "loop": {
+      "type": "boolean",
+      "default": false
+    },
+    "estimated_duration": {
+      "type": "number",
+      "default": 65
+    },
+    "hook_options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "spoken_hook", "visual_hook", "why"],
+        "properties": {
+          "id": {"type": "string"},
+          "type": {"type": "string"},
+          "spoken_hook": {"type": "string"},
+          "visual_hook": {"type": "string"},
+          "badge": {"type": "string"},
+          "why": {"type": "string"}
+        }
+      }
+    },
+    "chosen_hook": {
+      "type": "string"
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "voice_line", "badge"],
+        "properties": {
+          "id": {"type": "string"},
+          "role": {"type": "string"},
+          "voice_line": {
+            "type": "object",
+            "required": ["id", "text", "direction"],
+            "properties": {
+              "id": {"type": "string"},
+              "text": {"type": "string"},
+              "direction": {"type": "string"},
+              "caption": {"type": "string"}
+            }
+          },
+          "visual_intent": {"type": "string"},
+          "target": {"type": "string"},
+          "badge": {"type": "string"},
+          "sfx_intent": {"type": "string"},
+          "meme_intent": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "facts_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "value", "source"],
+        "properties": {
+          "key": {"type": "string"},
+          "value": {"type": "string"},
+          "source": {"type": "string"}
+        }
+      }
+    }
+  }
+}

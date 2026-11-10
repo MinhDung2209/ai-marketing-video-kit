@@ -1,0 +1,259 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorySchema",
+  "description": "Declarative screen-demo story representation for screendemo engine",
+  "type": "object",
+  "required": ["scenes"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "title": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["fullbleed", "card"],
+      "default": "fullbleed"
+    },
+    "sfx_defaults": {
+      "type": "object",
+      "properties": {
+        "whoosh": {"type": "string"},
+        "pop": {"type": "string"},
+        "ink": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "bgm": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": {"type": "string"},
+        "volume": {"type": "number", "default": 0.16},
+        "loop": {"type": "boolean", "default": false},
+        "fade_in": {"type": "number", "default": 0.5},
+        "fade_out": {"type": "number", "default": 2.5}
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "id": {"type": "string"},
+          "type": {
+            "type": "string",
+            "enum": ["screen", "logo_end", "card", "question", "clock", "timeskip", "recap"]
+          },
+          "rec": {"type": "string"},
+          "r0": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "number"},
+              {"type": "array", "items": [{"type": ["string", "number"]}, {"type": "number"}]}
+            ]
+          },
+          "r1": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "number"},
+              {"type": "array", "items": [{"type": ["string", "number"]}, {"type": "number"}]}
+            ]
+          },
+          "badge": {"type": "string"},
+          "tail": {"type": "number"},
+          "tail_hint": {"type": "number"},
+          "pre": {"type": "number"},
+          "start_zoomed": {"type": "boolean"},
+          "fade": {"type": "boolean"},
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "k": {"type": "string", "enum": ["P", "K"]},
+                "line": {"type": "string"},
+                "i": {"type": "integer", "minimum": 0},
+                "j": {"type": "integer", "minimum": 1},
+                "chunk": {"type": "integer", "minimum": 0},
+                "at": {
+                  "oneOf": [
+                    {"type": "string"},
+                    {"type": "number"},
+                    {"type": "array", "items": [{"type": ["string", "number"]}, {"type": "number"}]}
+                  ]
+                },
+                "hint": {"type": "number"},
+                "lead": {"type": "number"},
+                "meme": {"type": "string"},
+                "after": {"type": "number"}
+              }
+            }
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "line": {"type": "string"},
+              "i": {"type": "integer"},
+              "j": {"type": "integer"}
+            }
+          },
+          "name": {"type": "string"},
+          "tagline": {"type": "string"},
+          "url": {"type": "string"},
+          "logo": {"type": "string"},
+          "body": {"type": "string"},
+          "cls": {"type": "string"},
+          "min_dur": {"type": "number"},
+          "sfx": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["file"],
+              "properties": {
+                "at": {
+                  "oneOf": [
+                    {"type": "number"},
+                    {
+                      "type": "object",
+                      "properties": {
+                        "line": {"type": "string"},
+                        "chunk": {"type": "integer"},
+                        "offset": {"type": "number"}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "last": {"type": "number"}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "now": {"type": "number"}
+                      }
+                    }
+                  ]
+                },
+                "file": {"type": "string"},
+                "name": {"type": "string"},
+                "vol": {"type": "number"},
+                "volume": {"type": "number"},
+                "dur": {"type": "number"}
+              }
+            }
+          },
+          "stickers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": {"type": "string"},
+                "at": {
+                  "oneOf": [
+                    {"type": "number"},
+                    {
+                      "type": "object",
+                      "properties": {
+                        "line": {"type": "string"},
+                        "chunk": {"type": "integer"},
+                        "offset": {"type": "number"}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "last": {"type": "number"}
+                      }
+                    }
+                  ]
+                },
+                "dur": {"type": "number"},
+                "x": {"type": "number"},
+                "y": {"type": "number"},
+                "w": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "sfx": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file"],
+        "properties": {
+          "at": {
+            "oneOf": [
+              {"type": "number"},
+              {
+                "type": "object",
+                "properties": {
+                  "line": {"type": "string"},
+                  "chunk": {"type": "integer"},
+                  "offset": {"type": "number"}
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "last": {"type": "number"}
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "now": {"type": "number"}
+                }
+              }
+            ]
+          },
+          "file": {"type": "string"},
+          "name": {"type": "string"},
+          "vol": {"type": "number"},
+          "volume": {"type": "number"},
+          "dur": {"type": "number"}
+        }
+      }
+    },
+    "stickers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {"type": "string"},
+          "at": {
+            "oneOf": [
+              {"type": "number"},
+              {
+                "type": "object",
+                "properties": {
+                  "line": {"type": "string"},
+                  "chunk": {"type": "integer"},
+                  "offset": {"type": "number"}
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "last": {"type": "number"}
+                }
+              }
+            ]
+          },
+          "dur": {"type": "number"},
+          "x": {"type": "number"},
+          "y": {"type": "number"},
+          "w": {"type": "number"}
+        }
+      }
+    }
+  }
+}

@@ -19,25 +19,64 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from chunks import all_chunks
 
+
+def _probe(f):
+    """Độ dài thật (giây) của file âm thanh/hình — None nếu không đọc được."""
+    try:
+        r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(f)],
+                           capture_output=True, text=True, timeout=30)
+        return float(r.stdout.strip())
+    except Exception:
+        return None
+
 IN = lambda sel, t, frm="y:60,opacity:0", to="y:0,opacity:1", d=.45, ease="E": \
     f"tl.fromTo('{sel}',{{{frm}}},{{{to},duration:{d},ease:{ease},immediateRender:false}},{t:.3f});"
 
 SFX = dict(whoosh="sfx/pixabay/whoosh-short.mp3", pop="sfx/pixabay/pop.mp3", ink="sfx/mixkit/ui/ui-option-select.mp3")
+# SFX tự động theo THAO TÁC THẬT trong bản quay (marks.json "events") + chuyển động camera. Clip đặt file qua engine.SFX.update(...).
+# Thiếu file nào thì bỏ qua loại đó. whoosh_alt: danh sách whoosh xoay vòng giữa các cảnh (đỡ lặp 1 tiếng).
+SFX.update(click=None, typing=None, zoom_in=None, zoom_out=None, whoosh_alt=None)
+AUTO_VOL = dict(click=0.32, typing=0.22, zoom_in=0.16, zoom_out=0.14, whoosh=0.3)
 
 
 class Story:
     GAP = 0.22                      # nghỉ tối thiểu giữa 2 cụm lời
     W, H = 1080, 1920
-    CW, CHH, CX, CY = 780, 1170, 110, 250     # khung quay màn hình (tỉ lệ 2:3 như bản quay 720×1080)
     REC_W = 720
-    STK_POS = dict(x=830, y=150, w=220)
 
-    def __init__(self, proj, variant="full", variants_out=None, brand=None):
+    def __init__(self, proj, variant="full", variants_out=None, brand=None, layout=None):
         """proj = thư mục clip. variant = tên bản ("full" → xuất ngay thư mục clip; bản khác → <clip>/<variant>/ với
-        <base href="../"> dùng chung assets/audio). brand = dict(hl, accent) đổi màu nhấn của style.css."""
+        <base href="../"> dùng chung assets/audio). brand = dict(hl, accent) đổi màu nhấn của style.css.
+        layout = 'fullbleed' (mặc định từ 10/11/2026, tràn viền 1080x1350) hoặc 'card' (bản cũ có khung)."""
         self.proj = pathlib.Path(proj).resolve(); self.variant = variant
         self.out = self.proj if variant == "full" else self.proj / variant
         self.brand = brand or {}
+        if layout is None:
+            layout = self.brand.get("layout")
+        if layout is None and (self.proj / "clip.json").exists():
+            try:
+                c = json.loads((self.proj / "clip.json").read_text(encoding="utf-8"))
+                layout = c.get("layout") or c.get("brand", {}).get("layout")
+                if not layout and c.get("profile"):
+                    prof_path = HERE.parent / "profiles" / c["profile"] / "profile.json"
+                    if prof_path.exists():
+                        p = json.loads(prof_path.read_text(encoding="utf-8"))
+                        layout = p.get("layout") or p.get("brand", {}).get("layout")
+            except Exception:
+                pass
+        self.layout = layout or "fullbleed"
+        if self.layout == "fullbleed":
+            self.CW, self.CHH, self.CX, self.CY = 1080, 1350, 0, 150
+            self.SAFE_TOP = 150
+            self.SAFE_BOTTOM = 420
+            self.SAFE_RIGHT = 140
+            self.STK_POS = dict(x=720, y=170, w=210)
+        else:
+            self.CW, self.CHH, self.CX, self.CY = 1000, 1500, 40, 230
+            self.SAFE_TOP = 230
+            self.SAFE_BOTTOM = 190
+            self.SAFE_RIGHT = 40
+            self.STK_POS = dict(x=830, y=150, w=220)
         self.K = self.CW / self.REC_W
         self.CH = all_chunks(self.proj)
         self.REC = {}
@@ -48,8 +87,9 @@ class Story:
     # ------------------------------------------------------------ mốc bản quay
     def marks(self, h):
         if h not in self.REC:
-            m = json.load(open(self.proj / f"assets/screen/{h}/marks.json", encoding="utf-8"))["marks"]
+            doc = json.load(open(self.proj / f"assets/screen/{h}/marks.json", encoding="utf-8")); m = doc["marks"]
             self.REC[h] = {x["name"]: x for x in m}; self.REC[h]["__list"] = m
+            self.REC[h]["__events"] = doc.get("events", [])
         return self.REC[h]
 
     def M(self, h, at):
@@ -102,6 +142,29 @@ class Story:
         self.stickers.append(dict(id=mid, t=round(t, 2), dur=dur, **p))
         self.sfx.append(dict(t=t, file=SFX["pop"], volume=0.45))
 
+    def add_meme(self, mid, t=None, after=0.15, max_dur=2.2, volume=0.7, hold=True, **pos):
+        """Meme ĐÚNG NHỊP (thay add_sticker/add_meme_sound cho meme web). Mặc định đặt ngay sau khi câu vừa đặt NÓI XONG
+        (+after giây). Tải meme ngay để biết ĐỘ DÀI THẬT; dài hơn max_dur thì cắt + fade-out 0,25s.
+        Meme hình (green/full, .webm) hiện sticker + phát tiếng của chính nó; meme tiếng (.mp3) chỉ phát tiếng.
+        hold=True: câu sau CHỜ meme dứt rồi mới nói (không bao giờ đè lời). Trả về lúc meme kết thúc."""
+        sys.path.insert(0, str(HERE.parent / "tools")); import meme_web
+        cat = meme_web.catalog()
+        if mid not in cat: raise SystemExit(f"meme {mid} không có trong meme-library/web.json")
+        got = meme_web.fetch(self.proj, [mid]).get(mid) or {}
+        media = got.get("audio") or got.get("video")
+        if not media: raise SystemExit(f"tải meme {mid} lỗi")
+        real = _probe(media) or got.get("dur") or max_dur
+        d = round(min(real, max_dur), 2)
+        t = round(self.state["last"] + after if t is None else t, 2)
+        if cat[mid].get("kind") != "sound" and got.get("video"):
+            p = {**self.STK_POS, **pos}
+            self.stickers.append(dict(id=mid, t=t, dur=d, own_audio=True, **p))
+        if got.get("audio"):
+            self.sfx.append(dict(t=t, file=got["audio"], volume=volume, dur=d))
+        if hold: self.state["last"] = max(self.state["last"], t + d - 0.05)
+        print(f"  meme {mid} @ {t:.2f}s · dài thật {real:.2f}s → dùng {d:.2f}s" + (" · câu sau chờ" if hold else ""))
+        return t + d
+
     def add_sfx(self, t, file, volume=0.5, dur=None):
         """file = đường dẫn SFX, hoặc "meme:<id>" = tiếng meme trong meme-library/web.json (tải lúc finish)."""
         self.sfx.append(dict(t=t, file=file, volume=volume, **({"dur": dur} if dur else {})))
@@ -117,8 +180,10 @@ class Story:
     def last(self): return self.state["last"]
 
     # ------------------------------------------------------------ cảnh quay màn hình
-    def screen(self, rec, r0, r1, items, badge, tail=0.6, tail_hint=1.0, pre=0.35):
-        """Cảnh bản quay `rec` (assets/screen/<rec>/) từ mốc r0 tới r1, khớp các cụm lời `items` vào mốc."""
+    def screen(self, rec, r0, r1, items, badge, tail=0.6, tail_hint=1.0, pre=0.35, start_zoomed=False, fade=True):
+        """Cảnh bản quay `rec` (assets/screen/<rec>/) từ mốc r0 tới r1, khớp các cụm lời `items` vào mốc.
+        start_zoomed=True: khung đầu đã phóng sẵn vào mốc có box gần nhất trước r0 (dùng cho video nối vòng);
+        fade=False: không mờ dần khi vào cảnh (khung đầu video loop)."""
         M = lambda at: self.M(rec, at)
         c_start = self.state["now"]; a0 = M(r0); a_end = M(r1)
         anchors = [(a0, c_start)]; last_item = None
@@ -159,8 +224,26 @@ class Story:
                             f'<span>⏩ tua nhanh ×{cl["rate"]:.1f}</span></div>')
         body.append('</div>')
         self.html.append(f'<section class="clip" data-start="{c_start:.3f}" data-duration="{c_end - c_start:.3f}">{"".join(body)}</section>')
-        self.js.append(f"tl.fromTo('#{sid}c',{{y:70,opacity:0}},{{y:0,opacity:1,duration:.45,ease:E}},{c_start:.3f});")
-        self.sfx.append(dict(t=c_start, file=SFX["whoosh"], volume=0.35))
+        if not fade: pass
+        elif self.layout == "fullbleed":
+            self.js.append(f"tl.fromTo('#{sid}c',{{opacity:0}},{{opacity:1,duration:.35,ease:E}},{c_start:.3f});")
+        else:
+            self.js.append(f"tl.fromTo('#{sid}c',{{y:70,opacity:0}},{{y:0,opacity:1,duration:.45,ease:E}},{c_start:.3f});")
+        wl = [SFX["whoosh"]] + list(SFX.get("whoosh_alt") or [])
+        self.sfx.append(dict(t=c_start, file=wl[len(self.screens) % len(wl)], volume=AUTO_VOL["whoosh"]))
+        # tiếng theo thao tác thật: click, gõ phím (cắt đúng độ dài gõ, theo tốc độ tua), phím Enter
+        evs = self.marks(rec).get("__events", []); typing_from = None
+        for e in evs:
+            if not (a0 - 0.05 <= e["t"] <= a_end + 0.05): continue
+            te = cmap(e["t"])
+            if te is None: continue
+            if e["k"] in ("click", "key") and SFX.get("click"):
+                self.sfx.append(dict(t=te, file=SFX["click"], volume=AUTO_VOL["click"]))
+            elif e["k"] == "type_start": typing_from = te
+            elif e["k"] == "type_end" and typing_from is not None and SFX.get("typing"):
+                d = te - typing_from
+                if d > 0.25: self.sfx.append(dict(t=typing_from, file=SFX["typing"], volume=AUTO_VOL["typing"], dur=round(d, 2)))
+                typing_from = None
         # camera: phóng vào khung chữ ở mỗi mốc có box; mốc chuyển trang (không box) → lùi ra
         ev = []
         for m in self.marks(rec)["__list"]:
@@ -171,19 +254,54 @@ class Story:
                 ev.append((t, "in", m))
                 if m.get("ink", True): self.sfx.append(dict(t=t + 0.35, file=SFX["ink"], volume=0.3))
             elif m["name"] not in ("start", "end"): ev.append((t, "out", m))
+        def zoom(b):
+            if self.layout == "fullbleed":
+                avail_w = CW - self.SAFE_RIGHT
+                s = min(1.9, max(1.3, 0.62 * avail_w / (b["w"] * K + 90)))
+                cx, cy = (b["x"] + b["w"] / 2) * K, (b["y"] + b["h"] / 2) * K
+                tx = avail_w / 2 - s * cx
+                box_r = (b["x"] + b["w"]) * K
+                if tx + s * box_r > avail_w - 15:
+                    tx = avail_w - 15 - s * box_r
+                box_l = b["x"] * K
+                if tx + s * box_l < 15:
+                    tx = 15 - s * box_l
+                tx = min(0.0, max(CW - s * CW, tx))
+
+                target_cy = CHH * 0.42
+                ty = target_cy - s * cy
+                box_t = b["y"] * K
+                box_b = (b["y"] + b["h"]) * K
+                if ty + s * box_b > CHH - 160:
+                    ty = (CHH - 160) - s * box_b
+                if ty + s * box_t < 40:
+                    ty = 40 - s * box_t
+                ty = min(0.0, max(CHH - s * CHH, ty))
+            else:
+                s = min(1.9, max(1.3, 0.62 * CW / (b["w"] * K + 90)))
+                cx, cy = (b["x"] + b["w"] / 2) * K, (b["y"] + b["h"] / 2) * K
+                tx = min(0.0, max(CW - s * CW, CW / 2 - s * cx))
+                ty = min(0.0, max(CHH - s * CHH, CHH * 0.45 - s * cy))
+            return tx, ty, s
         zoomed = False
+        if start_zoomed:
+            prev = [m for m in self.marks(rec)["__list"] if "box" in m and m["t"] <= a0 + 1e-6]
+            if prev:
+                tx, ty, s = zoom(prev[-1]["box"])
+                self.js.append(f"tl.set('#{sid}m',{{x:{tx:.1f},y:{ty:.1f},scale:{s:.3f}}},{c_start:.3f});"); zoomed = True
         for n, (t, kind, m) in enumerate(ev):
             nxt = ev[n + 1][0] if n + 1 < len(ev) else c_end
             if kind == "in":
-                b = m["box"]; s = min(1.9, max(1.3, 0.62 * CW / (b["w"] * K + 90)))
-                cx, cy = (b["x"] + b["w"] / 2) * K, (b["y"] + b["h"] / 2) * K
-                tx = min(0, max(CW - s * CW, CW / 2 - s * cx)); ty = min(0, max(CHH - s * CHH, CHH * 0.45 - s * cy))
+                tx, ty, s = zoom(m["box"])
                 self.js.append(f"tl.to('#{sid}m',{{x:{tx:.1f},y:{ty:.1f},scale:{s:.3f},duration:.6,ease:'power2.inOut'}},{max(c_start, t - 0.3):.3f});")
+                if SFX.get("zoom_in") and not zoomed and t - c_start > 0.4:
+                    self.sfx.append(dict(t=max(c_start, t - 0.3), file=SFX["zoom_in"], volume=AUTO_VOL["zoom_in"]))
                 zoomed = True
                 if nxt - t > 4.5:
                     self.js.append(f"tl.to('#{sid}m',{{x:0,y:0,scale:1,duration:.6,ease:'power2.inOut'}},{t + 2.8:.3f});"); zoomed = False
             elif zoomed:
                 self.js.append(f"tl.to('#{sid}m',{{x:0,y:0,scale:1,duration:.5,ease:'power2.inOut'}},{max(c_start, t - 0.25):.3f});"); zoomed = False
+                if SFX.get("zoom_out") and t < c_end - 0.7: self.sfx.append(dict(t=max(c_start, t - 0.25), file=SFX["zoom_out"], volume=AUTO_VOL["zoom_out"]))
         self.state["now"] = c_end; self.screens.append((rec, clips))
         print(f"  {rec:4s} {c_start:6.2f}–{c_end:6.2f}  " + " ".join(f"{cl['rate']:.2f}" for cl in clips))
         return sid
@@ -246,25 +364,62 @@ class Story:
             else: print(f"  ⚠ không có tiếng meme {x['file']}"); self.sfx.remove(x)
         for s in self.stickers:
             g = got.get(s["id"])
-            if not g: continue
+            if not g or s.get("own_audio"): continue
             if g.get("audio") and web[s["id"]].get("sound", True):
                 self.sfx = [x for x in self.sfx if not (x["file"] == SFX["pop"] and abs(x["t"] - s["t"]) < 0.01)]
                 self.sfx.append(dict(t=s["t"], file=g["audio"], volume=s.get("volume", 0.6), dur=s["dur"]))
         stk_html = []
         for n, s in enumerate(self.stickers):
             stk_html.append(f'<div class="clip stk" data-start="{s["t"]:.3f}" data-duration="{s["dur"]:.3f}">'
-                            f'<div class="sk" id="sk{n}" style="left:{s["x"]}px;top:{s["y"]}px;width:{s["w"]}px">'
+                            f'<div class="sk" id="sk{n}" style="left:{s["x"]}px;top:{s["y"]}px;width:{s["w"]}px'
+                            + (f';background:{s["bg"]};border-radius:28px;padding:18px 0;box-shadow:0 18px 50px rgba(0,0,0,.45)' if s.get("bg") else "") + '">'
                             f'<video src="assets/meme/{s["id"]}.webm" muted playsinline preload="auto" data-loop="1"></video></div></div>')
             self.js.append(f"tl.fromTo('#sk{n}',{{scale:0,rotation:-25}},{{scale:1,rotation:0,duration:.45,ease:'back.out(2.2)'}},{s['t']:.3f});")
             self.js.append(f"tl.to('#sk{n}',{{scale:0,duration:.25,ease:'power2.in'}},{s['t'] + s['dur'] - 0.28:.3f});")
         css = "\n" + (HERE / "templates/style.css").read_text(encoding="utf-8").strip("\n") + "\n" + css_extra
         hl, acc = self.brand.get("hl", "#FBBF24"), self.brand.get("accent", "#4F46E5")
+        bg = self.brand.get("bg", "#0B1020")
+        font_title = self.brand.get("font_title", "'Be Vietnam Pro', sans-serif")
+        font_sub = self.brand.get("font_sub", "'IBM Plex Sans', sans-serif")
         css = css.replace("#FBBF24", hl).replace("#4F46E5", acc)
         tpl = (HERE / "templates/template.html").read_text(encoding="utf-8")
         fonts = (self.proj / "fonts.css.part").read_text(encoding="utf-8")
-        out = (tpl.replace("/*FONTS*/", fonts + css).replace("__W__", str(self.W)).replace("__H__", str(self.H)).replace("__D__", str(DUR))
-               .replace("__HL__", hl).replace("__ACCENT__", acc).replace("__CAPTOP__", "1440").replace("Video marketing", title)
-               .replace("__SECTIONS__", "\n".join(self.html + stk_html)).replace("__CAPTIONS__", "\n".join(cap_html)).replace("__JS__", "\n".join(self.js)))
+
+        vars_css = (
+            f":root{{\n"
+            f"  --hl: {hl};\n"
+            f"  --accent: {acc};\n"
+            f"  --bg: {bg};\n"
+            f"  --font-title: {font_title};\n"
+            f"  --font-sub: {font_sub};\n"
+            f"  --safe-top: {self.SAFE_TOP}px;\n"
+            f"  --safe-bottom: {self.SAFE_BOTTOM}px;\n"
+            f"  --safe-right: {self.SAFE_RIGHT}px;\n"
+            f"}}\n"
+        )
+
+        logo_path = "assets/logo.jpg"
+        if self.brand.get("logo"):
+            blogo = self.brand["logo"]
+            if not blogo.startswith("assets/"): blogo = f"assets/{blogo}"
+            if (self.proj / blogo).exists(): logo_path = blogo
+        else:
+            for ext in (".jpg", ".png", ".jpeg", ".webp"):
+                if (self.proj / f"assets/logo{ext}").exists():
+                    logo_path = f"assets/logo{ext}"
+                    break
+
+        if self.layout == "fullbleed":
+            bands_html = f'<div class="band-top"><img id="logo-goc" src="{logo_path}" alt="logo"></div><div class="band-bottom"></div>'
+            all_sections = [bands_html] + self.html + stk_html
+            captop = "auto"
+        else:
+            all_sections = self.html + stk_html
+            captop = "1748px"
+
+        out = (tpl.replace("/*FONTS*/", vars_css + fonts + css).replace("__W__", str(self.W)).replace("__H__", str(self.H)).replace("__D__", str(DUR))
+               .replace("__HL__", hl).replace("__ACCENT__", acc).replace("__CAPTOP__", captop).replace("__LAYOUT__", self.layout).replace("Video marketing", title)
+               .replace("__SECTIONS__", "\n".join(all_sections)).replace("__CAPTIONS__", "\n".join(cap_html)).replace("__JS__", "\n".join(self.js)))
         if self.out != self.proj: out = out.replace("<head>", '<head><base href="../">', 1)
         self.out.mkdir(exist_ok=True); (self.out / "index.html").write_text(out, encoding="utf-8")
         # giọng đọc: ghép các cụm vào đúng chỗ

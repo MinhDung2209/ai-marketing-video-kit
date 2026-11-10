@@ -5,6 +5,11 @@
   "tts_voice": "Kore",
   "tts_language": "vi-VN",
   "plenxai_credit_limit": 700,
+  "pexels_api_key": "",
+  "pixabay_api_key": "",
+  "freesound_api_key": "",
+  "comfyui_url": "",
+  "comfyui_workflow": "",
   "screendemo": {
     "cdp": "http://127.0.0.1:9333",
     "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",

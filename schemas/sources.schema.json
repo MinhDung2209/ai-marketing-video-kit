@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SourcesSchema",
+  "description": "Media requirements schema for external audio, SFX, BGM, meme, and B-roll",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "scene", "kind", "query_en"],
+    "properties": {
+      "id": {"type": "string"},
+      "scene": {"type": "string"},
+      "kind": {
+        "type": "string",
+        "enum": ["sfx", "bgm", "meme", "broll_video", "broll_image"]
+      },
+      "query_en": {"type": "string"},
+      "query_vi": {"type": "string"},
+      "max_dur": {"type": "number"},
+      "min_dur": {"type": "number"},
+      "orientation": {
+        "type": "string",
+        "enum": ["portrait", "landscape"]
+      }
+    }
+  }
+}

@@ -111,9 +111,9 @@ def _google_segments(clip, timeout):
     return json.loads(re.sub(r"^```(?:json)?|```$", "", text.strip()))
 
 
-def transcribe(clip, *, engine="whisperx", model="small", language="vi",
+def transcribe(clip, *, engine="google", model="small", language="vi",
                engine_python=None, cache_dir=DEFAULT_CACHE, transcript=None, timeout=600):
-    """Return a list. Default local; Google requires engine='google' explicitly."""
+    """Return a list. Default Google (WhisperX is opt-in: engine="whisperx"; blocked on this machine by Application Control)."""
     if engine not in {"whisperx", "google"}:
         raise ValueError("engine must be whisperx or google")
     if isinstance(timeout, bool) or not isinstance(timeout, (float, int)) or not math.isfinite(timeout) or timeout <= 0:
@@ -131,7 +131,7 @@ def transcribe(clip, *, engine="whisperx", model="small", language="vi",
 
 def transcribe_result(clip, **options):
     """Structured success/unavailable/error result, with no fallback on failure."""
-    engine = options.get("engine", "whisperx")
+    engine = options.get("engine", "google")
     try:
         segments = transcribe(clip, **options)
         return {"status": "ok", "engine": engine, "timing": "aligned" if engine == "whisperx" else "estimated",

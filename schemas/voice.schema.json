@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VoiceSchema",
+  "description": "Voice script schema for Gemini TTS generation",
+  "type": "object",
+  "required": ["model", "voice", "profile", "lines"],
+  "properties": {
+    "model": {
+      "type": "string",
+      "default": "gemini-3.1-flash-tts-preview"
+    },
+    "voice": {
+      "type": "string",
+      "default": "Puck"
+    },
+    "language": {
+      "type": "string",
+      "default": "vi-VN"
+    },
+    "gap_seconds": {
+      "type": "number",
+      "default": 0.3
+    },
+    "profile": {
+      "type": "string"
+    },
+    "profile_fallback": {
+      "type": "string"
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text", "direction"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^V[0-9]+$"
+          },
+          "text": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

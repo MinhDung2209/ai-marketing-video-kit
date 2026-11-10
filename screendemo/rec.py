@@ -51,6 +51,7 @@ class Session:
         self.out = pathlib.Path(out_dir).resolve(); self.out.mkdir(parents=True, exist_ok=True)
         self.w, self.h, self.scale = width, height, scale
         self.frames, self.marks, self.pos = [], [], (width * 0.6, height * 0.3)
+        self.events = []   # thao tác thật (click/gõ/cuộn) → engine tự đặt SFX khớp hình
         self.t0 = None
 
     # ---------- mở / đóng ----------
@@ -99,8 +100,43 @@ class Session:
     def mark(self, name, **info):
         """Ghi mốc (giây tính từ đầu bản quay) — build.py dùng để khớp cảnh với câu đọc."""
         t = round(time.time() - (self.t0 or time.time()), 3)
-        self.marks.append({"name": name, "t": t, **info})
+        entry = {"name": name, "t": t, **info}
+        if "element_text" not in entry:
+            elem_text = ""
+            if hasattr(self, "page") and self.page:
+                try:
+                    elem_text = self.page.evaluate("""() => {
+                        const el = window.__recSpan;
+                        if (!el || !el.isConnected) return "";
+                        return (el.innerText || el.textContent || "").trim();
+                    }""") or ""
+                except Exception:
+                    elem_text = ""
+            if elem_text:
+                entry["element_text"] = elem_text
+        if "page_text_path" not in entry:
+            page_path = ""
+            if hasattr(self, "page") and self.page and hasattr(self, "out") and self.out:
+                try:
+                    dom_text = self.page.evaluate("() => document.body ? (document.body.innerText || '') : ''") or ""
+                    dom_dir = pathlib.Path(self.out) / "_dom"
+                    dom_dir.mkdir(parents=True, exist_ok=True)
+                    safe_name = "".join(c if c.isalnum() or c in "-_" else "_" for c in str(name))
+                    idx = len(self.marks)
+                    dom_file = dom_dir / f"{idx:03d}_{safe_name}.txt"
+                    dom_file.write_text(dom_text, encoding="utf-8")
+                    page_path = str(dom_file.relative_to(self.out).as_posix())
+                except Exception:
+                    page_path = ""
+            if page_path:
+                entry["page_text_path"] = page_path
+        self.marks.append(entry)
         print(f"  [{t:6.2f}s] {name}", flush=True)
+
+    def _ev(self, kind, **info):
+        """Ghi 1 thao tác (cùng đồng hồ với mark) — engine dùng để đặt tiếng click/gõ phím/cuộn đúng khung hình."""
+        if self.t0 is None: return
+        self.events.append({"k": kind, "t": round(time.time() - self.t0, 3), **info})
 
     def snap(self, name):
         """Ảnh tĩnh để duyệt bằng mắt."""
@@ -123,7 +159,7 @@ class Session:
         subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst),
                         "-vf", "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2", "-c:v", "libx264", "-crf", "16",
                         "-pix_fmt", "yuv420p", str(mp4)], check=True)
-        (self.out / "marks.json").write_text(json.dumps({"first_frame_wall": base, "marks": self.marks},
+        (self.out / "marks.json").write_text(json.dumps({"first_frame_wall": base, "marks": self.marks, "events": self.events},
                                              ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"✅ {mp4} · {len(frames)} khung · {frames[-1][0]-base:.1f}s")
 
@@ -170,18 +206,20 @@ class Session:
         self.hover(selector, nth); self.wait(*think)
         x, y = self.pos
         self.page.evaluate("([x,y]) => window.__recClick && window.__recClick(x,y)", [x, y])
-        self.page.mouse.click(x, y); self._sync_cursor(); self.wait(0.3)
+        self._ev("click"); self.page.mouse.click(x, y); self._sync_cursor(); self.wait(0.3)
 
     def type(self, text, cps=(9, 15)):
+        self._ev("type_start", n=len(text))
         for ch in text:
             self.page.keyboard.type(ch)
             self.sleep(1 / random.uniform(*cps) + (0.18 if ch == " " and random.random() < 0.25 else 0))
+        self._ev("type_end")
 
     def press(self, key):
-        self.page.keyboard.press(key); self.wait(0.4)
+        self._ev("key", key=key); self.page.keyboard.press(key); self.wait(0.4)
 
     def scroll(self, dy, dur=1.0):
-        steps = max(10, int(dur * 40))
+        steps = max(10, int(dur * 40)); self._ev("scroll", dur=dur, dy=dy)
         # lăn chuột khi ô <input type=number> đang được chọn sẽ ĐỔI SỐ trong ô (clip 02: gõ 20 → bị lăn còn 1) → bỏ chọn trước
         self.page.evaluate("() => { const a = document.activeElement; if (a && a.type === 'number') a.blur(); }")
         for i in range(steps):

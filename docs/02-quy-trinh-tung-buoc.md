@@ -17,6 +17,12 @@ cd projects/<khach-hang>/<video>
 4. Liệt kê ảnh/clip AI cần tạo + prompt → **gửi duyệt trước khi tạo** (tốn credit).
 5. Người duyệt đọc BRIEF → sửa → duyệt.
 
+## Bước 1b — Tìm nguồn · sau duyệt kịch bản, trước giọng đọc/dựng
+1. Điền `<project>/sources.json`: nhu cầu sfx, bgm, broll_video, broll_image hoặc meme theo cảnh (ví dụ StradeVn: [docs/13](13-tim-nguon.md)).
+2. `python <kit>/tools/find_sources.py <project>` — thư viện local → Openverse/Wikimedia → API có khóa → gợi ý generator.
+3. Duyệt `sources/candidates.json`, `sources/contact-sheet.jpg`; nghe thử audio bằng lệnh `sfx_audition.py` được in ra.
+4. `python <kit>/tools/find_sources.py <project> --fetch whoosh:1 port:2` → `assets/src/` và `sources/credits.md`. Với audio online, tải rồi nghe thử trước khi chốt dùng.
+
 ## Bước 2 — Giọng đọc · 5 phút · ~vài trăm đồng
 1. Điền `voice.json`: `profile` (giọng chung), mỗi câu `text` + `direction` (docs/04).
 2. `python <kit>/tools/tts_script.py voice.json audio`

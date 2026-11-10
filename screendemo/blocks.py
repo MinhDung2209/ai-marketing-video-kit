@@ -79,8 +79,11 @@ def recap(st, items, rows, ask, cta="Bình luận nhé", sticker="point-down"):
 def logo_end(st, item, name, tagline, url, logo="assets/logo.jpg"):
     """Kết bằng logo thật + câu định vị + địa chỉ web. item: 2 cụm."""
     def a(sts, c0):
-        return [IN('#lg', c0 + 0.05, "scale:.6,opacity:0", "scale:1,opacity:1", .5, "'back.out(2)'"), IN('#tg', sts[1] - 0.1),
-                IN('#url', sts[1] + 0.8, "opacity:0", "opacity:1")]
+        js = [IN('#lg', c0 + 0.05, "scale:.6,opacity:0", "scale:1,opacity:1", .5, "'back.out(2)'"), IN('#tg', sts[1] - 0.1),
+              IN('#url', sts[1] + 0.8, "opacity:0", "opacity:1")]
+        if getattr(st, "layout", "fullbleed") == "fullbleed":
+            js.insert(0, f"tl.to('#logo-goc',{{opacity:0,duration:0.2}},{c0:.3f});")
+        return js
     sts = st.card([item], '<div class="grad"></div><div class="brand" id="lg" style="position:absolute;top:640px;left:0;right:0">'
                   f'<img src="{logo}"><div class="name">{name}</div></div>'
                   f'<div class="sub" id="tg" style="top:900px">{tagline}</div>'

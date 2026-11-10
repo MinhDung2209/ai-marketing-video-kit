@@ -1,0 +1,1 @@
+"""Shots stage checks."""
