@@ -44,7 +44,13 @@ if b:
     chain = (f"[{bi}:a]atrim={off}:{off + L},asetpts=PTS-STARTPTS,volume={b.get('volume', 0.2)},"
              f"afade=t=in:d={fi},afade=t=out:st={max(0, L - fo)}:d={fo},adelay={ms}|{ms},apad,atrim=0:{D}")
     if v and b.get("duck", True):
-        flt.append(chain + "[bg0]")
+        carve_flt = ""
+        if b.get("carve", False) and c.get("pieces"):
+            # Voice-band carve: EQ dip ~1-4 kHz (f=2500, w=2000 Hz, gain=-4 dB) while voice is speaking
+            between_exprs = [f"between(t,{p['t']:.3f},{p['t'] + p['b'] - p['a']:.3f})" for p in c["pieces"]]
+            if between_exprs:
+                carve_flt = f",equalizer=f=2500:t=h:w=2000:g=-4:enable='{'+'.join(between_exprs)}'"
+        flt.append(chain + carve_flt + "[bg0]")
         flt.append("[bg0][vsc]sidechaincompress=threshold=0.03:ratio=6:attack=15:release=350[bg]")
     else:
         flt.append(chain + "[bg]")
@@ -56,10 +62,19 @@ for k, s in enumerate(c.get("sfx", [])):
     fp = find(s["file"]); args += ["-i", fp]; si = idx; idx += 1
     ms = int(float(s["t"]) * 1000)
     gain = 10 ** ((PEAK_TARGET - peak_db(fp)) / 20) * float(s.get("volume", 0.7))   # chuẩn hoá đỉnh rồi mới nhân volume
-    cut = f"atrim=0:{float(s['dur']):.3f},afade=t=out:st={max(0, float(s['dur']) - 0.25):.3f}:d=0.25," if s.get("dur") else ""   # dur = cắt (tiếng meme dài)
+    off = float(s.get("offset", 0))
+    dur = float(s["dur"]) if s.get("dur") else None
+    is_riser = s.get("kind") == "riser" or "riser" in str(s.get("file", "")).lower()
+    fade = f"afade=t=out:st={max(0, dur - 0.25):.3f}:d=0.25," if (dur and not is_riser) else ""
+    if dur is not None:
+        cut = f"atrim={off}:{off + dur:.3f},asetpts=PTS-STARTPTS,{fade}"
+    elif off > 0:
+        cut = f"atrim={off},asetpts=PTS-STARTPTS,"
+    else:
+        cut = ""
     flt.append(f"[{si}:a]{cut}volume={gain:.4f},adelay={ms}|{ms}[s{k}]"); mix.append(f"[s{k}]")
 if not mix: raise SystemExit("cues.json không có voice / bgm / sfx")
-flt.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,atrim=0:{D},alimiter=limit=0.95[out]")
+flt.append("".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,atrim=0:{D},alimiter=limit=0.891:attack=5:release=50[out]")
 cmd = ["ffmpeg", "-y", "-loglevel", "error", *args, "-filter_complex", ";".join(flt), "-map", "[out]",
        "-ar", "44100", "-ac", "2", "-b:a", "192k", out]
 subprocess.run(cmd, check=True)

@@ -163,19 +163,36 @@ def main():
         for s0, s1 in spans:
             pts += [{"t": round(max(0, s0 - 0.05), 3), "v": 1}, {"t": round(max(0, s0 + 0.03), 3), "v": 0.35},
                     {"t": round(s1 + 0.05, 3), "v": 0.35}, {"t": round(s1 + 0.4, 3), "v": 1}]
-        auto = json.dumps({"version": 1, "lanes": [{"target": "volume", "points": pts[:512]}]}).replace('"', "&quot;")
+        lanes = [{"target": "volume", "points": pts[:512]}]
+        fx_attr = ""
+        if b.get("carve", False):
+            carve_pts = [{"t": 0, "v": 0}]
+            for s0, s1 in spans:
+                carve_pts += [{"t": round(max(0, s0 - 0.05), 3), "v": 0}, {"t": round(max(0, s0 + 0.03), 3), "v": -4.0},
+                              {"t": round(s1 + 0.05, 3), "v": -4.0}, {"t": round(s1 + 0.4, 3), "v": 0}]
+            lanes.append({"target": "fx.carve.gain", "points": carve_pts[:512]})
+            fx_chain = {
+                "version": 1,
+                "nodes": [
+                    {"type": "peaking", "id": "carve", "label": "Voice carve", "params": {"frequency": 2500, "gain": 0, "q": 0.7}}
+                ]
+            }
+            fx_attr = f' data-fx-chain="{json.dumps(fx_chain).replace(chr(34), "&quot;")}"'
+        auto = json.dumps({"version": 1, "lanes": lanes}).replace('"', "&quot;")
         au.append(f'<audio id="bgm" src="{rel}" loop data-start="{st:.3f}" data-duration="{D - st:.3f}" data-media-start="{float(b.get("offset", 0)):.3f}" '
-                  f'data-volume="{vol(float(b.get("volume", 0.2)) * g)}" data-fade-in="{b.get("fade_in", 0.8)}" data-fade-out="{b.get("fade_out", 2.5)}" '
-                  f'data-automation="{auto}" data-track-index="{TRACK["bgm"]}"></audio>')
+                  f'data-volume="{vol(float(b.get("volume", 0.2)) * g)}" data-fade-in="{b.get("fade_in", 0.8)}" data-fade-out="{b.get("fade_out", 2.5)}"'
+                  f'{fx_attr} data-automation="{auto}" data-track-index="{TRACK["bgm"]}"></audio>')
     # hiệu ứng + meme tiếng: chuẩn đỉnh như mix_audio.py (-6 dB) rồi nhân volume
     for i, s in enumerate(cues.get("sfx", [])):
         src = find(s["file"], base); rel = f"assets/sfx/{src.name}"; link(src, out / rel)
         gain = 10 ** ((-6.0 - peak_db(str(src))) / 20) * float(s.get("volume", 0.7)) * g
         dur = float(s["dur"]) if s.get("dur") else float(subprocess.run(
             ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)], capture_output=True, text=True).stdout or 1)
-        fo = ' data-fade-out="0.25"' if s.get("dur") else ""
+        is_riser = s.get("kind") == "riser" or "riser" in str(s.get("file", "")).lower()
+        fo = ' data-fade-out="0.25"' if (s.get("dur") and not is_riser) else ""
+        mo = f' data-media-start="{float(s.get("offset", 0)):.3f}"' if s.get("offset") else ""
         au.append(f'<audio id="sfx{i + 1}" class="sfx" src="{rel}" data-start="{float(s["t"]):.3f}" data-duration="{min(dur, D - float(s["t"])):.3f}" '
-                  f'data-volume="{vol(gain)}"{fo} data-track-index="{TRACK["sfx"]}"></audio>')
+                  f'data-volume="{vol(gain)}"{fo}{mo} data-track-index="{TRACK["sfx"]}"></audio>')
     # làn: đoạn tiếng chồng nhau (đệm đầu/cuối cụm lời, nhiều hiệu ứng cùng lúc) phải nằm khác làn
     groups = {"voice": [], "sfx": [], "bgm": []}
     for x in au:

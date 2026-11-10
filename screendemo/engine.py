@@ -44,11 +44,16 @@ class Story:
     W, H = 1080, 1920
     REC_W = 720
 
-    def __init__(self, proj, variant="full", variants_out=None, brand=None, layout=None):
+    def __init__(self, proj, variant="full", variants_out=None, brand=None, layout=None, sound=None):
         """proj = thư mục clip. variant = tên bản ("full" → xuất ngay thư mục clip; bản khác → <clip>/<variant>/ với
         <base href="../"> dùng chung assets/audio). brand = dict(hl, accent) đổi màu nhấn của style.css.
-        layout = 'fullbleed' (mặc định từ 10/11/2026, tràn viền 1080x1350) hoặc 'card' (bản cũ có khung)."""
+        layout = 'fullbleed' (mặc định từ 10/11/2026, tràn viền 1080x1350) hoặc 'card' (bản cũ có khung).
+        sound = 'auto' bật sound_plan tự động tối ưu BGM archetype, best entry, beat SFX và HyperFrames mixing graph."""
         self.proj = pathlib.Path(proj).resolve(); self.variant = variant
+        self.sound = sound
+        self._reveals = []
+        self._sound_plan_applied = False
+        self._bgm_file = None
         self.out = self.proj if variant == "full" else self.proj / variant
         self.brand = brand or {}
         if layout is None:
@@ -172,6 +177,21 @@ class Story:
     def add_meme_sound(self, mid, t, volume=0.7, dur=None):
         """Meme chỉ có tiếng (vd vn-10-diem, vine-boom): không hiện hình, chỉ phát tiếng ở giây t."""
         self.add_sfx(t, f"meme:{mid}", volume, dur)
+
+    def sound_plan(self, reveals=None, **kwargs):
+        """Opt-in hook áp dụng sound_plan (HyperFrames media-use chuẩn hoá).
+        API:
+            st.sound_plan(reveals=[
+                {"time": 7.42, "hit": "impact", "riser": "riser"},
+                {"line": "V2", "word": "StradeVn", "hit": "impact", "riser": True},
+                ("V5", "Harris"),
+                12.5,
+            ])
+        """
+        self.sound = "auto"
+        if reveals is not None:
+            self._reveals = list(reveals)
+        return self
 
     @property
     def now(self): return self.state["now"]
@@ -330,6 +350,18 @@ class Story:
 
     def finish(self, title="Video", css_extra="", bgm="bgm/mixkit/house-vibez.mp3", bgm_volume=0.14):
         """Ghi <out>/index.html + audio/narration_<variant>.wav + <out>/cues.json."""
+        if self.sound == "auto" and not self._sound_plan_applied:
+            self._sound_plan_applied = True
+            try:
+                sys.path.insert(0, str(HERE.parent / "tools"))
+                import sound_plan
+                self._bgm_file = bgm
+                sp = sound_plan.apply_sound_plan_to_story(self, reveals=self._reveals)
+                if sp and "bgm" in sp:
+                    bgm_volume = sp["bgm"].get("volume", bgm_volume)
+            except Exception as e:
+                print(f"  ⚠ sound_plan: {e}")
+
         DUR = round(self.state["now"], 2)
         groups = []
         for c in self.caps:              # phụ đề: gộp cụm ngắn trong cùng cụm lời
@@ -437,12 +469,25 @@ class Story:
         for x, y in zip(ps, ps[1:]):     # chỉ tính phần CÓ TIẾNG (bỏ khoảng lặng đệm 2 đầu cụm)
             if x["t"] + (x["e"] - x["a"]) > y["t"] + (y["s"] - y["a"]) + 0.02:
                 print(f"  ⚠ chồng tiếng: {x['line']} → {y['line']} @ {y['t']:.2f}")
+        bgm_entry = {"file": bgm, "volume": bgm_volume, "start": 0, "fade_in": 0.5, "fade_out": 2.5, "duck": True}
+        if self.sound == "auto" and getattr(self, "_sound_plan", None):
+            sp_bgm = self._sound_plan.get("bgm", {})
+            entry = sp_bgm.get("entry", {})
+            bgm_entry.update(
+                volume=sp_bgm.get("volume", bgm_volume),
+                offset=entry.get("best_offset", 0.0),
+                fade_in=entry.get("fade_in", 0.5),
+                fade_out=entry.get("fade_out", 2.5),
+                duck=True,
+                duck_multiplier=sp_bgm.get("duck_multiplier", 0.35),
+                carve=True,
+            )
         cues = {"duration": DUR, "voice": {"file": str(wav), "volume": 1.0},
                 # từng cụm lời (file, đoạn cắt a–b trong file, đặt ở giây t) — để tools/to_studio.py tách thành
                 # từng đoạn tiếng sửa được trong HyperFrames Studio
                 "pieces": [dict(line=p["line"], file=str(A / f"{p['line']}.mp3"), a=round(p["a"], 3), b=round(p["b"], 3),
                                 t=round(p["t"], 3)) for p in sorted(self.pieces, key=lambda p: p["t"])],
-                "bgm": {"file": bgm, "volume": bgm_volume, "start": 0, "fade_in": 0.5, "fade_out": 2.5, "duck": True},
+                "bgm": bgm_entry,
                 "sfx": sorted(({**s, "t": round(s["t"], 3)} for s in self.sfx), key=lambda s: s["t"])}
         (self.out / "cues.json").write_text(json.dumps(cues, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"xong: index.html · {DUR}s · {len(self.pieces)} cụm lời · {len(groups)} phụ đề · {len(self.stickers)} sticker · {len(self.sfx)} SFX")
