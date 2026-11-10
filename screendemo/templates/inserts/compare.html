@@ -1,0 +1,80 @@
+<!-- compare.html: Motion Insert — Two Bars / Prices Comparison -->
+<div class="insert-clip" id="{{id}}" data-start="{{t}}" data-duration="{{dur}}">
+  <div class="insert-panel {{panel_class}}">
+    <div class="ins-compare">
+      {{kicker_html}}
+      <div class="ins-title">{{title}}</div>
+      <div class="ins-sub">{{subtitle}}</div>
+      
+      <!-- Delta Badge -->
+      <div class="ins-compare-delta {{delta_dir}}" id="{{id}}_delta">
+        <svg class="ins-delta-arrow" viewBox="0 0 24 24" fill="none">
+          {{arrow_svg}}
+        </svg>
+        <span>{{delta_text}}</span>
+      </div>
+
+      <div class="ins-compare-stage">
+
+        <!-- Col A -->
+        <div class="ins-compare-col ins-compare-col-a" id="{{id}}_col_a">
+          <div class="ins-compare-val">
+            <span id="{{id}}_val_a">{{val_a_fmt}}</span>
+            <small>{{unit_a}}</small>
+          </div>
+          <div class="ins-compare-bar-wrap">
+            <div class="ins-compare-bar" id="{{id}}_bar_a" style="height: {{height_a}}px;"></div>
+          </div>
+          <div class="ins-compare-label">{{label_a}}</div>
+          <div class="ins-compare-subinfo">{{sub_a}}</div>
+        </div>
+
+        <!-- Col B -->
+        <div class="ins-compare-col ins-compare-col-b" id="{{id}}_col_b">
+          <div class="ins-compare-val">
+            <span id="{{id}}_val_b">{{val_b_fmt}}</span>
+            <small>{{unit_b}}</small>
+          </div>
+          <div class="ins-compare-bar-wrap">
+            <div class="ins-compare-bar" id="{{id}}_bar_b" style="height: {{height_b}}px;"></div>
+          </div>
+          <div class="ins-compare-label">{{label_b}}</div>
+          <div class="ins-compare-subinfo">{{sub_b}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+tl.fromTo('#{{id}} .insert-panel', { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: 'power3.out', immediateRender: false }, {{t}});
+tl.fromTo('#{{id}}_bar_a', { scaleY: 0 }, { scaleY: 1, duration: 0.45, ease: 'power3.out', immediateRender: false }, {{t}} + 0.10);
+{
+  const objA = { val: 0 };
+  tl.fromTo(objA, { val: 0 }, {
+    val: {{val_a_raw}},
+    duration: 0.45,
+    ease: 'power2.out',
+    immediateRender: false,
+    onUpdate: function() {
+      const el = document.getElementById('{{id}}_val_a');
+      if (el) el.textContent = formatViNumber(objA.val, {{decimals_a}});
+    }
+  }, {{t}} + 0.10);
+}
+tl.fromTo('#{{id}}_bar_b', { scaleY: 0 }, { scaleY: 1, duration: 0.45, ease: 'power3.out', immediateRender: false }, {{t}} + 0.22);
+{
+  const objB = { val: 0 };
+  tl.fromTo(objB, { val: 0 }, {
+    val: {{val_b_raw}},
+    duration: 0.45,
+    ease: 'power2.out',
+    immediateRender: false,
+    onUpdate: function() {
+      const el = document.getElementById('{{id}}_val_b');
+      if (el) el.textContent = formatViNumber(objB.val, {{decimals_b}});
+    }
+  }, {{t}} + 0.22);
+}
+tl.fromTo('#{{id}}_delta', { scale: 0.7, opacity: 0, y: -12 }, { scale: 1, opacity: 1, y: 0, duration: 0.35, ease: 'back.out(1.8)', immediateRender: false }, {{t}} + 0.45);
+tl.to('#{{id}} .insert-panel', { opacity: 0, scale: 0.96, duration: 0.22, ease: 'power2.in', immediateRender: false }, {{t}} + {{dur}} - 0.22);
+</script>
