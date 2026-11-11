@@ -279,7 +279,8 @@ class Session:
           const n = w.nextNode(); let span;
           if (n) {
             const i = n.data.indexOf(text), range = document.createRange(); range.setStart(n, i); range.setEnd(n, i + text.length);
-            span = document.createElement('span'); range.surroundContents(span);
+            // thẻ riêng (không phải <span>): CSS của trang kiểu ".mm-stat span{font-size:12px}" sẽ không áp vào → số giữ nguyên cỡ/màu (clip 07: "15" bị teo)
+            span = document.createElement('rec-hl'); range.surroundContents(span);
           } else {   // cụm chữ bị tách qua nhiều thẻ (vd số in đậm) → lấy phần tử NHỎ NHẤT chứa trọn cụm
             const norm = x => x.replace(/\\s+/g, ' ');
             const all = [...root.querySelectorAll('*')].filter(e => e.getClientRects().length && !e.closest('script,style') && norm(e.innerText || '').includes(text));
@@ -304,7 +305,8 @@ class Session:
             self.mark(name or f"focus:{text}", box=box, vw=self.w, vh=self.h, ink=False); self.wait(hold); return box
         box = self.page.evaluate("""([color, ring, hold]) => {
           const span = window.__recSpan;
-          span.style.cssText = `background:linear-gradient(transparent 12%, ${color} 12%, ${color} 92%, transparent 92%);background-size:0% 100%;background-repeat:no-repeat;transition:background-size .5s ease-out;border-radius:4px;padding:0 2px`;
+          // += giữ style inline sẵn có của phần tử (cỡ chữ/màu số to); = sẽ xoá → số bị teo nhỏ (clip 07: "15")
+          span.style.cssText += `;background:linear-gradient(transparent 12%, ${color} 12%, ${color} 92%, transparent 92%);background-size:0% 100%;background-repeat:no-repeat;transition:background-size .5s ease-out;border-radius:4px;padding:0 2px`;
           requestAnimationFrame(() => span.style.backgroundSize = '100% 100%');
           const rects = span.getClientRects(); const b = rects.length > 1 ? rects[rects.length - 1] : span.getBoundingClientRect();
           const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
