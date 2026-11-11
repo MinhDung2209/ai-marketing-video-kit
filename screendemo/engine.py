@@ -402,6 +402,48 @@ class Story:
         print(f"  card {c0:6.2f}–{c1:6.2f}")
         return starts
 
+    # ------------------------------------------------------------ cảnh hình ngoài (b-roll)
+    def broll(self, src, items, badge=None, tags=None, offset=0.0, zoom=(1.0, 1.08), tail=0.35, pre=0.35):
+        """Cảnh HÌNH NGOÀI (ảnh/video stock trong assets/broll/) tràn khung nội dung, Ken Burns chậm, lời đọc chạy đè.
+        Dùng cho phần kể chuyện NGÀNH HÀNG trước khi vào app (clip 10 dừa, 12/11/2026).
+        src = 'assets/broll/x.mp4' | '.jpg'; video nên cắt sẵn 1080x1350, không tiếng (tools/broll_prep.py).
+        tags = [(chunk_index, "chữ to")]: thẻ chữ hiện lúc bắt đầu nói cụm thứ chunk_index (đếm trên các cụm của items).
+        Video ngắn hơn cảnh → tự phát chậm lại (tối thiểu 0.5×), không lặp."""
+        c0 = self.state["now"]; starts = []
+        for it in items:
+            onset = max(c0 + pre, self.state["last"] + self.GAP) + (it["after"] or 0)
+            starts.append(onset); self.place(it, onset)
+            starts.extend(self.chunk_onset(it["line"], k) for k in range(it["i"] + 1, it["j"]))
+        c1 = self.state["last"] + tail; d = c1 - c0
+        bid = f"b{len(self.html)}"
+        if str(src).lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+            media = f'<img src="{src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+        else:
+            real = _probe(self.proj / src) or (offset + d)
+            rate = 1.0 if real - offset >= d else max(0.5, (real - offset) / d)
+            media = (f'<div class="clip" data-start="{c0:.3f}" data-duration="{d:.3f}"><video src="{src}" muted playsinline preload="auto" '
+                     f'data-offset="{offset:.3f}" data-end="{offset + d * rate:.3f}" data-rate="{rate:.3f}" style="object-position:center"></video></div>')
+        body = (f'{f"""<div class="step">{badge}</div>""" if badge else ""}<div class="card" id="{bid}c"><div class="cam" id="{bid}m">{media}</div>'
+                '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)"></div>')
+        for n, (k, txt) in enumerate(tags or []):
+            body += (f'<div class="btag" id="{bid}t{n}" style="position:absolute;left:48px;bottom:{70 + 0 * n}px;max-width:860px;'
+                     f'font:800 64px/1.1 var(--font-title,\'Be Vietnam Pro\');color:#fff;text-shadow:0 6px 24px rgba(0,0,0,.6);opacity:0">{txt}</div>')
+        body += '</div>'
+        self.html.append(f'<section class="clip" data-start="{c0:.3f}" data-duration="{d:.3f}">{body}</section>')
+        self.js.append(f"tl.fromTo('#{bid}c',{{opacity:0}},{{opacity:1,duration:.35,ease:E}},{c0:.3f});")
+        self.js.append(f"tl.fromTo('#{bid}m',{{scale:{zoom[0]}}},{{scale:{zoom[1]},duration:{d:.3f},ease:'none',transformOrigin:'50% 50%'}},{c0:.3f});")
+        tg = tags or []
+        for n, (k, _) in enumerate(tg):
+            t = starts[min(k, len(starts) - 1)]
+            self.js.append(f"tl.fromTo('#{bid}t{n}',{{y:40,opacity:0}},{{y:0,opacity:1,duration:.4,ease:E}},{t:.3f});")
+            t_end = starts[min(tg[n + 1][0], len(starts) - 1)] - 0.05 if n + 1 < len(tg) else c1 - 0.3
+            self.js.append(f"tl.to('#{bid}t{n}',{{opacity:0,duration:.25}},{t_end:.3f});")
+        self.sfx.append(dict(t=c0, file=SFX["whoosh"], volume=0.3))
+        self.state["now"] = c1
+        self.scene_spans.append((c0, c1, "broll"))
+        print(f"  broll {c0:6.2f}–{c1:6.2f}  {src}")
+        return starts
+
     # ------------------------------------------------------------ xuất
     @staticmethod
     def fmt_caption(t):
