@@ -286,7 +286,8 @@ class Session:
             const all = [...root.querySelectorAll('*')].filter(e => e.getClientRects().length && !e.closest('script,style') && norm(e.innerText || '').includes(text));
             if (!all.length) return false;
             span = all.reduce((a, b) => (b.innerText.length < a.innerText.length ? b : a));
-            span.style.display = span.style.display || ''; 
+            // phần tử khối (ô bảng/div) → bọc NỘI DUNG vào <rec-hl> để mực/vòng ôm sát chữ, không kéo ngang cả hàng (clip 08: "120 KG")
+            if (getComputedStyle(span).display !== 'inline') { const w2 = document.createElement('rec-hl'); while (span.firstChild) w2.appendChild(span.firstChild); span.appendChild(w2); span = w2; }
           }
           window.__recSpan = span;
           // bảng rộng: cuộn NGANG khung chứa cho ô nằm giữa (dọc để Python tự cuộn mượt)
